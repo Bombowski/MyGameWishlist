@@ -3,10 +3,10 @@
 <configuration>
 	<properties resource='jdbc.properties' />
 	<typeAliases>
-		<typeAlias type='viajesporinternet.model.pojo.User' alias='User'></typeAlias>
-		<typeAlias type='viajesporinternet.model.pojo.Game' alias='Game'></typeAlias>
-		<typeAlias type='viajesporinternet.model.pojo.Review' alias='Review'></typeAlias>
-		<typeAlias type='viajesporinternet.model.pojo.List' alias='List'></typeAlias>
+		<typeAlias type='mygamewishlist.model.pojo.User' alias='User'></typeAlias>
+		<typeAlias type='mygamewishlist.model.pojo.Game' alias='Game'></typeAlias>
+		<typeAlias type='mygamewishlist.model.pojo.Review' alias='Review'></typeAlias>
+		<typeAlias type='mygamewishlist.model.pojo.List' alias='List'></typeAlias>
 	</typeAliases>
 	<environments default='development'>
 		<environment id='development'>
@@ -20,9 +20,9 @@
 		</environment>
 	</environments>
 	<mappers>
-		<mapper resource='viajesporinternet/model/dao/mapper/List.xml' />
-		<mapper resource='viajesporinternet/model/dao/mapper/Game.xml' />
-		<mapper resource='viajesporinternet/model/dao/mapper/Review.xml' />
-		<mapper resource='viajesporinternet/model/dao/mapper/User.xml' />
+		<mapper resource='mygamewishlist/model/dao/mapper/List.xml' />
+		<mapper resource='mygamewishlist/model/dao/mapper/Game.xml' />
+		<mapper resource='mygamewishlist/model/dao/mapper/Review.xml' />
+		<mapper resource='mygamewishlist/model/dao/mapper/User.xml' />
 	</mappers>
 </configuration>

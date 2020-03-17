@@ -41,7 +41,7 @@ public class UserDAO {
 				LOG.logError(e.getMessage());
 			}
 		}
-		return new User();
+		return null;
 	}
 	
 	public void addUser(User usr) {

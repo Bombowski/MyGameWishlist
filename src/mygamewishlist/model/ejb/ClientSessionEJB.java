@@ -2,6 +2,7 @@ package mygamewishlist.model.ejb;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import mygamewishlist.model.pojo.User;
@@ -13,9 +14,9 @@ import mygamewishlist.model.pojo.User;
  */
 @Stateless
 @LocalBean
-public class SessionClientEJB {
+public class ClientSessionEJB {
 
-	public SessionClientEJB() {}
+	public ClientSessionEJB() {}
 	
 	/**
 	 * Comprueba si hay una session abierta
@@ -36,7 +37,8 @@ public class SessionClientEJB {
 	 * @param session HttpSession
 	 * @return User si existe una session, null si no
 	 */
-	public User getLoggedUser(HttpSession session) {
+	public User getLoggedUser(HttpServletRequest request) {
+		HttpSession session = request.getSession();
 		if (isSome1Logged(session)) {
 			return (User) session.getAttribute("user");
 		}

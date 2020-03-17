@@ -7,14 +7,26 @@ function onSignIn(googleUser) {
 	$.post("/MyGameWishlist/Login",
 			{
 			email: profile.getEmail(),
+			name: profile.getName()
 			},
 			function() {
-		alert("posted (?)");
+				window.location.href = "/MyGameWishlist/MyList";
 	});
 	
 }
 
-function logout() {	  
-    gapi.auth2.getAuthInstance().disconnect();
+$(".logout").click(function() {
+	if (gapi.auth2 == undefined) {
+	    gapi.load('auth2', init);
+	}
+	logout2();	
+});
+
+function init() {
+	gapi.auth2.init();
+}
+
+function logout2() {
+	gapi.auth2.getAuthInstance().disconnect();
     location.reload();
 }

@@ -10,9 +10,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import mygamewishlist.model.ejb.SessionClientEJB;
+import mygamewishlist.model.ejb.CreateQuery;
+import mygamewishlist.model.ejb.ClientSessionEJB;
 import mygamewishlist.model.pojo.ClassPaths;
 import mygamewishlist.model.pojo.MyLogger;
+import mygamewishlist.model.pojo.User;
 
 /**
  * Servlet implementation class Login
@@ -25,7 +27,10 @@ public class Login extends HttpServlet {
 	private static final MyLogger LOG = MyLogger.getLOG();
 	
 	@EJB
-	SessionClientEJB sc_ejb;
+	ClientSessionEJB sc_ejb;
+	
+	@EJB
+	CreateQuery cq_ejb;
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
@@ -42,8 +47,24 @@ public class Login extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.getWriter()
-			.append(request.getParameter("data"))
-			.append(" - horsecock2");
+		try {
+			String email = request.getParameter("email");
+			String name = request.getParameter("name");
+			
+			User usr = cq_ejb.getUserByEmail(email);
+			
+			if (usr == null) {
+				usr = new User(email, name, 0);
+				cq_ejb.addUser(usr);
+				sc_ejb.loginUser(request.getSession(false), usr);
+			} else {
+				sc_ejb.loginUser(request.getSession(false), usr);
+			}
+			
+			response.sendRedirect(ClassPaths.JSP_REDIRECT_MYLIST);		
+		} catch(Exception e) {
+			LOG.logError(e.getMessage());
+			response.sendRedirect(ClassPaths.JSP_REDIRECT_LOGIN);
+		}
 	}
 }

@@ -18,8 +18,7 @@ pageEncoding="ISO-8859-1"%>
 
 	<main class="content-fluid p-4">
 		<div class="w-75 m-auto">
-			<div class="g-signin2" data-onsuccess="onSignIn" id="myP"></div>
-   			<button onclick="logout()">Sign Out</button>
+		
 		</div>
 	</main>
 	<jsp:include page="template/Footer.jsp">

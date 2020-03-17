@@ -3,15 +3,16 @@ package mygamewishlist.model.pojo;
 public class User {
 
 	private String email;
-	private String passwd;
+	private String name;
 	private int admin;
 
-	public User() {}
-	
-	public User(String email, String passwd, int admin) {
+	public User() {
+	}
+
+	public User(String email, String name, int admin) {
 		super();
 		this.email = email;
-		this.passwd = passwd;
+		this.name = name;
 		this.admin = admin;
 	}
 
@@ -23,12 +24,12 @@ public class User {
 		this.email = email;
 	}
 
-	public String getPasswd() {
-		return passwd;
+	public String getName() {
+		return name;
 	}
 
-	public void setPasswd(String passwd) {
-		this.passwd = passwd;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public int getAdmin() {
