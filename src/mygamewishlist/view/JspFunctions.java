@@ -1,10 +1,9 @@
 package mygamewishlist.view;
 
-import java.util.ArrayList;
-
+import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
+import mygamewishlist.model.ejb.SessionClientEJB;
 import mygamewishlist.model.pojo.User;
 
 /**
@@ -15,6 +14,9 @@ import mygamewishlist.model.pojo.User;
 public class JspFunctions {
 
 	private static JspFunctions jsp = new JspFunctions();
+	
+	@EJB
+	SessionClientEJB SCEJB;
 	
 	private JspFunctions() {}
 	
@@ -30,31 +32,13 @@ public class JspFunctions {
 	}
 	
 	/**
-	 * Comprueba si existe alguna session abierta
-	 * 
-	 * @param request HttpServletRequest
-	 * @return true si exifte, false si no
-	 */
-	private boolean isSome1Logged(HttpServletRequest request) {
-		HttpSession session = request.getSession(false);
-		
-		if (session != null && session.getAttribute("user") != null) {
-			return true;
-		}
-		return false;
-	}
-	
-	/**
 	 * Consigue el objeto Usuario de la session si hay alguna session abierta 
 	 * 
 	 * @param request HttpServletRequest
 	 * @return User, null si no existe una session
 	 */
 	public User getLoggedUser(HttpServletRequest request) {
-		if (isSome1Logged(request)) {
-			return (User) request.getSession().getAttribute("user");
-		}
-		return null;
+		return getLoggedUser(request);
 	}
 	
 	/**
@@ -74,48 +58,6 @@ public class JspFunctions {
 		
 		sb.append(error)
 			.append("</p>");
-		
-		return sb.toString();
-	}
-	
-	/**
-	 * Envuelve cada String del arraylist en los tags option de html
-	 * 
-	 * @param arr ArrayList<String>
-	 * @return String
-	 */
-	public String printOptions(ArrayList<String> arr) {
-		StringBuilder sb = new StringBuilder();
-		for (String str : arr) {
-			sb.append("<option>")
-				.append(str)
-				.append("</option>");
-		}
-		
-		return sb.toString();
-	}
-	
-	/**
-	 * Envuelve cada String del arraylist en los tags option de html,
-	 * y si algun string coincide con selected, le añado al tag
-	 * el atributo selected
-	 * 
-	 * @param arr ArrayList<String>
-	 * @return String
-	 */
-	public String printOptions(ArrayList<String> arr, String selected) {
-		StringBuilder sb = new StringBuilder();
-		for (String str : arr) {
-			if (str.equals(selected)) {
-				sb.append("<option selected>")
-					.append(str)
-					.append("</option>");
-			} else {
-				sb.append("<option>")
-					.append(str)
-					.append("</option>");
-			}
-		}
 		
 		return sb.toString();
 	}

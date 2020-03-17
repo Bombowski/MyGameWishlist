@@ -4,11 +4,15 @@ public class User {
 
 	private String email;
 	private String passwd;
+	private int admin;
 
-	public User(String email, String passwd) {
+	public User() {}
+	
+	public User(String email, String passwd, int admin) {
 		super();
 		this.email = email;
 		this.passwd = passwd;
+		this.admin = admin;
 	}
 
 	public String getEmail() {
@@ -26,4 +30,13 @@ public class User {
 	public void setPasswd(String passwd) {
 		this.passwd = passwd;
 	}
+
+	public int getAdmin() {
+		return admin;
+	}
+
+	public void setAdmin(int admin) {
+		this.admin = admin;
+	}
+
 }
