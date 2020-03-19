@@ -4,7 +4,7 @@ import org.apache.ibatis.session.SqlSession;
 
 import mygamewishlist.model.dao.mapper.UserMapper;
 import mygamewishlist.model.pojo.MyLogger;
-import mygamewishlist.model.pojo.User;
+import mygamewishlist.model.pojo.db.User;
 
 public class UserDAO {
 

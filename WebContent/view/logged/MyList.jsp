@@ -2,7 +2,7 @@
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE>
 <html>
-<jsp:include page="../template/HeadLogged.jsp">
+<jsp:include page="../template/Head.jsp">
 	<jsp:param name="" value="" />
 </jsp:include>
 <body>
@@ -17,7 +17,7 @@
 
 	<main class="content-fluid p-4">
 		<div class="w-75 m-auto">
-			
+			mylist
 		</div>
 	</main>
 	<jsp:include page="../template/Footer.jsp">

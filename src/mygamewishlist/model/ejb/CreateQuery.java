@@ -7,7 +7,7 @@ import mygamewishlist.model.dao.GameDAO;
 import mygamewishlist.model.dao.ListDAO;
 import mygamewishlist.model.dao.ReviewDAO;
 import mygamewishlist.model.dao.UserDAO;
-import mygamewishlist.model.pojo.User;
+import mygamewishlist.model.pojo.db.User;
 
 @Stateless
 @LocalBean

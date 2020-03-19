@@ -3,7 +3,7 @@ package mygamewishlist.view;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import mygamewishlist.model.pojo.User;
+import mygamewishlist.model.pojo.db.User;
 
 /**
  * @author Patryk

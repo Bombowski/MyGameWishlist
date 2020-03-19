@@ -1,3 +1,9 @@
+window.onload = function() {
+	if (gapi.auth2 == undefined) {
+		onLoad();
+	}
+}
+
 function onSignIn(googleUser) {
 	var profile = googleUser.getBasicProfile();
 //	var imagurl = profile.getImageUrl();
@@ -5,28 +11,26 @@ function onSignIn(googleUser) {
 //	var email = profile.getEmail();
 	
 	$.post("/MyGameWishlist/Login",
-			{
+		{
 			email: profile.getEmail(),
 			name: profile.getName()
-			},
+		},
 			function() {
 				window.location.href = "/MyGameWishlist/MyList";
-	});
-	
+		}
+	);
 }
 
 $(".logout").click(function() {
 	if (gapi.auth2 == undefined) {
-	    gapi.load('auth2', init);
+		onLoad();
 	}
-	logout2();	
+	gapi.auth2.getAuthInstance().disconnect();
+	window.location.href = "/MyGameWishlist/Logout";
 });
 
-function init() {
-	gapi.auth2.init();
-}
-
-function logout2() {
-	gapi.auth2.getAuthInstance().disconnect();
-    location.reload();
+function onLoad() {
+	gapi.load('auth2', function() {
+		gapi.auth2.init();
+	});
 }

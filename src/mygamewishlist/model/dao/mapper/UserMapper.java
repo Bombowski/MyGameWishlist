@@ -2,7 +2,7 @@ package mygamewishlist.model.dao.mapper;
 
 import org.apache.ibatis.annotations.Param;
 
-import mygamewishlist.model.pojo.User;
+import mygamewishlist.model.pojo.db.User;
 
 public interface UserMapper {
 

@@ -18,7 +18,7 @@ pageEncoding="ISO-8859-1"%>
 
 	<main class="content-fluid p-4">
 		<div class="w-75 m-auto">
-		
+			LOGIN
 		</div>
 	</main>
 	<jsp:include page="template/Footer.jsp">

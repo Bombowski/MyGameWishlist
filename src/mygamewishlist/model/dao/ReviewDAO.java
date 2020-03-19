@@ -1,10 +1,13 @@
 package mygamewishlist.model.dao;
 
+import java.util.ArrayList;
+
 import org.apache.ibatis.session.SqlSession;
 
 import mygamewishlist.model.dao.mapper.ReviewMapper;
 import mygamewishlist.model.pojo.MyLogger;
-import mygamewishlist.model.pojo.User;
+import mygamewishlist.model.pojo.ReviewList;
+import mygamewishlist.model.pojo.db.Review;
 
 public class ReviewDAO {
 
@@ -16,7 +19,7 @@ public class ReviewDAO {
 	 * Crea la conexion con la base de datos y consigue
 	 * la interfaz
 	 */
-	private static void getViaMapper() {
+	private static void getRevMapper() {
 		session = MyBatisUtil.getSqlSessionFactory().openSession();
 		reviewMapper = session.getMapper(ReviewMapper.class);
 	}
@@ -27,11 +30,11 @@ public class ReviewDAO {
 	private static void closeAll() {
 		session.close();
 	}
-	
-	public User getNotVisited(String email) {
+		
+	public ArrayList<ReviewList> getReviewByIdUser(int idUser) {
 		try {
-			getViaMapper();
-//			return userMapper.userExists(email);
+			getRevMapper();
+			return reviewMapper.getReviewList(idUser);
 		} catch(Exception e) {
 			LOG.logError(e.getMessage());
 		} finally {
@@ -41,6 +44,38 @@ public class ReviewDAO {
 				LOG.logError(e.getMessage());
 			}
 		}
-		return new User();
+		return new ArrayList<ReviewList>();
+	}
+	
+	public void updateReview(Review rev) {
+		try {
+			getRevMapper();
+			reviewMapper.updateReview(rev);
+			session.commit();
+		} catch(Exception e) {
+			LOG.logError(e.getMessage());
+		} finally {
+			try {
+				closeAll();
+			} catch (Exception e) {
+				LOG.logError(e.getMessage());
+			}
+		}
+	}
+	
+	public void deleteReview(int idUser, int idGame) {
+		try {
+			getRevMapper();
+			reviewMapper.deleteReview(idUser, idGame);;
+			session.commit();
+		} catch(Exception e) {
+			LOG.logError(e.getMessage());
+		} finally {
+			try {
+				closeAll();
+			} catch (Exception e) {
+				LOG.logError(e.getMessage());
+			}
+		}
 	}
 }

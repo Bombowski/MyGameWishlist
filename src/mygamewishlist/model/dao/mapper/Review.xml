@@ -4,20 +4,27 @@
   
 <mapper namespace="mygamewishlist.model.dao.mapper.ReviewMapper">
 
-	<select id="getReviewByIdGame" resultMap="reviewMap">
-		SELECT * FROM REVIEW WHERE ID = #{id_game}
-	</select>
-	
-	<select id="getReviewByIdUser" resultMap="reviewMap">
-		SELECT * FROM REVIEW WHERE ID_USER = #{idUser}
-	</select>
-	
-	<select id="getReviewByIdUserGame" resultMap="reviewMap">
-		SELECT * FROM REVIEW WHERE ID_USER = #{idUser} NAD ID_GAME = #{idGame}
-	</select>
-	
-	<select id="getGameAverage" resultType="Integer">
-		SELECT AVG(RATING) FROM REVIEW WHERE ID_GAME = #{idGame}
+	<select id="getReviews" resultMap="reviewListMap">
+		SELECT
+			AVG(RE.RATING) AS AVERAGE_RATING, USER_RATING, GA.ID AS ID_GAME, GA.NAME AS NAME
+		FROM
+			GAME GA, REVIEW RE, USER US,
+		    (
+				SELECT
+					GA.ID AS IDG, RATING AS USER_RATING
+				FROM
+					GAME GA LEFT JOIN REVIEW RE ON GA.ID = RE.ID_GAME AND RE.ID_USER = 1
+		        ORDER BY
+					GA.ID
+		    ) SUB
+		WHERE
+			GA.ID = RE.ID_GAME AND
+		    RE.ID_USER = US.ID AND
+		    IDG = RE.ID_GAME
+		GROUP BY
+			GA.NAME, USER_RATING, GA.ID
+		ORDER BY
+			GA.ID
 	</select>
 	
 	<update id="updateReview" parameterType="Review">
@@ -32,5 +39,12 @@
 		<id property="idUser" column="ID_USER"/>
 		<id property="idGame" column="ID_GAME"/>
 		<result property="rating" column="RATING"/>
+	</resultMap>
+	
+	<resultMap type="ReviewList" id="reviewListMap">
+		<result property="averageRating" column="AVERAGE_RATING"/>
+		<result property="userRating" column="USER_RATING"/>
+		<result property="name" column="NAME"/>
+		<result property="idGame" column="ID_GAME"/>
 	</resultMap>
 </mapper>

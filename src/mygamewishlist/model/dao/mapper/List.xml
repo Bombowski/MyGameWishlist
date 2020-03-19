@@ -4,4 +4,14 @@
   
 <mapper namespace="mygamewishlist.model.dao.mapper.ListMapper">
 	
+	<resultMap type="List" id="resultList">
+		<id property="idUser" column="ID_USER" />
+		<id property="url" column="GAME_URL" />
+		<result property="idShop" column="ID_SHOP" />
+		<result property="name" column="NAME" />
+		<result property="defaultPrice" column="DEFAULT_PRICE" />
+		<result property="lastNotifiedPrice" column="LAST_NOTIFIED_PRICE" />
+		<result property="minPrice" column="MIN_PRICE" />
+		<result property="maxPrice" column="MAX_PRICE" />
+	</resultMap>
 </mapper>

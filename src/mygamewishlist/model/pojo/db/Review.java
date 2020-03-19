@@ -1,4 +1,4 @@
-package mygamewishlist.model.pojo;
+package mygamewishlist.model.pojo.db;
 
 public class Review {
 

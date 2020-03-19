@@ -2,7 +2,7 @@
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE>
 <html>
-<jsp:include page="../template/HeadLogged.jsp">
+<jsp:include page="../template/Head.jsp">
 	<jsp:param name="" value="" />
 </jsp:include>
 <body>
