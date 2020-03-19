@@ -10,6 +10,7 @@ public class ClassPaths {
 	
 	public static final String LOGIN = "/Login";
 	public static final String REVIEW_LIST = "/ReviewList";
+	public static final String GAME_INFO = "/GameInfo";
 	public static final String ADD_GAME_OPTIONS = "/AddGameOptions";
 	public static final String ADD_GAME_WISHLIST = "/AddGameWishlist";
 	public static final String DELETE_GAME_WISHLIST = "/Delete/GameWishList";
@@ -22,6 +23,7 @@ public class ClassPaths {
 	
 	public static final String REDIRECT_LOGIN = new StringBuilder().append(PROJECT).append(LOGIN).toString();
 	public static final String REDIRECT_REVIEW_LIST = new StringBuilder().append(PROJECT).append(REVIEW_LIST).toString();
+	public static final String REDIRECT_GAME_INFO = new StringBuilder().append(PROJECT).append(GAME_INFO).toString();
 	public static final String REDIRECT_ADD_GAME_OPTIONS = new StringBuilder().append(PROJECT).append(ADD_GAME_OPTIONS).toString();
 	public static final String REDIRECT_ADD_GAME_WISHLIST = new StringBuilder().append(PROJECT).append(ADD_GAME_WISHLIST).toString();
 	public static final String REDIRECT_DELETE_GAME_WISHLIST = new StringBuilder().append(PROJECT).append(DELETE_GAME_WISHLIST).toString();
@@ -34,6 +36,7 @@ public class ClassPaths {
 	
 	public static final String JSP_LOGIN = new StringBuilder().append(VIEW).append(LOGIN).append(JSP).toString();
 	public static final String JSP_REVIEW_LIST = new StringBuilder().append(VIEW).append(REVIEW_LIST).append(JSP).toString();
+	public static final String JSP_GAME_INFO = new StringBuilder().append(VIEW).append(GAME_INFO).append(JSP).toString();
 	public static final String JSP_ADD_GAME_OPTIONS = new StringBuilder().append(LOGGED).append(ADD_GAME_OPTIONS).append(JSP).toString();
 	public static final String JSP_ADD_GAME_WISHLIST = new StringBuilder().append(LOGGED).append(ADD_GAME_WISHLIST).append(JSP).toString();
 	public static final String JSP_DELETE_GAME_WISHLIST = new StringBuilder().append(LOGGED).append(DELETE_GAME_WISHLIST).append(JSP).toString();

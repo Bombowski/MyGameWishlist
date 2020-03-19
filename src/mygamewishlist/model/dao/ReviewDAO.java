@@ -31,10 +31,26 @@ public class ReviewDAO {
 		session.close();
 	}
 		
-	public ArrayList<ReviewList> getReviewByIdUser(int idUser) {
+	public ArrayList<ReviewList> getReviewList(int idUser) {
 		try {
 			getRevMapper();
 			return reviewMapper.getReviewList(idUser);
+		} catch(Exception e) {
+			LOG.logError(e.getMessage());
+		} finally {
+			try {
+				closeAll();
+			} catch (Exception e) {
+				LOG.logError(e.getMessage());
+			}
+		}
+		return new ArrayList<ReviewList>();
+	}
+	
+	public ArrayList<ReviewList> getReviewListNotLogged() {
+		try {
+			getRevMapper();
+			return reviewMapper.getReviewListNotLogged();
 		} catch(Exception e) {
 			LOG.logError(e.getMessage());
 		} finally {

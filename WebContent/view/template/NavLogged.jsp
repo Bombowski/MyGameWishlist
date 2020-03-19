@@ -9,8 +9,8 @@
 <nav class="container-fluid bgGray justify-content-center d-flex">
 	<div class="navbar navbar-expand d-flex w-75">
 		<ul class="navbar-nav">
-			<li class="nav-link"><a href="/MyGameWishlist/Login" class="nav-link">Login</a></li>
 			<li class="nav-link"><a href="/MyGameWishlist/ReviewList" class="nav-link">Review List</a></li>
+			<li class="nav-link"><a href="/MyGameWishlist/MyList" class="nav-link">My List</a></li>
 		</ul>
 		<div class="d-flex justify-content-end w-100">
 			<% if (jspF.getLoggedUser(request.getSession(false)) == null) { %>

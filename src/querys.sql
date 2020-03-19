@@ -22,3 +22,38 @@ GROUP BY
 	GA.NAME, USER_RATING, GA.ID
 ORDER BY
 	GA.ID;
+    
+SELECT
+	AVG(RE.RATING) AS AVERAGE_RATING, -1 AS USER_RATING, GA.ID AS ID_GAME, GA.NAME AS NAME
+FROM
+	GAME GA, REVIEW RE
+WHERE
+	GA.ID = RE.ID_GAME
+GROUP BY
+	GA.NAME, USER_RATING, GA.ID
+ORDER BY
+	GA.ID;
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    

@@ -10,20 +10,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import mygamewishlist.model.ejb.CreateQuery;
 import mygamewishlist.model.ejb.ClientSessionEJB;
+import mygamewishlist.model.ejb.CreateQuery;
 import mygamewishlist.model.pojo.ClassPaths;
 import mygamewishlist.model.pojo.MyLogger;
-import mygamewishlist.model.pojo.db.User;
 
 /**
- * Servlet implementation class Login
+ * Servlet implementation class GameInfo
  */
-@WebServlet("/Login")
-public class Login extends HttpServlet {
-
+@WebServlet("/GameInfo")
+public class GameInfo extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+       
 	private static final MyLogger LOG = MyLogger.getLOG();
 	
 	@EJB
@@ -34,13 +32,8 @@ public class Login extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-			if (sc_ejb.isSome1Logged(request.getSession(false))) {
-				RequestDispatcher rd = getServletContext().getRequestDispatcher(ClassPaths.MYLIST);
-				rd.forward(request, response);
-			} else {
-				RequestDispatcher rd = getServletContext().getRequestDispatcher(ClassPaths.JSP_LOGIN);
-				rd.forward(request, response);
-			}
+			RequestDispatcher rd = getServletContext().getRequestDispatcher(ClassPaths.GAME_INFO);
+			rd.forward(request, response);
 		} catch(Exception e) {
 			LOG.logError(e.getMessage());
 			response.sendRedirect(ClassPaths.REDIRECT_LOGIN);
@@ -49,19 +42,7 @@ public class Login extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-			String email = request.getParameter("email");
-			
-			User usr = cq_ejb.getUserByEmail(email);
-			
-			if (usr == null) {
-				cq_ejb.addUser(usr);
-				usr = cq_ejb.getUserByEmail(email);
-				sc_ejb.loginUser(request.getSession(false), usr);
-			} else {
-				sc_ejb.loginUser(request.getSession(false), usr);
-			}
-			
-			response.sendRedirect(ClassPaths.REDIRECT_MYLIST);		
+				
 		} catch(Exception e) {
 			LOG.logError(e.getMessage());
 			response.sendRedirect(ClassPaths.REDIRECT_LOGIN);

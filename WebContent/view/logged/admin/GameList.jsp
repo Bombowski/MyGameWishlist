@@ -11,7 +11,7 @@
 		<jsp:param name="" value="" />
 	</jsp:include>
 	<!-- añado el html del nav -->
-	<jsp:include page="../../template/Nav.jsp">
+	<jsp:include page="../../template/NavAdmin.jsp">
 		<jsp:param name="" value="" />
 	</jsp:include>
 

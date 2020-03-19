@@ -4,7 +4,7 @@
   
 <mapper namespace="mygamewishlist.model.dao.mapper.ReviewMapper">
 
-	<select id="getReviews" resultMap="reviewListMap">
+	<select id="getReviewList" resultMap="reviewListMap">
 		SELECT
 			AVG(RE.RATING) AS AVERAGE_RATING, USER_RATING, GA.ID AS ID_GAME, GA.NAME AS NAME
 		FROM
@@ -25,6 +25,19 @@
 			GA.NAME, USER_RATING, GA.ID
 		ORDER BY
 			GA.ID
+	</select>
+	
+	<select id="getReviewListNotLogged" resultMap="reviewListMap">
+		SELECT
+			AVG(RE.RATING) AS AVERAGE_RATING, -1 AS USER_RATING, GA.ID AS ID_GAME, GA.NAME AS NAME
+		FROM
+			GAME GA, REVIEW RE
+		WHERE
+			GA.ID = RE.ID_GAME
+		GROUP BY
+			GA.NAME, USER_RATING, GA.ID
+		ORDER BY
+			GA.ID;
 	</select>
 	
 	<update id="updateReview" parameterType="Review">

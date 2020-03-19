@@ -2,6 +2,7 @@ package mygamewishlist.model.pojo.db;
 
 public class User {
 
+	private int id;
 	private String email;
 	private String name;
 	private int admin;
@@ -9,11 +10,20 @@ public class User {
 	public User() {
 	}
 
-	public User(String email, String name, int admin) {
+	public User(int id, String email, String name, int admin) {
 		super();
+		this.id = id;
 		this.email = email;
 		this.name = name;
 		this.admin = admin;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getEmail() {
