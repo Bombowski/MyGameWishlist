@@ -23,6 +23,7 @@ public class GameInfo extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	private static final MyLogger LOG = MyLogger.getLOG();
+	private static final ClassPaths cp = ClassPaths.getCP();
 	
 	@EJB
 	ClientSessionEJB sc_ejb;
@@ -32,11 +33,11 @@ public class GameInfo extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-			RequestDispatcher rd = getServletContext().getRequestDispatcher(ClassPaths.GAME_INFO);
+			RequestDispatcher rd = getServletContext().getRequestDispatcher(cp.GAME_INFO);
 			rd.forward(request, response);
 		} catch(Exception e) {
 			LOG.logError(e.getMessage());
-			response.sendRedirect(ClassPaths.REDIRECT_LOGIN);
+			response.sendRedirect(cp.REDIRECT_LOGIN);
 		}
 	}
 
@@ -45,7 +46,7 @@ public class GameInfo extends HttpServlet {
 				
 		} catch(Exception e) {
 			LOG.logError(e.getMessage());
-			response.sendRedirect(ClassPaths.REDIRECT_LOGIN);
+			response.sendRedirect(cp.REDIRECT_LOGIN);
 		}
 	}
 }

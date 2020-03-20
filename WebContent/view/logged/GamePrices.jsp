@@ -1,6 +1,25 @@
+<%@page import="mygamewishlist.model.pojo.ClassPaths"%>
+<%@page import="mygamewishlist.view.JspFunctions"%>
+<%@page import="mygamewishlist.model.pojo.MyLogger"%>
+<%@page import="mygamewishlist.model.pojo.db.User"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE>
+
+<%!
+	JspFunctions jspF = JspFunctions.getJspF();
+	MyLogger log = MyLogger.getLOG();
+	ClassPaths cp = ClassPaths.getCP();
+%>
+
+<%
+	User usr = jspF.getLoggedUser(request.getSession(false));
+
+	if (usr == null) {
+		response.sendRedirect(cp.REDIRECT_LOGIN);
+	}
+%>
+
 <html>
 <jsp:include page="../template/Head.jsp">
 	<jsp:param name="" value="" />
@@ -10,10 +29,17 @@
 	<jsp:include page="../template/Header.jsp">
 		<jsp:param name="" value="" />
 	</jsp:include>
+	
 	<!-- añado el html del nav -->
-	<jsp:include page="../template/NavLogged.jsp">
+	<% if (usr.getAdmin() == 1) { %>
+	<jsp:include page="../template/NavAdmin.jsp">
 		<jsp:param name="" value="" />
 	</jsp:include>
+	<% } else { %>
+	<jsp:include page="../template/NavLogged.jsp">
+		<jsp:param name="" value="" />
+	</jsp:include>	
+	<% } %>
 
 	<main class="content-fluid p-4">
 		<div class="w-75 m-auto">

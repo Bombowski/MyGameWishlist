@@ -26,6 +26,7 @@ public class ReviewList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	private static final MyLogger LOG = MyLogger.getLOG();
+	private static final ClassPaths cp = ClassPaths.getCP();
 	
 	@EJB
 	ClientSessionEJB sc_ejb;
@@ -40,12 +41,12 @@ public class ReviewList extends HttpServlet {
 			ArrayList<mygamewishlist.model.pojo.ReviewList> reviews = 
 					(usr == null ? cq_ejb.getReviewListNotLogged() : cq_ejb.getReviewList(usr.getId()));
 			
-			RequestDispatcher rd = getServletContext().getRequestDispatcher(ClassPaths.JSP_REVIEW_LIST);
+			RequestDispatcher rd = getServletContext().getRequestDispatcher(cp.JSP_REVIEW_LIST);
 			request.setAttribute("reviews", reviews);
 			rd.forward(request, response);
 		} catch(Exception e) {
 			LOG.logError(e.getMessage());
-			response.sendRedirect(ClassPaths.REDIRECT_LOGIN);
+			response.sendRedirect(cp.REDIRECT_LOGIN);
 		}
 	}
 
@@ -54,7 +55,7 @@ public class ReviewList extends HttpServlet {
 					
 		} catch(Exception e) {
 			LOG.logError(e.getMessage());
-			response.sendRedirect(ClassPaths.REDIRECT_LOGIN);
+			response.sendRedirect(cp.REDIRECT_LOGIN);
 		}
 	}
 }

@@ -1,6 +1,6 @@
 INSERT INTO USER(NAME,EMAIL,ADMIN) VALUES
-	('Patryk','patryk080998@gmail.com',0),
-    ('Bombo','bumboxowatosciowowaty@gmail.com',1);
+	('Patryk','patryk080998@gmail.com',1),
+    ('Bombo','bumboxowatosciowowaty@gmail.com',0);
 
 INSERT INTO SHOP(NAME) VALUES
 	('Instant Gaming'),

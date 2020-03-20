@@ -25,6 +25,7 @@ public class Login extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	private static final MyLogger LOG = MyLogger.getLOG();
+	private static final ClassPaths cp = ClassPaths.getCP();
 	
 	@EJB
 	ClientSessionEJB sc_ejb;
@@ -35,15 +36,15 @@ public class Login extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			if (sc_ejb.isSome1Logged(request.getSession(false))) {
-				RequestDispatcher rd = getServletContext().getRequestDispatcher(ClassPaths.MYLIST);
+				RequestDispatcher rd = getServletContext().getRequestDispatcher(cp.MYLIST);
 				rd.forward(request, response);
 			} else {
-				RequestDispatcher rd = getServletContext().getRequestDispatcher(ClassPaths.JSP_LOGIN);
+				RequestDispatcher rd = getServletContext().getRequestDispatcher(cp.JSP_LOGIN);
 				rd.forward(request, response);
 			}
 		} catch(Exception e) {
 			LOG.logError(e.getMessage());
-			response.sendRedirect(ClassPaths.REDIRECT_LOGIN);
+			response.sendRedirect(cp.REDIRECT_LOGIN);
 		}
 	}
 
@@ -61,10 +62,10 @@ public class Login extends HttpServlet {
 				sc_ejb.loginUser(request.getSession(false), usr);
 			}
 			
-			response.sendRedirect(ClassPaths.REDIRECT_MYLIST);		
+			response.sendRedirect(cp.REDIRECT_MYLIST);		
 		} catch(Exception e) {
 			LOG.logError(e.getMessage());
-			response.sendRedirect(ClassPaths.REDIRECT_LOGIN);
+			response.sendRedirect(cp.REDIRECT_LOGIN);
 		}
 	}
 }

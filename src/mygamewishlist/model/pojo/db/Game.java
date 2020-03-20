@@ -4,7 +4,15 @@ public class Game {
 
 	private String name;
 	private String description;
+	private int id;
 
+	public Game(String name, String description, int id) {
+		super();
+		this.name = name;
+		this.description = description;
+		this.id = id;
+	}
+	
 	public Game(String name, String description) {
 		super();
 		this.name = name;
@@ -29,6 +37,14 @@ public class Game {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 }

@@ -18,15 +18,17 @@ import mygamewishlist.model.pojo.db.Game;
 import mygamewishlist.model.pojo.db.User;
 
 /**
- * Servlet implementation class AddGame
+ * Servlet implementation class UpdateGame
  */
-@WebServlet("/AddGame")
-public class AddGame extends HttpServlet {
-
+@WebServlet("/UpdateGame")
+public class UpdateGame extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+       
 	private static final MyLogger LOG = MyLogger.getLOG();
 	private static final ClassPaths cp = ClassPaths.getCP();
+		
+	private int idGame = -1;
+	private String error = "";
 	
 	@EJB
 	ClientSessionEJB sc_ejb;
@@ -34,52 +36,62 @@ public class AddGame extends HttpServlet {
 	@EJB
 	CreateQuery cq_ejb;
 	
-	private String error = "";
-	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			User usr = sc_ejb.getLoggedUser(request);
 			RequestDispatcher rd;
+			idGame = -1;
 			
 			if (usr == null) {
 				rd = getServletContext().getRequestDispatcher(cp.LOGIN);
 			} else if (usr.getAdmin() != 1) {
 				rd = getServletContext().getRequestDispatcher(cp.MYLIST);
 			} else {
-				rd = getServletContext().getRequestDispatcher(cp.JSP_ADD_GAME);
+				rd = getServletContext().getRequestDispatcher(cp.JSP_UPDATE_GAME);
 			}
 			
+			int id = Integer.parseInt(request.getParameter("id"));
+			Game game = cq_ejb.getGame(id);
+			
+			if (game == null) {
+				rd = getServletContext().getRequestDispatcher(cp.GAME_LIST);
+			}
+			
+			idGame = game.getId();
+			
+			request.setAttribute("game", game);
+			request.setAttribute("error", error);
 			rd.forward(request, response);
 		} catch(Exception e) {
 			LOG.logError(e.getMessage());
+			response.sendRedirect(cp.REDIRECT_GAME_LIST);
+			error = "Unexpected error occured";
 		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-			User usr = sc_ejb.getLoggedUser(request);
-			
-			if (usr == null) {
-				response.sendRedirect(cp.REDIRECT_LOGIN);
-			} else if (usr.getAdmin() != 1) {
-				response.sendRedirect(cp.REDIRECT_MYLIST);
-			} else {
-				response.sendRedirect(cp.REDIRECT_ADD_GAME);
-			}
-			
-			String name = request.getParameter("name");
-			String description = request.getParameter("description");
-			error = chkStuff(name, description);
-			
-			if (error.equals("")) {
-				cq_ejb.addGame(new Game(name, description));
+			if (idGame == -1) {
 				response.sendRedirect(cp.REDIRECT_GAME_LIST);
 			} else {
-				response.sendRedirect(cp.REDIRECT_ADD_GAME);
+				String name = request.getParameter("name");
+				String description = request.getParameter("description");
+				error = chkStuff(name, description);
+				
+				if (error.equals("")) {
+					Game g = new Game(name, description, idGame);
+					
+					cq_ejb.updateGame(g);
+					
+					response.sendRedirect(cp.REDIRECT_GAME_LIST);
+				} else {
+					response.sendRedirect(cp.REDIRECT_UPDATE_GAME);
+				}
 			}
-			
 		} catch(Exception e) {
 			LOG.logError(e.getMessage());
+			response.sendRedirect(cp.REDIRECT_GAME_LIST);
+			error = "Unexpected error occured";
 		}
 	}
 	

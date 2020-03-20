@@ -10,6 +10,7 @@ import mygamewishlist.model.dao.ListDAO;
 import mygamewishlist.model.dao.ReviewDAO;
 import mygamewishlist.model.dao.UserDAO;
 import mygamewishlist.model.pojo.ReviewList;
+import mygamewishlist.model.pojo.db.Game;
 import mygamewishlist.model.pojo.db.Review;
 import mygamewishlist.model.pojo.db.User;
 
@@ -46,5 +47,25 @@ public class CreateQuery {
 	
 	public void deleteReview(int idUser, int idGame) {
 		REV_DAO.deleteReview(idUser, idGame);
+	}
+	
+	public Game getGame(int idGame) {
+		return GAME_DAO.getGame(idGame);
+	}
+	
+	public ArrayList<Game> getGames() {
+		return GAME_DAO.getGames();
+	}
+	
+	public void addGame(Game game) {
+		GAME_DAO.addGame(game);
+	}
+	
+	public void updateGame(Game game) {
+		GAME_DAO.updateGame(game);
+	}
+	
+	public void deleteGame(int idGame) {
+		GAME_DAO.deleteGame(idGame);
 	}
 }

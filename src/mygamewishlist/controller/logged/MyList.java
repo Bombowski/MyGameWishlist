@@ -25,6 +25,7 @@ public class MyList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	private static final MyLogger LOG = MyLogger.getLOG();
+	private static final ClassPaths cp = ClassPaths.getCP();
 	
 	@EJB
 	ClientSessionEJB sc_ejb;
@@ -37,15 +38,15 @@ public class MyList extends HttpServlet {
 			User usr = sc_ejb.getLoggedUser(request);
 			
 			if (usr == null) {
-				RequestDispatcher rd = getServletContext().getRequestDispatcher(ClassPaths.LOGIN);
+				RequestDispatcher rd = getServletContext().getRequestDispatcher(cp.LOGIN);
 				rd.forward(request, response);
 			} else {
-				RequestDispatcher rd = getServletContext().getRequestDispatcher(ClassPaths.JSP_MYLIST);
+				RequestDispatcher rd = getServletContext().getRequestDispatcher(cp.JSP_MYLIST);
 				rd.forward(request, response);
 			}
 		} catch(Exception e) {
 			LOG.logError(e.getMessage());
-			response.sendRedirect(ClassPaths.JSP_LOGIN);
+			response.sendRedirect(cp.JSP_LOGIN);
 		}
 	}
 
@@ -54,14 +55,14 @@ public class MyList extends HttpServlet {
 			User usr = sc_ejb.getLoggedUser(request);
 			
 			if (usr == null) {
-				response.sendRedirect(ClassPaths.REDIRECT_LOGIN);
+				response.sendRedirect(cp.REDIRECT_LOGIN);
 			} else {
-				RequestDispatcher rd = getServletContext().getRequestDispatcher(ClassPaths.JSP_MYLIST);
+				RequestDispatcher rd = getServletContext().getRequestDispatcher(cp.JSP_MYLIST);
 				rd.forward(request, response);
 			}
 		} catch(Exception e) {
 			LOG.logError(e.getMessage());
-			response.sendRedirect(ClassPaths.REDIRECT_MYLIST);
+			response.sendRedirect(cp.REDIRECT_MYLIST);
 		}
 	}
 }

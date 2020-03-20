@@ -1,6 +1,24 @@
+<%@page import="mygamewishlist.model.pojo.ClassPaths"%>
+<%@page import="mygamewishlist.model.pojo.db.User"%>
+<%@page import="mygamewishlist.model.pojo.MyLogger"%>
+<%@page import="mygamewishlist.view.JspFunctions"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<%!
+	JspFunctions jspF = JspFunctions.getJspF();
+	MyLogger log = MyLogger.getLOG();
+	ClassPaths cp = ClassPaths.getCP();
+%>
+
+<%
+	User usr = jspF.getLoggedUser(request.getSession(false));
+
+	if (usr != null) {
+		response.sendRedirect(cp.REDIRECT_MYLIST);
+	}
+%>
 
 <html>
 <jsp:include page="template/Head.jsp">
@@ -11,6 +29,7 @@ pageEncoding="ISO-8859-1"%>
 	<jsp:include page="template/Header.jsp">
 		<jsp:param name="" value="" />
 	</jsp:include>
+	
 	<!-- añado el html del nav -->
 	<jsp:include page="template/Nav.jsp">
 		<jsp:param name="" value="" />

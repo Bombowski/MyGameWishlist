@@ -16,6 +16,10 @@
 		INSERT INTO GAME (NAME) VALUES(#{name})
 	</insert>
 	
+	<update id="updateGame" parameterType="Game">
+		UPDATE GAME SET NAME = #{name}, DESCRIPTION = #{description} WHERE ID = #{id}
+	</update>
+	
 	<delete id="deleteGame">
 		DELETE FROM GAME WHERE ID = #{id}
 	</delete>

@@ -8,7 +8,7 @@
 
 <nav class="container-fluid bgGray justify-content-center d-flex">
 	<div class="navbar navbar-expand d-flex w-75">
-		<ul class="navbar-nav">
+		<ul class="navbar-nav w-50">
 			<li class="nav-link"><a href="/MyGameWishlist/ReviewList" class="nav-link">Review List</a></li>
 			<li class="nav-link"><a href="/MyGameWishlist/MyList" class="nav-link">My List</a></li>
 			<li class="nav-link"><a href="/MyGameWishlist/GameList" class="nav-link">Game List</a></li>
