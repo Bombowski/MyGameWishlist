@@ -1,3 +1,7 @@
+<%@page import="bomboshtml.body.A"%>
+<%@page import="bomboshtml.body.table.Tr"%>
+<%@page import="mygamewishlist.model.pojo.db.WishListGame"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="mygamewishlist.model.pojo.ClassPaths"%>
 <%@page import="mygamewishlist.view.JspFunctions"%>
 <%@page import="mygamewishlist.model.pojo.MyLogger"%>
@@ -42,7 +46,21 @@
 
 	<main class="content-fluid p-4">
 		<div class="w-75 m-auto">
-			mylist
+			<table class="table">
+				<%
+					try {
+						ArrayList<WishListGame> list = (ArrayList<WishListGame>) request.getAttribute("list");
+						
+						for (WishListGame g : list) {
+							Tr tr = new Tr();
+							tr.addTd(new A());
+						}
+					} catch(Exception e) {
+						log.logError(e.getMessage());
+						response.sendRedirect(cp.REDIRECT_MYLIST);
+					}
+				%>
+			</table>
 		</div>
 	</main>
 	<jsp:include page="../template/Footer.jsp">

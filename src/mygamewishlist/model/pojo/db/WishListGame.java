@@ -1,6 +1,6 @@
 package mygamewishlist.model.pojo.db;
 
-public class List {
+public class WishListGame {
 
 	private int idUser;
 	private String url;
@@ -11,7 +11,7 @@ public class List {
 	private double minPrice;
 	private double maxPrice;
 
-	public List(int idUser, String url, int idShop, String name, double defaultPrice, double lastNotifiedPrice,
+	public WishListGame(int idUser, String url, int idShop, String name, double defaultPrice, double lastNotifiedPrice,
 			double minPrice, double maxPrice) {
 		super();
 		this.idUser = idUser;
@@ -24,7 +24,7 @@ public class List {
 		this.maxPrice = maxPrice;
 	}
 
-	public List() {
+	public WishListGame() {
 		super();
 	}
 

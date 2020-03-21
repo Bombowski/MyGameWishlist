@@ -2,10 +2,10 @@ INSERT INTO USER(NAME,EMAIL,ADMIN) VALUES
 	('Patryk','patryk080998@gmail.com',1),
     ('Bombo','bumboxowatosciowowaty@gmail.com',0);
 
-INSERT INTO SHOP(NAME) VALUES
-	('Instant Gaming'),
-    ('Steam'),
-    ('G2A');
+INSERT INTO SHOP(NAME, URL) VALUES
+	('Instant Gaming','https://www.instant-gaming.com/en/'),
+    ('Steam','https://store.steampowered.com/'),
+    ('G2A','https://www.g2a.com/');
     
 INSERT INTO GAME(NAME) VALUES
 	('Minecraft'),
@@ -25,12 +25,27 @@ INSERT INTO REVIEW(ID_USER,ID_GAME,RATING) VALUES
     (2, 4, 2),
     (2, 5, 2);
     
-INSERT INTO LIST(ID_USER, GAME_URL, ID_SHOP, NAME, DEFUALT_PRICE) VALUES
-	(1,'URL HERE',2,'DRG',25.00),
-    (1,'URL HERE1',1,'DRG',25.00),
-    (1,'URL HERE3',2,'DRG',25.00),
-    (1,'URL HERE4',2,'DRG',25.00),
-    (1,'URL HERE5',3,'DRG',25.00),
-    (1,'URL HERE6',2,'DRG',25.00),
-    (1,'URL HERE7',1,'DRG',25.00);
+INSERT INTO LIST(ID_USER) VALUES (1),(2);
+    
+INSERT INTO WISHLIST_GAME(URL, ID_USER, ID_SHOP, NAME, DEFAULT_PRICE, CURRENT_PRICE, LAST_NOTIFIED_PRICE) VALUES
+	('URL',1,1,'NAME',25.00,25.00,25.00),
+    ('URL2',1,3,'NAME',25.00,25.00,25.00),
+    ('URL2',2,3,'NAME',25.00,25.00,25.00),
+    ('URL3',2,2,'NAME',25.00,25.00,25.00);
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     

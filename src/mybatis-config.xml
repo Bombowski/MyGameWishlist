@@ -6,7 +6,8 @@
 		<typeAlias type='mygamewishlist.model.pojo.db.User' alias='User'></typeAlias>
 		<typeAlias type='mygamewishlist.model.pojo.db.Game' alias='Game'></typeAlias>
 		<typeAlias type='mygamewishlist.model.pojo.db.Review' alias='Review'></typeAlias>
-		<typeAlias type='mygamewishlist.model.pojo.db.List' alias='List'></typeAlias>
+		<typeAlias type='mygamewishlist.model.pojo.db.Shop' alias='Shop'></typeAlias>
+		<typeAlias type='mygamewishlist.model.pojo.db.WishListGame' alias='WishListGame'></typeAlias>
 		<typeAlias type='mygamewishlist.model.pojo.ReviewList' alias='ReviewList'></typeAlias>
 	</typeAliases>
 	<environments default='development'>
@@ -21,9 +22,10 @@
 		</environment>
 	</environments>
 	<mappers>
-		<mapper resource='mygamewishlist/model/dao/mapper/List.xml' />
+		<mapper resource='mygamewishlist/model/dao/mapper/WishListGame.xml' />
 		<mapper resource='mygamewishlist/model/dao/mapper/Game.xml' />
 		<mapper resource='mygamewishlist/model/dao/mapper/Review.xml' />
 		<mapper resource='mygamewishlist/model/dao/mapper/User.xml' />
+		<mapper resource='mygamewishlist/model/dao/mapper/Shop.xml' />
 	</mappers>
 </configuration>
