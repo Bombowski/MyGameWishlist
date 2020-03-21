@@ -4,7 +4,15 @@
   
 <mapper namespace="mygamewishlist.model.dao.mapper.ListMapper">
 	
-	<resultMap type="List" id="resultList">
+	<select id="getListByIdUser" resultMap="resultList">
+		SELECT * FROM LIST WHERE ID_USER = #{idUser}
+	</select>
+	
+	<select id="getGameFromListById" resultMap="resultList">
+		SELECT * FROM LIST WHERE ID_USER = #{idUser} AND URL = #{url} 
+	</select>
+	
+	<resultMap type="WishListGame" id="resultList">
 		<id property="idUser" column="ID_USER" />
 		<id property="url" column="GAME_URL" />
 		<result property="idShop" column="ID_SHOP" />
