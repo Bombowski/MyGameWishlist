@@ -1,19 +1,19 @@
 package mygamewishlist.model.pojo.db;
 
-public class Shop {
+public class Store {
 
 	private int id;
 	private String name;
 	private String url;
 
-	public Shop(int id, String name, String url) {
+	public Store(int id, String name, String url) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.url = url;
 	}
 
-	public Shop() {
+	public Store() {
 		super();
 	}
 

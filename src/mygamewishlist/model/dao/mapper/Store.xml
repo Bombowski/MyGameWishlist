@@ -2,13 +2,13 @@
 <!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
   'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
   
-<mapper namespace="mygamewishlist.model.dao.mapper.ListMapper">
+<mapper namespace="mygamewishlist.model.dao.mapper.StoreMapper">
 	
-	<select id="getShops" resultType="Shop">
-		SELECT * FROM SHOP;
+	<select id="getStores" resultType="Store">
+		SELECT * FROM STORE;
 	</select>
 	
-	<select id="getShopUrlById" resultType="String">
-		SELECT URL FROM SHOP WHERE ID = #{id}
+	<select id="getStoreUrlById" resultType="String">
+		SELECT URL FROM STORE WHERE ID = #{id}
 	</select>
 </mapper>
