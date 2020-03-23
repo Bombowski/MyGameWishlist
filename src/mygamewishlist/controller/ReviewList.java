@@ -38,7 +38,7 @@ public class ReviewList extends HttpServlet {
 		try {
 			User usr = sc_ejb.getLoggedUser(request);
 			
-			ArrayList<mygamewishlist.model.pojo.ReviewList> reviews = 
+			ArrayList<mygamewishlist.model.pojo.db.ReviewList> reviews = 
 					(usr == null ? cq_ejb.getReviewListNotLogged() : cq_ejb.getReviewList(usr.getId()));
 			
 			RequestDispatcher rd = getServletContext().getRequestDispatcher(cp.JSP_REVIEW_LIST);

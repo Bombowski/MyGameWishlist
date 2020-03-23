@@ -10,10 +10,10 @@ import mygamewishlist.model.dao.WishListGameDAO;
 import mygamewishlist.model.dao.ReviewDAO;
 import mygamewishlist.model.dao.ShopDAO;
 import mygamewishlist.model.dao.UserDAO;
-import mygamewishlist.model.pojo.ReviewList;
 import mygamewishlist.model.pojo.db.Game;
 import mygamewishlist.model.pojo.db.Review;
-import mygamewishlist.model.pojo.db.Shop;
+import mygamewishlist.model.pojo.db.ReviewList;
+import mygamewishlist.model.pojo.db.Store;
 import mygamewishlist.model.pojo.db.User;
 import mygamewishlist.model.pojo.db.WishListGame;
 
@@ -73,8 +73,8 @@ public class CreateQuery {
 		GAME_DAO.deleteGame(idGame);
 	}
 	
-	public ArrayList<Shop> getShops() {
-		return SHOP_DAO.getShops();
+	public ArrayList<Store> getStores() {
+		return SHOP_DAO.getStores();
 	}
 	
 	public ArrayList<WishListGame> getListByIdUser(int idUser) {

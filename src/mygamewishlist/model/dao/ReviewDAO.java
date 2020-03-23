@@ -6,8 +6,8 @@ import org.apache.ibatis.session.SqlSession;
 
 import mygamewishlist.model.dao.mapper.ReviewMapper;
 import mygamewishlist.model.pojo.MyLogger;
-import mygamewishlist.model.pojo.ReviewList;
 import mygamewishlist.model.pojo.db.Review;
+import mygamewishlist.model.pojo.db.ReviewList;
 
 public class ReviewDAO {
 

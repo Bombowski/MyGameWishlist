@@ -2,46 +2,60 @@ package mygamewishlist.model.pojo.db;
 
 public class WishListGame {
 
-	private int idUser;
-	private String url;
+	private String urlShop;
+	private String urlGame;
+	private int idList;
 	private int idShop;
 	private String name;
 	private double defaultPrice;
+	private double currentPrice;
+	private double discount;
 	private double lastNotifiedPrice;
 	private double minPrice;
 	private double maxPrice;
-
-	public WishListGame(int idUser, String url, int idShop, String name, double defaultPrice, double lastNotifiedPrice,
-			double minPrice, double maxPrice) {
-		super();
-		this.idUser = idUser;
-		this.url = url;
-		this.idShop = idShop;
-		this.name = name;
-		this.defaultPrice = defaultPrice;
-		this.lastNotifiedPrice = lastNotifiedPrice;
-		this.minPrice = minPrice;
-		this.maxPrice = maxPrice;
-	}
 
 	public WishListGame() {
 		super();
 	}
 
-	public int getIdUser() {
-		return idUser;
+	public WishListGame(String urlShop, String urlGame, int idList, int idShop, String name, double defaultPrice,
+			double currentPrice, double discount, double lastNotifiedPrice, double minPrice, double maxPrice) {
+		super();
+		this.urlShop = urlShop;
+		this.urlGame = urlGame;
+		this.idList = idList;
+		this.idShop = idShop;
+		this.name = name;
+		this.defaultPrice = defaultPrice;
+		this.currentPrice = currentPrice;
+		this.discount = discount;
+		this.lastNotifiedPrice = lastNotifiedPrice;
+		this.minPrice = minPrice;
+		this.maxPrice = maxPrice;
 	}
 
-	public void setIdUser(int idUser) {
-		this.idUser = idUser;
+	public String getUrlShop() {
+		return urlShop;
 	}
 
-	public String getUrl() {
-		return url;
+	public void setUrlShop(String urlShop) {
+		this.urlShop = urlShop;
 	}
 
-	public void setUrl(String url) {
-		this.url = url;
+	public String getUrlGame() {
+		return urlGame;
+	}
+
+	public void setUrlGame(String urlGame) {
+		this.urlGame = urlGame;
+	}
+
+	public int getIdList() {
+		return idList;
+	}
+
+	public void setIdList(int idList) {
+		this.idList = idList;
 	}
 
 	public int getIdShop() {
@@ -68,6 +82,22 @@ public class WishListGame {
 		this.defaultPrice = defaultPrice;
 	}
 
+	public double getCurrentPrice() {
+		return currentPrice;
+	}
+
+	public void setCurrentPrice(double currentPrice) {
+		this.currentPrice = currentPrice;
+	}
+
+	public double getDiscount() {
+		return discount;
+	}
+
+	public void setDiscount(double discount) {
+		this.discount = discount;
+	}
+
 	public double getLastNotifiedPrice() {
 		return lastNotifiedPrice;
 	}
@@ -91,5 +121,5 @@ public class WishListGame {
 	public void setMaxPrice(double maxPrice) {
 		this.maxPrice = maxPrice;
 	}
-
+	
 }

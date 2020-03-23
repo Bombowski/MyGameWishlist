@@ -4,11 +4,11 @@ import java.util.ArrayList;
 
 import org.apache.ibatis.annotations.Param;
 
-import mygamewishlist.model.pojo.db.Shop;
+import mygamewishlist.model.pojo.db.Store;
 
 public interface ShopMapper {
 
-	public ArrayList<Shop> getShops();
+	public ArrayList<Store> getStores();
 	
-	public String getShopUrlById(@Param("id") int id);
+	public String getStoreUrlById(@Param("id") int id);
 }

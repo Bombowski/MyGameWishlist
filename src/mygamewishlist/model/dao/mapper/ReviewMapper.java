@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 import org.apache.ibatis.annotations.Param;
 
-import mygamewishlist.model.pojo.ReviewList;
 import mygamewishlist.model.pojo.db.Review;
+import mygamewishlist.model.pojo.db.ReviewList;
 
 public interface ReviewMapper {
 

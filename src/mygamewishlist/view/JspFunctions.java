@@ -1,8 +1,13 @@
 package mygamewishlist.view;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import bomboshtml.body.Img;
+import bomboshtml.body.table.Tr;
+import mygamewishlist.model.pojo.ScrapedGame;
 import mygamewishlist.model.pojo.db.User;
 
 /**
@@ -93,5 +98,42 @@ public class JspFunctions {
 			.append("</p>");
 		
 		return sb.toString();
+	}
+	
+	public String buildScrapedGameTable(ArrayList<ScrapedGame> games) {
+		StringBuilder toReturn = new StringBuilder();
+		
+		toReturn.append("<table class='table'>");
+		
+		Tr th = new Tr();
+		th.addTd("");
+		th.addTd("Name");
+		th.addTd("Default price");
+		th.addTd("Current price");
+		th.addTd("Currect Discount");
+		toReturn.append(th.print());
+		
+		for (ScrapedGame sg : games) {
+			Tr tr = new Tr();
+			tr.addTd(new Img(sg.getImg(), sg.getFullName()));
+			tr.addTd(sg.getFullName());
+			tr.addTd(getStringPrice(sg.getDefaultPrice()));
+			tr.addTd(getStringPrice(sg.getCurrentPrice()));
+			tr.addTd(sg.getCurrentDiscount() + "%");
+			
+			toReturn.append(tr.print());
+		}
+		
+		return toReturn.append("</table>").toString();
+	}
+	
+	private String getStringPrice(double price) {
+		if (price == 0) {
+			return "Free to play";
+		} else if (price == -1) {
+			return "Free demo";
+		} else {
+			return price + "€";
+		}
 	}
 }

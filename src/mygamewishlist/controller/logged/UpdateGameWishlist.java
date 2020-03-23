@@ -1,10 +1,8 @@
 package mygamewishlist.controller.logged;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.ejb.EJB;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -15,15 +13,12 @@ import mygamewishlist.model.ejb.ClientSessionEJB;
 import mygamewishlist.model.ejb.CreateQuery;
 import mygamewishlist.model.pojo.ClassPaths;
 import mygamewishlist.model.pojo.MyLogger;
-import mygamewishlist.model.pojo.db.User;
-import mygamewishlist.model.pojo.db.WishListGame;
 
 /**
- * Servlet implementation class MyList
+ * Servlet implementation class UpdateGameWishlist
  */
-@WebServlet("/MyList")
-public class MyList extends HttpServlet {
-
+@WebServlet("/UpdateGameWishlist")
+public class UpdateGameWishlist extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	private static final MyLogger LOG = MyLogger.getLOG();
@@ -37,22 +32,17 @@ public class MyList extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-			User usr = sc_ejb.getLoggedUser(request);
-			RequestDispatcher rd;
 			
-			if (usr == null) {
-				rd = getServletContext().getRequestDispatcher(cp.LOGIN);
-			} else {
-				rd = getServletContext().getRequestDispatcher(cp.JSP_MYLIST);
-				
-				ArrayList<WishListGame> list = cq_ejb.getListByIdUser(usr.getId());
-				request.setAttribute("list", list);
-			}
-
-			rd.forward(request, response);
 		} catch(Exception e) {
 			LOG.logError(e.getMessage());
-			response.sendRedirect(cp.JSP_LOGIN);
+		}
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		try {
+			
+		} catch(Exception e) {
+			LOG.logError(e.getMessage());
 		}
 	}
 }

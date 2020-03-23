@@ -6,8 +6,8 @@
 <%@page import="mygamewishlist.model.pojo.db.User"%>
 <%@page import="mygamewishlist.model.pojo.MyLogger"%>
 <%@page import="mygamewishlist.view.JspFunctions"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE>
 
 <%!
@@ -31,16 +31,16 @@
 	<jsp:param name="" value="" />
 </jsp:include>
 <body>
-	<!-- añado el html del header -->
+	<!-- aÃ±ado el html del header -->
 	<jsp:include page="../../template/Header.jsp">
 		<jsp:param name="" value="" />
 	</jsp:include>
-	<!-- añado el html del nav -->
+	<!-- aÃ±ado el html del nav -->
 	<jsp:include page="../../template/NavAdmin.jsp">
 		<jsp:param name="" value="" />
 	</jsp:include>
 
-	<main class="content-fluid p-4">
+	<main class="content-fluid p-4 mb-5">
 		<div class="w-75 m-auto">
 			<div class="row m-2">
 				<a class="btn btn-primary" href="/MyGameWishlist/AddGame">

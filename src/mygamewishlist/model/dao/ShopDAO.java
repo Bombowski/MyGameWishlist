@@ -6,21 +6,21 @@ import org.apache.ibatis.session.SqlSession;
 
 import mygamewishlist.model.dao.mapper.ShopMapper;
 import mygamewishlist.model.pojo.MyLogger;
-import mygamewishlist.model.pojo.db.Shop;
+import mygamewishlist.model.pojo.db.Store;
 
 public class ShopDAO {
 
 	private static final MyLogger LOG = MyLogger.getLOG();
 	private static SqlSession session;
-	private static ShopMapper shopMapper;
+	private static ShopMapper sotreMapper;
 	
 	/**
 	 * Crea la conexion con la base de datos y consigue
 	 * la interfaz
 	 */
-	private static void getShMapper() {
+	private static void getStMapper() {
 		session = MyBatisUtil.getSqlSessionFactory().openSession();
-		shopMapper = session.getMapper(ShopMapper.class);
+		sotreMapper = session.getMapper(ShopMapper.class);
 	}
 	
 	/**
@@ -30,10 +30,10 @@ public class ShopDAO {
 		session.close();
 	}
 	
-	public ArrayList<Shop> getShops() {
+	public ArrayList<Store> getStores() {
 		try {
-			getShMapper();
-			return shopMapper.getShops();
+			getStMapper();
+			return sotreMapper.getStores();
 		} catch(Exception e) {
 			LOG.logError(e.getMessage());
 		} finally {
@@ -43,13 +43,13 @@ public class ShopDAO {
 				LOG.logError(e.getMessage());
 			}
 		}
-		return new ArrayList<Shop>();
+		return new ArrayList<Store>();
 	}
 	
-	public String getShopUrlById(int id) {
+	public String getStoreUrlById(int id) {
 		try {
-			getShMapper();
-			return shopMapper.getShopUrlById(id);
+			getStMapper();
+			return sotreMapper.getStoreUrlById(id);
 		} catch(Exception e) {
 			LOG.logError(e.getMessage());
 		} finally {

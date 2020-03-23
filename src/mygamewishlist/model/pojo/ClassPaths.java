@@ -27,7 +27,8 @@ public class ClassPaths {
 	public final String REVIEW_LIST = "/ReviewList";
 	public final String GAME_INFO = "/GameInfo";
 	public final String ADD_GAME_OPTIONS = "/AddGameOptions";
-	public final String ADD_GAME_WISHLIST = "/AddGameWishlist";
+	public final String ADD_GAME_WISHLIST = "/AddGameWishList";
+	public final String UPDATE_GAME_WISHLIST = "/UpdateGameWishList";
 	public final String DELETE_GAME_WISHLIST = "/Delete/GameWishList";
 	public final String GAME_HISTORY = "/GameHistory";
 	public final String LOGOUT = "/Logout";
@@ -41,6 +42,7 @@ public class ClassPaths {
 	public final String REDIRECT_REVIEW_LIST = new StringBuilder().append(PROJECT).append(REVIEW_LIST).toString();
 	public final String REDIRECT_GAME_INFO = new StringBuilder().append(PROJECT).append(GAME_INFO).toString();
 	public final String REDIRECT_ADD_GAME_OPTIONS = new StringBuilder().append(PROJECT).append(ADD_GAME_OPTIONS).toString();
+	public final String REDIRECT_UPDATE_GAME_OPTIONS = new StringBuilder().append(PROJECT).append(UPDATE_GAME_WISHLIST).toString();
 	public final String REDIRECT_ADD_GAME_WISHLIST = new StringBuilder().append(PROJECT).append(ADD_GAME_WISHLIST).toString();
 	public final String REDIRECT_DELETE_GAME_WISHLIST = new StringBuilder().append(PROJECT).append(DELETE_GAME_WISHLIST).toString();
 	public final String REDIRECT_GAME_HISTORY = new StringBuilder().append(PROJECT).append(GAME_HISTORY).toString();
@@ -56,6 +58,7 @@ public class ClassPaths {
 	public final String JSP_GAME_INFO = new StringBuilder().append(VIEW).append(GAME_INFO).append(JSP).toString();
 	public final String JSP_ADD_GAME_OPTIONS = new StringBuilder().append(LOGGED).append(ADD_GAME_OPTIONS).append(JSP).toString();
 	public final String JSP_ADD_GAME_WISHLIST = new StringBuilder().append(LOGGED).append(ADD_GAME_WISHLIST).append(JSP).toString();
+	public final String JSP_UPDATE_GAME_WISHLIST = new StringBuilder().append(LOGGED).append(ADD_GAME_WISHLIST).append(JSP).toString();
 	public final String JSP_DELETE_GAME_WISHLIST = new StringBuilder().append(LOGGED).append(DELETE_GAME_WISHLIST).append(JSP).toString();
 	public final String JSP_GAME_HISTORY = new StringBuilder().append(LOGGED).append(GAME_HISTORY).append(JSP).toString();
 	public final String JSP_LOGOUT = new StringBuilder().append(LOGGED).append(LOGOUT).append(JSP).toString();
