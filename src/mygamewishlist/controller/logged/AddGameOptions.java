@@ -45,15 +45,9 @@ public class AddGameOptions extends HttpServlet {
 			
 			if (steam != null || g2a != null || instant != null) {
 				rd = getServletContext().getRequestDispatcher(cp.JSP_ADD_GAME_OPTIONS);
-				
-				request.setAttribute("steam", steam == null ? null : steam);
-				request.setAttribute("g2a", g2a == null ? null : g2a);
-				request.setAttribute("instant", instant == null ? null : instant);
-				request.setAttribute("search", searchParam);
-				
-				g2a = instant = steam = null;
 			} else {
 				rd = getServletContext().getRequestDispatcher(cp.MYLIST);
+				request.setAttribute("error", "No games found with such parameters.");
 			}
 			
 			rd.forward(request, response);
@@ -66,17 +60,14 @@ public class AddGameOptions extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-			String id = request.getParameter("id");
+			String[] id = request.getParameterValues("games");
 			
-			if (steam != null || g2a != null || instant != null) {
-				doGet(request, response);
-			} else if (id != null) {
+			if (id != null) {
 				// TODO
 			} else {
 				steam = (ArrayList<ScrapedGame>)request.getAttribute("steam");
 				g2a = (ArrayList<ScrapedGame>)request.getAttribute("g2a");
 				instant = (ArrayList<ScrapedGame>)request.getAttribute("instant");
-				searchParam = (String)request.getAttribute("search");
 				
 				doGet(request, response);
 			}
@@ -84,5 +75,9 @@ public class AddGameOptions extends HttpServlet {
 			LOG.logError(e.getMessage());
 			response.sendRedirect(cp.REDIRECT_MYLIST);
 		}
+	}
+	
+	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		steam = g2a = instant = null;
 	}
 }

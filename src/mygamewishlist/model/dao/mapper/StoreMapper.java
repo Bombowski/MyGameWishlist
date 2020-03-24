@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 import mygamewishlist.model.pojo.db.Store;
 
-public interface ShopMapper {
+public interface StoreMapper {
 
 	public ArrayList<Store> getStores();
 	

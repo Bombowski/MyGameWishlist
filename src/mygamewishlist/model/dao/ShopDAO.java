@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import org.apache.ibatis.session.SqlSession;
 
-import mygamewishlist.model.dao.mapper.ShopMapper;
+import mygamewishlist.model.dao.mapper.StoreMapper;
 import mygamewishlist.model.pojo.MyLogger;
 import mygamewishlist.model.pojo.db.Store;
 
@@ -12,7 +12,7 @@ public class ShopDAO {
 
 	private static final MyLogger LOG = MyLogger.getLOG();
 	private static SqlSession session;
-	private static ShopMapper sotreMapper;
+	private static StoreMapper sotreMapper;
 	
 	/**
 	 * Crea la conexion con la base de datos y consigue
@@ -20,7 +20,7 @@ public class ShopDAO {
 	 */
 	private static void getStMapper() {
 		session = MyBatisUtil.getSqlSessionFactory().openSession();
-		sotreMapper = session.getMapper(ShopMapper.class);
+		sotreMapper = session.getMapper(StoreMapper.class);
 	}
 	
 	/**

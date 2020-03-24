@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import bomboshtml.body.A;
 import bomboshtml.body.Img;
+import bomboshtml.body.Input;
 import bomboshtml.body.table.Tr;
 import mygamewishlist.model.pojo.ScrapedGame;
 import mygamewishlist.model.pojo.db.User;
@@ -102,6 +104,7 @@ public class JspFunctions {
 	
 	public String buildScrapedGameTable(ArrayList<ScrapedGame> games) {
 		StringBuilder toReturn = new StringBuilder();
+		int i = 0;
 		
 		toReturn.append("<table class='table'>");
 		
@@ -111,17 +114,20 @@ public class JspFunctions {
 		th.addTd("Default price");
 		th.addTd("Current price");
 		th.addTd("Currect Discount");
+		th.addTd("Check games you want to add");
 		toReturn.append(th.print());
 		
 		for (ScrapedGame sg : games) {
 			Tr tr = new Tr();
 			tr.addTd(new Img(sg.getImg(), sg.getFullName()));
-			tr.addTd(sg.getFullName());
+			tr.addTd(new A(sg.getFullName().replace("'", "&#39;"), sg.getUrl()));
 			tr.addTd(getStringPrice(sg.getDefaultPrice()));
 			tr.addTd(getStringPrice(sg.getCurrentPrice()));
 			tr.addTd(sg.getCurrentDiscount() + "%");
+			tr.addTd(new Input("checkbox", "games", i + ""));
 			
 			toReturn.append(tr.print());
+			i++;
 		}
 		
 		return toReturn.append("</table>").toString();

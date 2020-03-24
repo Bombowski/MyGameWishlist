@@ -48,7 +48,7 @@
 		<div class="w-75 m-auto">
 			<div>
 				<a href="<% out.append(cp.REDIRECT_ADD_GAME_WISHLIST); %>" class="btn btn-primary">
-					Add button
+					Add game
 				</a>
 			</div>
 			<table class="table">
