@@ -1,3 +1,4 @@
+<%@page import="java.util.Hashtable"%>
 <%@page import="mygamewishlist.model.pojo.ScrapedGame"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="mygamewishlist.model.pojo.db.User"%>
@@ -55,33 +56,45 @@
 						.append("</span>");
 				%>
 				<h5 class="mb-0">
-                    <button type="button" class="btn btn-primary" id="st1">
-                        1
-                    </button>
-                    <button type="button" class="btn btn-primary" id="st2">
-                        2
-                    </button>
-                    <button type="button" class="btn btn-primary" id="st3">
-                        3
-                    </button>
+					<%
+						try {
+							ArrayList<String> stores = (ArrayList<String>)request.getAttribute("stores");
+							ArrayList<ScrapedGame> steam = (ArrayList<ScrapedGame>)request.getAttribute("Steam");
+							ArrayList<ScrapedGame> g2a = (ArrayList<ScrapedGame>)request.getAttribute("G2A");
+							ArrayList<ScrapedGame> instant = (ArrayList<ScrapedGame>)request.getAttribute("Instant Gaming"); 
+							
+							int i = 0;
+							Hashtable<Integer, ArrayList<ScrapedGame>> lists = new Hashtable<Integer, ArrayList<ScrapedGame>>();
+							lists.put(1, steam);
+							lists.put(2, g2a);
+							lists.put(3, instant);
+							
+							for (String str : stores) {
+								out.append("<button type='button' class='btn btn-primary' id='st")
+									.append(i + "'>")
+			                        .append(str != null ? str : "")
+			                        .append("</button>");
+							}
+					%>
                 </h5>
                 <div id="tables">
 					<%
-						try {
-							ArrayList<ScrapedGame> steam = (ArrayList<ScrapedGame>)request.getAttribute("steam");
-							ArrayList<ScrapedGame> g2a = (ArrayList<ScrapedGame>)request.getAttribute("g2a");
-							ArrayList<ScrapedGame> instant = (ArrayList<ScrapedGame>)request.getAttribute("instant");
 							String noR = "No results.";
+							i = 0;
 							
-							out.append("<div id='store1'>")
-								.append(steam == null ? noR : jspF.buildScrapedGameTable(steam))
-								.append("</div>")
-								.append("<div id='store2'>")
-								.append(g2a == null ? noR : jspF.buildScrapedGameTable(g2a))
-								.append("</div>")
-								.append("<div id='store3'>")
-								.append(instant == null ? noR : jspF.buildScrapedGameTable(instant))
-								.append("</div>");
+							for (Integer key : lists.keySet()) {
+								ArrayList<ScrapedGame> games = lists.get(key);
+								
+								if (games == null) {
+									out.append("<div id='store</div>");
+								} else {
+									out.append("<div id='")
+										.append(key + "'>")
+										.append(games.size() == 0 ? noR : jspF.buildScrapedGameTable(games))
+										.append("</div>");
+								}
+								i++;
+							}
 						} catch(Exception e) {
 							log.logError(e.getMessage());
 							response.sendRedirect(cp.REDIRECT_MYLIST);

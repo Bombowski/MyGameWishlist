@@ -4,11 +4,18 @@
   
 <mapper namespace="mygamewishlist.model.dao.mapper.StoreMapper">
 	
-	<select id="getStores" resultType="Store">
+	<select id="getStores" resultMap="storeMap">
 		SELECT * FROM STORE;
 	</select>
 	
-	<select id="getStoreUrlById" resultType="String">
-		SELECT URL FROM STORE WHERE ID = #{id}
+	<select id="getStoreNames" resultType="String">
+		SELECT NAME FROM STORE;
 	</select>
+	
+	<resultMap type="Store" id="storeMap">
+		<id property="id" column="ID"/>
+		<result property="name" column="NAME"/>
+		<result property="url" column="URL"/>
+		<result property="queryPart" column="QUERY_PART"/>		
+	</resultMap>
 </mapper>

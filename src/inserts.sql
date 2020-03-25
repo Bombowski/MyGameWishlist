@@ -2,10 +2,10 @@ INSERT INTO USER(NAME,EMAIL,ADMIN) VALUES
 	('Patryk','patryk080998@gmail.com',1),
     ('Bombo','bumboxowatosciowowaty@gmail.com',0);
 
-INSERT INTO STORE(NAME, URL) VALUES
-	('Instant Gaming','https://www.instant-gaming.com/en/'),
-    ('Steam','https://store.steampowered.com/'),
-    ('G2A','https://www.g2a.com/');
+INSERT INTO STORE(NAME, URL, QUERY_PART) VALUES
+    ('Steam','https://store.steampowered.com','/search/?term='),
+	('Instant Gaming','https://www.instant-gaming.com/en','/search/?q='),
+    ('G2A','https://www.g2a.com','/search?query=');
     
 INSERT INTO GAME(NAME) VALUES
 	('Minecraft'),

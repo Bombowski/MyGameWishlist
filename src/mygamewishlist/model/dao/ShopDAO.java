@@ -12,7 +12,7 @@ public class ShopDAO {
 
 	private static final MyLogger LOG = MyLogger.getLOG();
 	private static SqlSession session;
-	private static StoreMapper sotreMapper;
+	private static StoreMapper storeMapper;
 	
 	/**
 	 * Crea la conexion con la base de datos y consigue
@@ -20,7 +20,7 @@ public class ShopDAO {
 	 */
 	private static void getStMapper() {
 		session = MyBatisUtil.getSqlSessionFactory().openSession();
-		sotreMapper = session.getMapper(StoreMapper.class);
+		storeMapper = session.getMapper(StoreMapper.class);
 	}
 	
 	/**
@@ -33,7 +33,7 @@ public class ShopDAO {
 	public ArrayList<Store> getStores() {
 		try {
 			getStMapper();
-			return sotreMapper.getStores();
+			return storeMapper.getStores();
 		} catch(Exception e) {
 			LOG.logError(e.getMessage());
 		} finally {
@@ -46,10 +46,10 @@ public class ShopDAO {
 		return new ArrayList<Store>();
 	}
 	
-	public String getStoreUrlById(int id) {
+	public ArrayList<String> getStoreName() {
 		try {
 			getStMapper();
-			return sotreMapper.getStoreUrlById(id);
+			return storeMapper.getStoreName();
 		} catch(Exception e) {
 			LOG.logError(e.getMessage());
 		} finally {
@@ -59,6 +59,6 @@ public class ShopDAO {
 				LOG.logError(e.getMessage());
 			}
 		}
-		return "";
+		return new ArrayList<String>();
 	}
 }

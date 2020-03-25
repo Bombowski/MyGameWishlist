@@ -5,16 +5,18 @@ public class Store {
 	private int id;
 	private String name;
 	private String url;
+	private String queryPart;
 
-	public Store(int id, String name, String url) {
+	public Store() {
+		super();
+	}
+
+	public Store(int id, String name, String url, String queryPart) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.url = url;
-	}
-
-	public Store() {
-		super();
+		this.queryPart = queryPart;
 	}
 
 	public int getId() {
@@ -39,6 +41,14 @@ public class Store {
 
 	public void setUrl(String url) {
 		this.url = url;
+	}
+
+	public String getQueryPart() {
+		return queryPart;
+	}
+
+	public void setQueryPart(String queryPart) {
+		this.queryPart = queryPart;
 	}
 
 }

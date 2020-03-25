@@ -11,4 +11,8 @@
 	<insert id="addUser" parameterType="User">
 		INSERT INTO USER (NAME, EMAIL) VALUES(#{name},#{email})
 	</insert>
+	
+	<select id="getIdList" resultType="Integer">
+		SELECT ID FROM LIST WHERE ID_USER = #{idUser}
+	</select>
 </mapper>

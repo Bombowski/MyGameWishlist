@@ -77,11 +77,19 @@ public class CreateQuery {
 		return SHOP_DAO.getStores();
 	}
 	
+	public ArrayList<String> getStoreNames() {
+		return SHOP_DAO.getStoreName();
+	}
+	
 	public ArrayList<WishListGame> getListByIdUser(int idUser) {
 		return LIST_DAO.getListByIdUser(idUser);
 	}
 	
 	public WishListGame getGameFromListByIdUser(int idUser, String url) {
 		return LIST_DAO.getGameFromListByIdUser(idUser, url);
+	}
+	
+	public int getIdList(int idUser) {
+		return USR_DAO.getIdList(idUser);
 	}
 }

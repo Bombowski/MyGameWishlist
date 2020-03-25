@@ -59,4 +59,20 @@ public class UserDAO {
 			}
 		}
 	}
+	
+	public int getIdList(int idUser) {
+		try {
+			getUserMapper();
+			return userMapper.getIdList(idUser);
+		} catch(Exception e) {
+			LOG.logError(e.getMessage());
+		} finally {
+			try {
+				closeAll();
+			} catch (Exception e) {
+				LOG.logError(e.getMessage());
+			}
+		}
+		return -1;
+	}
 }

@@ -57,22 +57,34 @@ public class AddGameWishList extends HttpServlet {
 			rd.forward(request, response);
 		} catch(Exception e) {
 			LOG.logError(e.getMessage());
-			response.sendRedirect(cp.JSP_LOGIN);
+			RequestDispatcher rd = getServletContext().getRequestDispatcher(cp.MYLIST);
+			rd.forward(request, response);
 		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			String name = request.getParameter("name");
+			String chked[] = request.getParameterValues("store");
+			ArrayList<Store> stores = cq_ejb.getStores();
 			
-			ArrayList<ScrapedGame> games = scrap_ejb.getSteamGames(name, "https://store.steampowered.com/");
+			for (String str : chked) {
+				for (Store st : stores) {
+					if (str.equals(st.getName())) {
+							ArrayList<ScrapedGame> games = 
+									scrap_ejb.getGamesByNameUrl(name, st.getUrl());
+							request.setAttribute(st.getName(), games);
+							break;
+					}
+				}
+			}			
 			
 			RequestDispatcher rd = getServletContext().getRequestDispatcher(cp.ADD_GAME_OPTIONS);
-			request.setAttribute("steam", games);
 			request.setAttribute("search", name);
 			rd.forward(request, response);
 		} catch(Exception e) {
 			LOG.logError(e.getMessage());
+			response.sendRedirect(cp.REDIRECT_MYLIST);
 		}
 	}
 }

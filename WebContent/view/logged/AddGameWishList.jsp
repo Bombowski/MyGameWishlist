@@ -1,3 +1,4 @@
+<%@page import="bomboshtml.body.Input"%>
 <%@page import="mygamewishlist.model.pojo.db.Store"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="mygamewishlist.model.pojo.ClassPaths"%>
@@ -65,9 +66,7 @@
 								StringBuilder sb = new StringBuilder();
 								
 								for (Store st : stores) {
-									sb.append("<input class='form-control' type='checkbox' value='")
-										.append(st.getId())
-										.append("'>")
+									sb.append(new Input("checkbox","store",st.getName()).print())
 										.append(st.getName());
 								}
 								

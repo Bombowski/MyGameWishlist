@@ -9,4 +9,6 @@ public interface UserMapper {
 	public User getUserByEmail(@Param("email") String email);
 	
 	public void addUser(User usr);
+	
+	public Integer getIdList(@Param("idUser") int idUser);
 }

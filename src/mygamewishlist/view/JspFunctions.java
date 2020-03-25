@@ -124,7 +124,7 @@ public class JspFunctions {
 			tr.addTd(getStringPrice(sg.getDefaultPrice()));
 			tr.addTd(getStringPrice(sg.getCurrentPrice()));
 			tr.addTd(sg.getCurrentDiscount() + "%");
-			tr.addTd(new Input("checkbox", "games", i + ""));
+			tr.addTd(new Input("checkbox", "games", sg.getStoreId() + "&" +  i));
 			
 			toReturn.append(tr.print());
 			i++;

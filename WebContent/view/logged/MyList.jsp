@@ -68,7 +68,7 @@
 						
 						for (WishListGame g : list) {
 							Tr tr = new Tr();
-							tr.addTd(new A(g.getName(),g.getUrlShop() + g.getUrlGame()));
+							tr.addTd(new A(g.getName(),g.getUrlStore() + g.getUrlGame()));
 							tr.addTd(g.getDefaultPrice() + "");
 							tr.addTd(g.getCurrentPrice() + "");
 							tr.addTd(g.getDiscount() + "%");

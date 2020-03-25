@@ -2,9 +2,9 @@ package mygamewishlist.model.pojo;
 
 public class ClassPaths {
 
-	ClassPaths() {}
-	
 	private static ClassPaths cp = new ClassPaths();
+
+	private ClassPaths() {}
 	
 	public static ClassPaths getCP() {
 		if (cp == null) {

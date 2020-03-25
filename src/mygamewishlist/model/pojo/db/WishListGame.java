@@ -2,11 +2,12 @@ package mygamewishlist.model.pojo.db;
 
 public class WishListGame {
 
-	private String urlShop;
+	private String urlStore;
 	private String urlGame;
 	private int idList;
-	private int idShop;
+	private int idStore;
 	private String name;
+	private String img;
 	private double defaultPrice;
 	private double currentPrice;
 	private double discount;
@@ -18,14 +19,16 @@ public class WishListGame {
 		super();
 	}
 
-	public WishListGame(String urlShop, String urlGame, int idList, int idShop, String name, double defaultPrice,
-			double currentPrice, double discount, double lastNotifiedPrice, double minPrice, double maxPrice) {
+	public WishListGame(String urlStore, String urlGame, int idList, int idStore, String name, String img,
+			double defaultPrice, double currentPrice, double discount, double lastNotifiedPrice, double minPrice,
+			double maxPrice) {
 		super();
-		this.urlShop = urlShop;
+		this.urlStore = urlStore;
 		this.urlGame = urlGame;
 		this.idList = idList;
-		this.idShop = idShop;
+		this.idStore = idStore;
 		this.name = name;
+		this.img = img;
 		this.defaultPrice = defaultPrice;
 		this.currentPrice = currentPrice;
 		this.discount = discount;
@@ -34,12 +37,12 @@ public class WishListGame {
 		this.maxPrice = maxPrice;
 	}
 
-	public String getUrlShop() {
-		return urlShop;
+	public String getUrlStore() {
+		return urlStore;
 	}
 
-	public void setUrlShop(String urlShop) {
-		this.urlShop = urlShop;
+	public void setUrlStore(String urlStore) {
+		this.urlStore = urlStore;
 	}
 
 	public String getUrlGame() {
@@ -58,12 +61,12 @@ public class WishListGame {
 		this.idList = idList;
 	}
 
-	public int getIdShop() {
-		return idShop;
+	public int getIdStore() {
+		return idStore;
 	}
 
-	public void setIdShop(int idShop) {
-		this.idShop = idShop;
+	public void setIdStore(int idStore) {
+		this.idStore = idStore;
 	}
 
 	public String getName() {
@@ -72,6 +75,14 @@ public class WishListGame {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getImg() {
+		return img;
+	}
+
+	public void setImg(String img) {
+		this.img = img;
 	}
 
 	public double getDefaultPrice() {
@@ -121,5 +132,5 @@ public class WishListGame {
 	public void setMaxPrice(double maxPrice) {
 		this.maxPrice = maxPrice;
 	}
-	
+
 }

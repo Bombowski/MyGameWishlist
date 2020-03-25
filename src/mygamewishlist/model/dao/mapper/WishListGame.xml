@@ -6,8 +6,8 @@
 	
 	<select id="getListByIdUser" resultMap="resultList">
 		SELECT
-			SH.URL AS SHOP_URL, WG.URL AS GAME_URL, ID_LIST, ID_STORE, WG.NAME,   
-			DEFAULT_PRICE, CURRENT_PRICE, 
+			SH.URL AS STORE_URL, WG.URL AS GAME_URL, ID_LIST, ID_STORE, 
+			WG.NAME, WG.IMG, DEFAULT_PRICE, CURRENT_PRICE, 
 			(100 - (CURRENT_PRICE * 100 / DEFAULT_PRICE)) AS DISCOUNT,
 			LAST_NOTIFIED_PRICE, MIN_PRICE, MAX_PRICE
 		FROM
@@ -20,8 +20,8 @@
 	
 	<select id="getGameFromListById" resultMap="resultList">
 		SELECT
-			SH.URL AS SHOP_URL, WG.URL AS GAME_URL, ID_LIST, ID_STORE, WG.NAME,   
-			DEFAULT_PRICE, CURRENT_PRICE, 
+			SH.URL AS STORE_URL, WG.URL AS GAME_URL, ID_LIST, ID_STORE, 
+			WG.NAME, WG.IMG, DEFAULT_PRICE, CURRENT_PRICE, 
 			(100 - (CURRENT_PRICE * 100 / DEFAULT_PRICE)) AS DISCOUNT,
 			LAST_NOTIFIED_PRICE, MIN_PRICE, MAX_PRICE
 		FROM
@@ -29,16 +29,17 @@
 		WHERE
 			LI.ID = WG.ID_LIST AND
 			SH.ID = WG.ID_STORE AND
-		    LI.ID_USER = #{idUser} AND
+			LI.ID_USER = #{idUser} AND
 		    WG.URL = #{url}
 	</select>
 	
 	<resultMap type="WishListGame" id="resultList">
 		<id property="urlGame" column="GAME_URL" />
 		<id property="idList" column="ID_LIST" />
-		<result property="urlShop" column="SHOP_URL" />
+		<result property="urlStore" column="STORE_URL" />
 		<result property="idShop" column="ID_SHOP" />
 		<result property="name" column="NAME" />
+		<result property="img" column="IMG" />
 		<result property="defaultPrice" column="DEFAULT_PRICE" />
 		<result property="currentPrice" column="CURRENT_PRICE" />
 		<result property="discount" column="DISCOUNT" />
