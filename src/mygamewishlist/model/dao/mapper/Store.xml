@@ -12,6 +12,10 @@
 		SELECT NAME FROM STORE;
 	</select>
 	
+	<select id="getStoreByName" resultMap="storeMap">
+		SELECT * FROM STORE WHERE NAME = #{name}		
+	</select>
+	
 	<resultMap type="Store" id="storeMap">
 		<id property="id" column="ID"/>
 		<result property="name" column="NAME"/>

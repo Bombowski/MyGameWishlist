@@ -76,7 +76,7 @@
 							tr.addTd(g.getMinPrice() == -1 ? "Not specified" : "<=" + g.getMinPrice());
 							tr.addTd(new A("Edit", 
 										new StringBuilder()
-											.append(cp.REDIRECT_ADD_GAME_WISHLIST)
+											.append(cp.REDIRECT_UPDATE_GAME_WISHLIST)
 											.append("?url=")
 											.append(g.getUrlGame())
 											.append("&id=")

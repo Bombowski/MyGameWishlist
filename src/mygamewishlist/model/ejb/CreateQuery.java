@@ -8,7 +8,7 @@ import javax.ejb.Stateless;
 import mygamewishlist.model.dao.GameDAO;
 import mygamewishlist.model.dao.WishListGameDAO;
 import mygamewishlist.model.dao.ReviewDAO;
-import mygamewishlist.model.dao.ShopDAO;
+import mygamewishlist.model.dao.StoreDAO;
 import mygamewishlist.model.dao.UserDAO;
 import mygamewishlist.model.pojo.db.Game;
 import mygamewishlist.model.pojo.db.Review;
@@ -24,7 +24,7 @@ public class CreateQuery {
 	private static final UserDAO USR_DAO = new UserDAO();
 	private static final GameDAO GAME_DAO = new GameDAO();
 	private static final WishListGameDAO LIST_DAO = new WishListGameDAO();
-	private static final ShopDAO SHOP_DAO = new ShopDAO();
+	private static final StoreDAO STORE_DAO = new StoreDAO();
 	private static final ReviewDAO REV_DAO = new ReviewDAO();
 	
 	public CreateQuery() {}
@@ -74,11 +74,11 @@ public class CreateQuery {
 	}
 	
 	public ArrayList<Store> getStores() {
-		return SHOP_DAO.getStores();
+		return STORE_DAO.getStores();
 	}
 	
 	public ArrayList<String> getStoreNames() {
-		return SHOP_DAO.getStoreName();
+		return STORE_DAO.getStoreNames();
 	}
 	
 	public ArrayList<WishListGame> getListByIdUser(int idUser) {
@@ -91,5 +91,17 @@ public class CreateQuery {
 	
 	public int getIdList(int idUser) {
 		return USR_DAO.getIdList(idUser);
+	}
+	
+	public Store getStoreByName(String name) {
+		return STORE_DAO.getStoreByName(name);
+	}
+	
+	public void addGame2Wishlist(ArrayList<WishListGame> games) {
+		LIST_DAO.addGame2Wishlist(games);
+	}
+	
+	public ArrayList<WishListGame> getGamesByStore(int idStore) {
+		return LIST_DAO.getGamesByStore(idStore);
 	}
 }

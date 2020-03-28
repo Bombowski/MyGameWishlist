@@ -1,11 +1,13 @@
 package mygamewishlist.model.ejb;
 
+import java.util.ArrayList;
 import java.util.Properties;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.mail.Authenticator;
 import javax.mail.Message;
+import javax.mail.MessagingException;
 import javax.mail.Multipart;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
@@ -15,8 +17,9 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
-import mygamewishlist.model.pojo.GameOnSale;
+import bomboshtml.body.table.Tr;
 import mygamewishlist.model.pojo.MyLogger;
+import mygamewishlist.model.pojo.db.WishListGame;
 
 /**
  * @author Patryk
@@ -40,10 +43,26 @@ public class MailEJB {
 	 * el código.
 	 * 
 	 * @return String código de verificacion
+	 * @throws MessagingException 
 	 */
-	public void sendMail(String destination, GameOnSale gos) {
-		// envío el correo al usuario
-//		sendMail(destination);
+	public void sendMailItemsOnSale(String destination, ArrayList<WishListGame> games, String store) throws MessagingException {
+		Session session = createMailSession();
+		
+		Message messageContent = new MimeMessage(session);
+		messageContent.setFrom(new InternetAddress(USERNAME));
+		messageContent.setRecipients(Message.RecipientType.TO, InternetAddress.parse(destination));
+		messageContent.setSubject("An item from your wishlist is on sale");
+
+		MimeBodyPart mimeBodyPart = new MimeBodyPart();
+		
+		mimeBodyPart.setContent(generateMessage(games, store), "text/html");
+		
+		Multipart multipart = new MimeMultipart();
+		multipart.addBodyPart(mimeBodyPart);
+		
+		messageContent.setContent(multipart);
+		
+		Transport.send(messageContent);
 	}
 	
 	private Session createMailSession() {
@@ -64,43 +83,28 @@ public class MailEJB {
 		
 		return session;
 	}
-	
-	/**
-	 * EnvÃ­a un correo a destination, con el titulo que sera title, y mensaje
-	 * que sera message, si message = "", se envÃ­ara una lista con usuarios
-	 * nuevos y usuarios que se han dado de baja.
-	 * 
-	 * @param destination String email del destinatario
-	 * @param title String titulo
-	 * @param message String mensaje
-	 */
-	private void sendMail(String destination, String message) {
-		try {
-			Session session = createMailSession();
-			
-			// creo el correo, digo cual serÃ¡ el recipiente, destinatario, y tÃ­tulo
-			Message messageContent = new MimeMessage(session);
-			messageContent.setFrom(new InternetAddress(USERNAME));
-			messageContent.setRecipients(Message.RecipientType.TO, InternetAddress.parse(destination));
-			messageContent.setSubject("An item from your wishlist is on sale");
 
-			MimeBodyPart mimeBodyPart = new MimeBodyPart();
+	private String generateMessage(ArrayList<WishListGame> games, String store) {
+		StringBuilder sb = new StringBuilder();
+		
+		Tr th = new Tr();
+		th.addTd("");
+		th.addTd("Name");
+		th.addTd("Store");
+		th.addTd("Current Price");
+		th.addTd("Current Discount");
+		th.addTd("Default Price");
+		
+		for (WishListGame wlg : games) {
+			Tr tr = new Tr();
+			tr.addTd(wlg.getImg());
+			tr.addTd(wlg.getName());
+			tr.addTd(wlg.getUrlStore());
 			
-			// aÃ±ado el mensaje
-			mimeBodyPart.setContent(message, "text/html");
-			
-			// aÃ±ado el MimeBodyPart al MultiPart
-			Multipart multipart = new MimeMultipart();
-			multipart.addBodyPart(mimeBodyPart);
-			
-			// aÃ±ado el Multipart al correo
-			messageContent.setContent(multipart);
-			
-			// envio el correo
-			Transport.send(messageContent);
-
-		} catch (Exception e) {
-			LOG.logError(e.getMessage());
+			sb.append("Some of the items from your wishlist are on sale!");
+				
 		}
+		
+		return sb.toString();
 	}
 }

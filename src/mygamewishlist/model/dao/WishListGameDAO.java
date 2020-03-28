@@ -61,4 +61,38 @@ public class WishListGameDAO {
 		}
 		return new WishListGame();
 	}
+	
+	public void addGame2Wishlist(ArrayList<WishListGame> games) {
+		try {
+			getViaMapper();
+			for (WishListGame wlg : games) {
+				listMapper.addGame2Wishlist(wlg);
+			}
+			session.commit();
+		} catch(Exception e) {
+			LOG.logError(e.getMessage());
+		} finally {
+			try {
+				closeAll();
+			} catch (Exception e) {
+				LOG.logError(e.getMessage());
+			}
+		}
+	}
+	
+	public ArrayList<WishListGame> getGamesByStore(int idStore) {
+		try {
+			getViaMapper();
+			return listMapper.getGamesByStore(idStore);
+		} catch(Exception e) {
+			LOG.logError(e.getMessage());
+		} finally {
+			try {
+				closeAll();
+			} catch (Exception e) {
+				LOG.logError(e.getMessage());
+			}
+		}
+		return new ArrayList<WishListGame>();
+	}
 }

@@ -15,4 +15,8 @@
 	<select id="getIdList" resultType="Integer">
 		SELECT ID FROM LIST WHERE ID_USER = #{idUser}
 	</select>
+	
+	<select id="getUserByIdList" resultType="User">
+		SELECT * FROM USER WHERE ID_LIST = #{}	
+	</select>
 </mapper>

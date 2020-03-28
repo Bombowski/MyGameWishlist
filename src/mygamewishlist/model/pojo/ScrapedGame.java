@@ -5,7 +5,7 @@ public class ScrapedGame {
 	private String url;
 	private String fullName;
 	private String img;
-	private int storeId;
+	private String storeName;
 	private double defaultPrice;
 	private double currentPrice;
 	private double currentDiscount;
@@ -14,13 +14,13 @@ public class ScrapedGame {
 		super();
 	}
 
-	public ScrapedGame(String url, String fullName, String img, int storeId, double defaultPrice,
+	public ScrapedGame(String url, String fullName, String img, String storeName, double defaultPrice,
 			double currentPrice, double currentDiscount) {
 		super();
 		this.url = url;
 		this.fullName = fullName;
 		this.img = img;
-		this.storeId = storeId;
+		this.storeName = storeName;
 		this.defaultPrice = defaultPrice;
 		this.currentPrice = currentPrice;
 		this.currentDiscount = currentDiscount;
@@ -50,12 +50,12 @@ public class ScrapedGame {
 		this.img = img;
 	}
 
-	public int getStoreId() {
-		return storeId;
+	public String getStoreName() {
+		return storeName;
 	}
 
-	public void setStoreId(int storeId) {
-		this.storeId = storeId;
+	public void setStoreName(String storeName) {
+		this.storeName = storeName;
 	}
 
 	public double getDefaultPrice() {
@@ -81,4 +81,5 @@ public class ScrapedGame {
 	public void setCurrentDiscount(double currentDiscount) {
 		this.currentDiscount = currentDiscount;
 	}
+
 }

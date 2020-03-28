@@ -8,31 +8,64 @@ import java.util.function.Function;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+
+import mygamewishlist.model.pojo.Game2Scrap;
 import mygamewishlist.model.pojo.MyLogger;
 import mygamewishlist.model.pojo.ScrapedGame;
+import mygamewishlist.model.pojo.db.WishListGame;
 
 @Stateless
 @LocalBean
 public class ScrapingEJB {
+
+	private static final MyLogger LOG = MyLogger.getLOG(); 
 	
-	private MyLogger LOG = MyLogger.getLOG();
-	private Hashtable<String, Function<String, ArrayList<ScrapedGame>>> scraping = 
-			new Hashtable<String, Function<String, ArrayList<ScrapedGame>>>();
+	private Hashtable<String, Function<Game2Scrap, Hashtable<String,ArrayList<ScrapedGame>>>> scraping = 
+			new Hashtable<String, Function<Game2Scrap, Hashtable<String,ArrayList<ScrapedGame>>>>();
+	private Hashtable<String, Function<WishListGame, ScrapedGame>> timerScr =
+			new Hashtable<String, Function<WishListGame, ScrapedGame>>();
+	
+	private static final String STEAM = "Steam";
+	private static final String INSTANT = "Instant Gaming";
+	private static final String G2A = "G2A";
+	
+	private ScrapingSteam ss;
+	private ScrapingInstantGaming si;
+	private ScrapingG2A sg;
 	
 	public ScrapingEJB() throws IOException {
-		scraping.put("https://store.steampowered.com/search/?term=", new ScrapingSteam()::getSteamGames);
-		scraping.put("https://www.instant-gaming.com/en/", new ScrapingInstantGaming()::getInstantGames);
-		scraping.put("https://www.g2a.com/", new ScrapingG2A()::getG2AGames);
+		ss = new ScrapingSteam();
+		sg = new ScrapingG2A();
+		si = new ScrapingInstantGaming();
+		
+		scraping.put(STEAM, ss::getSteamGames);
+		scraping.put(INSTANT, si::getInstantGames);
+		scraping.put(G2A, sg::getG2AGames);
+		
+		timerScr.put(STEAM, ss::getGame);
+		timerScr.put(INSTANT, si::getGame);
+		timerScr.put(G2A, sg::getGame);
 	}
 	
-	public ArrayList<ScrapedGame> getGamesByNameUrl(String name, String storeUrl) {
+	public Hashtable<String,ArrayList<ScrapedGame>> getGamesByNameUrl(Game2Scrap g2s) {
 		for (String key : scraping.keySet()) {
-			if (key.equals(storeUrl)) {
-				return scraping.get(key).apply(name);
+			if (key.equals(g2s.getStoreName())) {
+				return scraping.get(key).apply(g2s);
 			}
 		}
 		
-		return new ArrayList<ScrapedGame>();
+		return new Hashtable<String,ArrayList<ScrapedGame>>();
+	}
+	
+	public ScrapedGame getGame(WishListGame wlg, String store) {
+		for (String key : timerScr.keySet()) {
+			if(key.equals(store)) {
+				return timerScr.get(key).apply(wlg);
+			}
+		}
+		return new ScrapedGame();
 	}
 	
 	protected static String replaceSpaces(String str) {
@@ -48,5 +81,23 @@ public class ScrapingEJB {
 		}
 		
 		return prices;
+	}
+
+	protected static Document getDoc(String url, String name) {
+		Document doc = null;
+		try {
+			doc = Jsoup.connect(new StringBuilder()
+						.append(url)
+						.append(name)
+						.toString()
+					)
+					.get();
+			
+			return doc;
+		} catch (IOException e) {
+			LOG.logError(e.getMessage());
+		}
+		
+		return doc;
 	}
 }

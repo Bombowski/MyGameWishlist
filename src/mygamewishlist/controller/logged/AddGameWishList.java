@@ -2,6 +2,7 @@ package mygamewishlist.controller.logged;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Hashtable;
 
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
@@ -15,6 +16,7 @@ import mygamewishlist.model.ejb.ClientSessionEJB;
 import mygamewishlist.model.ejb.CreateQuery;
 import mygamewishlist.model.ejb.scraping.ScrapingEJB;
 import mygamewishlist.model.pojo.ClassPaths;
+import mygamewishlist.model.pojo.Game2Scrap;
 import mygamewishlist.model.pojo.MyLogger;
 import mygamewishlist.model.pojo.ScrapedGame;
 import mygamewishlist.model.pojo.db.Store;
@@ -71,10 +73,10 @@ public class AddGameWishList extends HttpServlet {
 			for (String str : chked) {
 				for (Store st : stores) {
 					if (str.equals(st.getName())) {
-							ArrayList<ScrapedGame> games = 
-									scrap_ejb.getGamesByNameUrl(name, st.getUrl());
-							request.setAttribute(st.getName(), games);
-							break;
+						Hashtable<String,ArrayList<ScrapedGame>> games = 
+								scrap_ejb.getGamesByNameUrl(new Game2Scrap(name, st.getName(), st.getUrl() + st.getQueryPart()));
+						request.setAttribute(st.getName(), games);
+						break;
 					}
 				}
 			}			
