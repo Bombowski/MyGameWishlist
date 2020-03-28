@@ -6,16 +6,17 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
 import mygamewishlist.model.dao.GameDAO;
-import mygamewishlist.model.dao.WishListGameDAO;
 import mygamewishlist.model.dao.ReviewDAO;
 import mygamewishlist.model.dao.StoreDAO;
 import mygamewishlist.model.dao.UserDAO;
+import mygamewishlist.model.dao.WishListGameDAO;
 import mygamewishlist.model.pojo.db.Game;
 import mygamewishlist.model.pojo.db.Review;
 import mygamewishlist.model.pojo.db.ReviewList;
 import mygamewishlist.model.pojo.db.Store;
 import mygamewishlist.model.pojo.db.User;
 import mygamewishlist.model.pojo.db.WishListGame;
+import mygamewishlist.model.pojo.db.WishListGame2Scrap;
 
 @Stateless
 @LocalBean
@@ -89,8 +90,8 @@ public class CreateQuery {
 		return LIST_DAO.getGameFromListByIdUser(idUser, url);
 	}
 	
-	public int getIdList(int idUser) {
-		return USR_DAO.getIdList(idUser);
+	public ArrayList<User> getUsersWithList() {
+		return USR_DAO.getUsersWithList();
 	}
 	
 	public Store getStoreByName(String name) {
@@ -101,7 +102,11 @@ public class CreateQuery {
 		LIST_DAO.addGame2Wishlist(games);
 	}
 	
-	public ArrayList<WishListGame> getGamesByStore(int idStore) {
-		return LIST_DAO.getGamesByStore(idStore);
+	public ArrayList<WishListGame2Scrap> getGameFromListById(int idUser) {
+		return LIST_DAO.getGameFromListById(idUser);
+	}
+	
+	public int getIdListByIdUser(int idUser) {
+		return USR_DAO.getIdListByIdUser(idUser);
 	}
 }

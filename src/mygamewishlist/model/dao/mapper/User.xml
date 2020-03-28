@@ -12,11 +12,23 @@
 		INSERT INTO USER (NAME, EMAIL) VALUES(#{name},#{email})
 	</insert>
 	
-	<select id="getIdList" resultType="Integer">
-		SELECT ID FROM LIST WHERE ID_USER = #{idUser}
+	<select id="getUsersWithList" resultType="User">
+		SELECT
+			DISTINCT(US.ID), US.NAME
+		FROM
+			USER US, LIST LI, WISHLIST_GAME WG
+		WHERE
+			US.ID = LI.ID_USER AND
+		    LI.ID = WG.ID_LIST;
 	</select>
 	
-	<select id="getUserByIdList" resultType="User">
-		SELECT * FROM USER WHERE ID_LIST = #{}	
+	<select id="getIdListByIdUser" resultType="Integer">
+		SELECT
+			LI.ID
+		FROM
+			USER US, LIST LI
+		WHERE
+			US.ID = LI.ID AND
+			US.ID = #{idUser};
 	</select>
 </mapper>

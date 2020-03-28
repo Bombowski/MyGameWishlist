@@ -1,6 +1,7 @@
 package mygamewishlist.model.ejb;
 
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.Properties;
 
 import javax.ejb.LocalBean;
@@ -19,6 +20,7 @@ import javax.mail.internet.MimeMultipart;
 
 import bomboshtml.body.table.Tr;
 import mygamewishlist.model.pojo.MyLogger;
+import mygamewishlist.model.pojo.ScrapedGame;
 import mygamewishlist.model.pojo.db.WishListGame;
 
 /**
@@ -45,7 +47,7 @@ public class MailEJB {
 	 * @return String código de verificacion
 	 * @throws MessagingException 
 	 */
-	public void sendMailItemsOnSale(String destination, ArrayList<WishListGame> games, String store) throws MessagingException {
+	public void sendMailItemsOnSale(String destination, Hashtable<Integer, ScrapedGame> toSend) throws MessagingException {
 		Session session = createMailSession();
 		
 		Message messageContent = new MimeMessage(session);
@@ -55,7 +57,7 @@ public class MailEJB {
 
 		MimeBodyPart mimeBodyPart = new MimeBodyPart();
 		
-		mimeBodyPart.setContent(generateMessage(games, store), "text/html");
+		mimeBodyPart.setContent(generateMessage(toSend), "text/html");
 		
 		Multipart multipart = new MimeMultipart();
 		multipart.addBodyPart(mimeBodyPart);
@@ -84,7 +86,7 @@ public class MailEJB {
 		return session;
 	}
 
-	private String generateMessage(ArrayList<WishListGame> games, String store) {
+	private String generateMessage(Hashtable<Integer, ScrapedGame> toSend) {
 		StringBuilder sb = new StringBuilder();
 		
 		Tr th = new Tr();
@@ -95,11 +97,13 @@ public class MailEJB {
 		th.addTd("Current Discount");
 		th.addTd("Default Price");
 		
-		for (WishListGame wlg : games) {
+		for (Integer i : toSend.keySet()) {
+			ScrapedGame sg = toSend.get(i);
+			
 			Tr tr = new Tr();
-			tr.addTd(wlg.getImg());
-			tr.addTd(wlg.getName());
-			tr.addTd(wlg.getUrlStore());
+			tr.addTd(sg.getImg());
+			tr.addTd(sg.getFullName());
+			tr.addTd(sg.getUrl());
 			
 			sb.append("Some of the items from your wishlist are on sale!");
 				

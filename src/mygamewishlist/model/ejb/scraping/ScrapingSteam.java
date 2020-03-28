@@ -11,6 +11,7 @@ import mygamewishlist.model.pojo.Game2Scrap;
 import mygamewishlist.model.pojo.MyLogger;
 import mygamewishlist.model.pojo.ScrapedGame;
 import mygamewishlist.model.pojo.db.WishListGame;
+import mygamewishlist.model.pojo.db.WishListGame2Scrap;
 
 public class ScrapingSteam {
 
@@ -46,8 +47,8 @@ public class ScrapingSteam {
 		return toReturn;
 	}
 	
-	protected ScrapedGame getGame(WishListGame wlg) {
-		Document doc = ScrapingEJB.getDoc(wlg.getUrlStore() + wlg.getUrlGame(), wlg.getName());
+	protected ScrapedGame getGame(WishListGame2Scrap wlg) {
+		Document doc = ScrapingEJB.getDoc(wlg.getStoreUrl() + wlg.getGameUrl(), wlg.getGameName());
 		
 		
 		

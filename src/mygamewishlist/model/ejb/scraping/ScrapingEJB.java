@@ -7,6 +7,7 @@ import java.util.function.Function;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.servlet.http.Cookie;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -15,6 +16,7 @@ import mygamewishlist.model.pojo.Game2Scrap;
 import mygamewishlist.model.pojo.MyLogger;
 import mygamewishlist.model.pojo.ScrapedGame;
 import mygamewishlist.model.pojo.db.WishListGame;
+import mygamewishlist.model.pojo.db.WishListGame2Scrap;
 
 @Stateless
 @LocalBean
@@ -24,8 +26,8 @@ public class ScrapingEJB {
 	
 	private Hashtable<String, Function<Game2Scrap, Hashtable<String,ArrayList<ScrapedGame>>>> scraping = 
 			new Hashtable<String, Function<Game2Scrap, Hashtable<String,ArrayList<ScrapedGame>>>>();
-	private Hashtable<String, Function<WishListGame, ScrapedGame>> timerScr =
-			new Hashtable<String, Function<WishListGame, ScrapedGame>>();
+	private Hashtable<String, Function<WishListGame2Scrap, ScrapedGame>> timerScr =
+			new Hashtable<String, Function<WishListGame2Scrap, ScrapedGame>>();
 	
 	private static final String STEAM = "Steam";
 	private static final String INSTANT = "Instant Gaming";
@@ -59,9 +61,9 @@ public class ScrapingEJB {
 		return new Hashtable<String,ArrayList<ScrapedGame>>();
 	}
 	
-	public ScrapedGame getGame(WishListGame wlg, String store) {
+	public ScrapedGame getGame(WishListGame2Scrap wlg) {
 		for (String key : timerScr.keySet()) {
-			if(key.equals(store)) {
+			if(key.equals(wlg.getStoreName())) {
 				return timerScr.get(key).apply(wlg);
 			}
 		}
@@ -83,6 +85,18 @@ public class ScrapingEJB {
 		return prices;
 	}
 
+	protected static Document getDoc(String url, String name, Cookie ck) throws IOException {
+		Document doc = Jsoup
+				.connect(new StringBuilder()
+					.append(url)
+					.append(name)
+					.toString())
+				.cookie(ck.getName(), ck.getValue())
+				.get();
+		
+		return doc;
+	}
+	
 	protected static Document getDoc(String url, String name) {
 		Document doc = null;
 		try {

@@ -1,5 +1,7 @@
 package mygamewishlist.model.dao.mapper;
 
+import java.util.ArrayList;
+
 import org.apache.ibatis.annotations.Param;
 
 import mygamewishlist.model.pojo.db.User;
@@ -10,5 +12,7 @@ public interface UserMapper {
 	
 	public void addUser(User usr);
 	
-	public Integer getIdList(@Param("idUser") int idUser);
+	public ArrayList<User> getUsersWithList();
+	
+	public Integer getIdListByIdUser(@Param("idUser") int idUser);
 }

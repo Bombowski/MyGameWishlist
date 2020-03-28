@@ -110,7 +110,7 @@ public class AddGameOptions extends HttpServlet {
 			WishListGame wlg = new WishListGame();
 			
 			wlg.setUrlGame(fixUrl(g.getUrl(), stores, g.getStoreName()));
-			wlg.setIdList(cq_ejb.getIdList(sc_ejb.getLoggedUser(request).getId()));
+			wlg.setIdList(cq_ejb.getIdListByIdUser(sc_ejb.getLoggedUser(request).getId()));
 			wlg.setIdStore(cq_ejb.getStoreByName(store).getId());
 			wlg.setName(g.getFullName());
 			wlg.setDefaultPrice(g.getDefaultPrice());

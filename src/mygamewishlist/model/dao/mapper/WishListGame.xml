@@ -18,7 +18,7 @@
 			LI.ID_USER = #{idUser}
 	</select>
 	
-	<select id="getGameFromListById" resultMap="resultList">
+	<select id="getGameFromListByIdUser" resultMap="resultList">
 		SELECT
 			SH.URL AS STORE_URL, WG.URL AS GAME_URL, ID_LIST, ID_STORE, 
 			WG.NAME, WG.IMG, DEFAULT_PRICE, CURRENT_PRICE, 
@@ -38,8 +38,18 @@
 		VALUES(#{urlGame},#{idList},#{idStore},#{img},#{name},#{defaultPrice},#{currentPrice})
 	</insert>
 	
-	<select id="getGamesByStore" resultMap="resultList">
-		SELECT * FROM WISHLIST_GAME WHERE ID_STORE = #{idStore}
+	<select id="getGameFromListById" resultMap="games2Scrap">
+		SELECT
+			ST.URL AS STORE_URL, WG.URL AS GAME_URL, ST.NAME STORE_NAME, 
+			WG.NAME GAME_NAME, WG.IMG, DEFAULT_PRICE, CURRENT_PRICE, MIN_PRICE, MAX_PRICE
+		FROM
+			WISHLIST_GAME WG, LIST LI, STORE ST
+		WHERE
+			LI.ID = WG.ID_LIST AND
+			ST.ID = WG.ID_STORE AND
+			LI.ID_USER = #{idStore}
+		ORDER BY
+			ST.NAME;
 	</select>
 	
 	<resultMap type="WishListGame" id="resultList">
@@ -53,6 +63,18 @@
 		<result property="currentPrice" column="CURRENT_PRICE" />
 		<result property="discount" column="DISCOUNT" />
 		<result property="lastNotifiedPrice" column="LAST_NOTIFIED_PRICE" />
+		<result property="minPrice" column="MIN_PRICE" />
+		<result property="maxPrice" column="MAX_PRICE" />
+	</resultMap>
+	
+	<resultMap type="WishListGame" id="games2Scrap">
+		<result property="storeUrl" column="STORE_URL" />
+		<result property="gameUrl" column="GAME_URL" />
+		<result property="storeName" column="STORE_NAME" />
+		<result property="gameName" column="GAME_NAME" />
+		<result property="img" column="IMG" />
+		<result property="defaultPrice" column="DEFAULT_PRICE" />
+		<result property="currentPrice" column="CURRENT_PRICE" />
 		<result property="minPrice" column="MIN_PRICE" />
 		<result property="maxPrice" column="MAX_PRICE" />
 	</resultMap>

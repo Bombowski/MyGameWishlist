@@ -1,5 +1,7 @@
 package mygamewishlist.model.dao;
 
+import java.util.ArrayList;
+
 import org.apache.ibatis.session.SqlSession;
 
 import mygamewishlist.model.dao.mapper.UserMapper;
@@ -60,10 +62,10 @@ public class UserDAO {
 		}
 	}
 	
-	public int getIdList(int idUser) {
+	public ArrayList<User> getUsersWithList() {
 		try {
 			getUserMapper();
-			return userMapper.getIdList(idUser);
+			return userMapper.getUsersWithList();
 		} catch(Exception e) {
 			LOG.logError(e.getMessage());
 		} finally {
@@ -73,6 +75,22 @@ public class UserDAO {
 				LOG.logError(e.getMessage());
 			}
 		}
-		return -1;
+		return new ArrayList<User>();
+	}
+	
+	public int getIdListByIdUser(int idUser) {
+		try {
+			getUserMapper();
+			return userMapper.getIdListByIdUser(idUser);
+		} catch(Exception e) {
+			LOG.logError(e.getMessage());
+		} finally {
+			try {
+				closeAll();
+			} catch (Exception e) {
+				LOG.logError(e.getMessage());
+			}
+		}
+		return 0;
 	}
 }

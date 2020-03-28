@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import mygamewishlist.model.dao.mapper.WishListGameMapper;
 import mygamewishlist.model.pojo.MyLogger;
 import mygamewishlist.model.pojo.db.WishListGame;
+import mygamewishlist.model.pojo.db.WishListGame2Scrap;
 
 public class WishListGameDAO {
 
@@ -80,10 +81,10 @@ public class WishListGameDAO {
 		}
 	}
 	
-	public ArrayList<WishListGame> getGamesByStore(int idStore) {
+	public ArrayList<WishListGame2Scrap> getGameFromListById(int idUser) {
 		try {
 			getViaMapper();
-			return listMapper.getGamesByStore(idStore);
+			return listMapper.getGameFromListById(idUser);
 		} catch(Exception e) {
 			LOG.logError(e.getMessage());
 		} finally {
@@ -93,6 +94,6 @@ public class WishListGameDAO {
 				LOG.logError(e.getMessage());
 			}
 		}
-		return new ArrayList<WishListGame>();
+		return new ArrayList<WishListGame2Scrap>();
 	}
 }

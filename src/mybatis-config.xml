@@ -9,6 +9,7 @@
 		<typeAlias type='mygamewishlist.model.pojo.db.Store' alias='Store'></typeAlias>
 		<typeAlias type='mygamewishlist.model.pojo.db.WishListGame' alias='WishListGame'></typeAlias>
 		<typeAlias type='mygamewishlist.model.pojo.db.ReviewList' alias='ReviewList'></typeAlias>
+		<typeAlias type='mygamewishlist.model.pojo.db.WishListGame2Scrap' alias='WishListGame2Scrap'></typeAlias>
 	</typeAliases>
 	<environments default='development'>
 		<environment id='development'>

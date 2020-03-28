@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.apache.ibatis.annotations.Param;
 
 import mygamewishlist.model.pojo.db.WishListGame;
+import mygamewishlist.model.pojo.db.WishListGame2Scrap;
 
 public interface WishListGameMapper {
 
@@ -14,5 +15,5 @@ public interface WishListGameMapper {
 	
 	public void addGame2Wishlist(WishListGame wlg);
 	
-	public ArrayList<WishListGame> getGamesByStore(@Param("idStore") int idStore);
+	public ArrayList<WishListGame2Scrap> getGameFromListById(@Param("idUser") int idUser);
 }
