@@ -33,11 +33,20 @@
 		    WG.URL = #{url}
 	</select>
 	
+	<insert id="addGame2Wishlist" parameterType="WishListGame">
+		INSERT INTO WISHLIST_GAME (URL,ID_LIST,ID_STORE,IMG,NAME,DEFAULT_PRICE,CURRENT_PRICE)
+		VALUES(#{urlGame},#{idList},#{idStore},#{img},#{name},#{defaultPrice},#{currentPrice})
+	</insert>
+	
+	<select id="getGamesByStore" resultMap="resultList">
+		SELECT * FROM WISHLIST_GAME WHERE ID_STORE = #{idStore}
+	</select>
+	
 	<resultMap type="WishListGame" id="resultList">
 		<id property="urlGame" column="GAME_URL" />
 		<id property="idList" column="ID_LIST" />
 		<result property="urlStore" column="STORE_URL" />
-		<result property="idShop" column="ID_SHOP" />
+		<result property="idStore" column="ID_STORE" />
 		<result property="name" column="NAME" />
 		<result property="img" column="IMG" />
 		<result property="defaultPrice" column="DEFAULT_PRICE" />

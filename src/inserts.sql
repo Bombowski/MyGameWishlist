@@ -1,6 +1,7 @@
 INSERT INTO USER(NAME,EMAIL,ADMIN) VALUES
 	('Patryk','patryk080998@gmail.com',1),
-    ('Bombo','bumboxowatosciowowaty@gmail.com',0);
+    ('Bombo','bumboxowatosciowowaty@gmail.com',0),
+    ('ASD','asd@gmail.com',0);
 
 INSERT INTO STORE(NAME, URL, QUERY_PART) VALUES
     ('Steam','https://store.steampowered.com','/search/?term='),
@@ -24,8 +25,6 @@ INSERT INTO REVIEW(ID_USER,ID_GAME,RATING) VALUES
     (2, 3, 3),
     (2, 4, 2),
     (2, 5, 2);
-    
-INSERT INTO LIST(ID_USER) VALUES (1),(2);
     
 INSERT INTO WISHLIST_GAME(URL, ID_LIST, ID_STORE, NAME, DEFAULT_PRICE, CURRENT_PRICE, LAST_NOTIFIED_PRICE) VALUES
 	('URL',1,1,'NAME',25.00,25.00,25.00),

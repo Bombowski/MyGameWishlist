@@ -8,7 +8,7 @@ import mygamewishlist.model.dao.mapper.StoreMapper;
 import mygamewishlist.model.pojo.MyLogger;
 import mygamewishlist.model.pojo.db.Store;
 
-public class ShopDAO {
+public class StoreDAO {
 
 	private static final MyLogger LOG = MyLogger.getLOG();
 	private static SqlSession session;
@@ -46,10 +46,10 @@ public class ShopDAO {
 		return new ArrayList<Store>();
 	}
 	
-	public ArrayList<String> getStoreName() {
+	public ArrayList<String> getStoreNames() {
 		try {
 			getStMapper();
-			return storeMapper.getStoreName();
+			return storeMapper.getStoreNames();
 		} catch(Exception e) {
 			LOG.logError(e.getMessage());
 		} finally {
@@ -60,5 +60,21 @@ public class ShopDAO {
 			}
 		}
 		return new ArrayList<String>();
+	}
+	
+	public Store getStoreByName(String name) {
+		try {
+			getStMapper();
+			return storeMapper.getStoreByName(name);
+		} catch(Exception e) {
+			LOG.logError(e.getMessage());
+		} finally {
+			try {
+				closeAll();
+			} catch (Exception e) {
+				LOG.logError(e.getMessage());
+			}
+		}
+		return new Store();
 	}
 }

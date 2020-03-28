@@ -45,7 +45,7 @@
 
 	<main class="content-fluid p-4 mb-5">
 		<div class="w-75 m-auto">
-			<form action="<% out.append(cp.REDIRECT_ADD_GAME_OPTIONS); %>">
+			<form action="<% out.append(cp.REDIRECT_ADD_GAME_OPTIONS); %>" method="post">
 				<% 
 					String searchParam = (String)request.getAttribute("search");
 					
@@ -59,21 +59,24 @@
 					<%
 						try {
 							ArrayList<String> stores = (ArrayList<String>)request.getAttribute("stores");
-							ArrayList<ScrapedGame> steam = (ArrayList<ScrapedGame>)request.getAttribute("Steam");
-							ArrayList<ScrapedGame> g2a = (ArrayList<ScrapedGame>)request.getAttribute("G2A");
-							ArrayList<ScrapedGame> instant = (ArrayList<ScrapedGame>)request.getAttribute("Instant Gaming"); 
+							Hashtable<String,ArrayList<ScrapedGame>> games = 
+									(Hashtable<String,ArrayList<ScrapedGame>>)request.getAttribute("games"); 
 							
 							int i = 0;
-							Hashtable<Integer, ArrayList<ScrapedGame>> lists = new Hashtable<Integer, ArrayList<ScrapedGame>>();
-							lists.put(1, steam);
-							lists.put(2, g2a);
-							lists.put(3, instant);
+							
+							if (stores == null) {
+								response.sendRedirect(cp.REDIRECT_MYLIST);
+								return;
+							}
 							
 							for (String str : stores) {
-								out.append("<button type='button' class='btn btn-primary' id='st")
-									.append(i + "'>")
-			                        .append(str != null ? str : "")
-			                        .append("</button>");
+								if (str != null) {
+									out.append("<button type='button' class='btn btn-primary' id='")
+										.append(str)
+										.append("'>")
+				                        .append(str)
+				                        .append("</button>");
+								}
 							}
 					%>
                 </h5>
@@ -82,15 +85,16 @@
 							String noR = "No results.";
 							i = 0;
 							
-							for (Integer key : lists.keySet()) {
-								ArrayList<ScrapedGame> games = lists.get(key);
+							for (String key : games.keySet()) {
+								ArrayList<ScrapedGame> list = games.get(key);
 								
-								if (games == null) {
-									out.append("<div id='store</div>");
+								if (list == null) {
+									out.append("<div id='store'></div>");
 								} else {
 									out.append("<div id='")
-										.append(key + "'>")
-										.append(games.size() == 0 ? noR : jspF.buildScrapedGameTable(games))
+										.append(key)
+										.append("tbl'>")
+										.append(games.isEmpty() ? noR : jspF.buildScrapedGameTable(list))
 										.append("</div>");
 								}
 								i++;
