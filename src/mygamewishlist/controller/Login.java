@@ -51,10 +51,15 @@ public class Login extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			String email = request.getParameter("email");
+			String name = request.getParameter("name");
 			
 			User usr = cq_ejb.getUserByEmail(email);
 			
 			if (usr == null) {
+				usr = new User();
+				usr.setEmail(email);
+				usr.setName(name);
+				
 				cq_ejb.addUser(usr);
 				usr = cq_ejb.getUserByEmail(email);
 				sc_ejb.loginUser(request.getSession(false), usr);

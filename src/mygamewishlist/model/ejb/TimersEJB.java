@@ -34,33 +34,34 @@ public class TimersEJB {
 	
 	public TimersEJB() {}
 	
-//	@Schedule(second = "00", minute = "*/3", hour = "*")
-//	public void chkPrices() {
-//		System.out.println("Hello");
-//		
-//		Hashtable<String, ScrapedGame> chkedGames = new Hashtable<String, ScrapedGame>();
-//		ArrayList<User> users = cq_ejb.getUsersWithList();
-//		
-//		for (User us : users) {
-//			ArrayList<WishListGame2Scrap> games = cq_ejb.getGameFromListById(us.getId());
-//			Hashtable<Integer, ScrapedGame> toSend = new Hashtable<Integer, ScrapedGame>();
-//			int i = 0;
-//			
-//			for (WishListGame2Scrap wlg : games) {
-//				ScrapedGame scGame = scr_ejb.getGame(wlg);
-//				
-////				if (wlg.getCurrentPrice() > scGame.getCurrentPrice()) {
-//					chkedGames.put(wlg.getGameUrl(), scGame);
-//					toSend.put(i, scGame);
-//					i++;
-////				}
-//			}
-//			
-//			try {
-//				mail_ejb.sendMailItemsOnSale(us.getEmail(), toSend);
-//			} catch (MessagingException e) {
-//				LOG.logError(e.getMessage());
-//			}
-//		}
-//	}
+//	@Schedule(second = "00", minute = "*/10", hour = "*")
+	public void chkPrices() {
+		System.out.println("Hello");
+		
+		Hashtable<String, ScrapedGame> chkedGames = new Hashtable<String, ScrapedGame>();
+		ArrayList<User> users = cq_ejb.getUsersWithList();
+		
+		for (User us : users) {
+			ArrayList<WishListGame2Scrap> games = cq_ejb.getGamesFromListById(us.getId());
+			Hashtable<Integer, ScrapedGame> toSend = new Hashtable<Integer, ScrapedGame>();
+			int i = 0;
+			
+			for (WishListGame2Scrap wlg : games) {
+				ScrapedGame scGame = scr_ejb.getGame(wlg);
+				
+//				if (wlg.getCurrentPrice() > scGame.getCurrentPrice()) {
+					scGame.setFullName(wlg.getGameName());
+					scGame.setImg(wlg.getImg());
+					scGame.setStoreName(wlg.getStoreName());
+					chkedGames.put(wlg.getGameUrl(), scGame);
+					toSend.put(i, scGame);
+					i++;
+//				}
+			}
+			
+			if (!toSend.isEmpty()) {
+				mail_ejb.sendMailItemsOnSale(us, toSend);
+			}
+		}
+	}
 }

@@ -27,9 +27,9 @@ public class ClassPaths {
 	public final String REVIEW_LIST = "/ReviewList";
 	public final String GAME_INFO = "/GameInfo";
 	public final String ADD_GAME_OPTIONS = "/AddGameOptions";
-	public final String ADD_GAME_WISHLIST = "/AddGameWishList";
-	public final String UPDATE_GAME_WISHLIST = "/UpdateGameWishList";
-	public final String DELETE_GAME_WISHLIST = "/Delete/GameWishList";
+	public final String ADD_GAME_WISHLIST = "/AddGameWishlist";
+	public final String UPDATE_GAME_WISHLIST = "/UpdateGameWishlist";
+	public final String DELETE_GAME_WISHLIST = "/DeleteGameWishlist";
 	public final String GAME_HISTORY = "/GameHistory";
 	public final String LOGOUT = "/Logout";
 	public final String MYLIST = "/MyList";

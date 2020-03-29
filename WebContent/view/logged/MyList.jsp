@@ -78,17 +78,13 @@
 										new StringBuilder()
 											.append(cp.REDIRECT_UPDATE_GAME_WISHLIST)
 											.append("?url=")
-											.append(g.getUrlGame())
-											.append("&id=")
-											.append(g.getIdList())
+											.append(g.getUrlGame().replace("?", "%3f"))
 											.toString()));
 							tr.addTd(new A("Delete",
 										new StringBuilder()
 											.append(cp.REDIRECT_DELETE_GAME_WISHLIST)
 											.append("?url=")
-											.append(g.getUrlGame())
-											.append("&id=")
-											.append(g.getIdList())
+											.append(g.getUrlGame().replace("?", "%3f"))
 											.toString()));
 							
 							sb.append(tr.print());

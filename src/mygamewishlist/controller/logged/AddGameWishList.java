@@ -25,8 +25,8 @@ import mygamewishlist.model.pojo.db.User;
 /**
  * Servlet implementation class AddGameWishList
  */
-@WebServlet("/AddGameWishList")
-public class AddGameWishList extends HttpServlet {
+@WebServlet("/AddGameWishlist")
+public class AddGameWishlist extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
@@ -44,6 +44,11 @@ public class AddGameWishList extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
+			if (!sc_ejb.isSome1Logged(request.getSession(false))) {
+				response.sendRedirect(cp.REDIRECT_LOGIN);
+				return;
+			}
+			
 			User usr = sc_ejb.getLoggedUser(request);
 			RequestDispatcher rd;
 			
@@ -66,6 +71,11 @@ public class AddGameWishList extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
+			if (!sc_ejb.isSome1Logged(request.getSession(false))) {
+				response.sendRedirect(cp.REDIRECT_LOGIN);
+				return;
+			}
+			
 			String name = request.getParameter("name");
 			String chked[] = request.getParameterValues("store");
 			ArrayList<Store> stores = cq_ejb.getStores();

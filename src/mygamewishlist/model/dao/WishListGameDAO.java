@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 
 import mygamewishlist.model.dao.mapper.WishListGameMapper;
 import mygamewishlist.model.pojo.MyLogger;
+import mygamewishlist.model.pojo.ScrapedGame;
 import mygamewishlist.model.pojo.db.WishListGame;
 import mygamewishlist.model.pojo.db.WishListGame2Scrap;
 
@@ -19,7 +20,7 @@ public class WishListGameDAO {
 	 * Crea la conexion con la base de datos y consigue
 	 * la interfaz
 	 */
-	private static void getViaMapper() {
+	private static void getWlgMapper() {
 		session = MyBatisUtil.getSqlSessionFactory().openSession();
 		listMapper = session.getMapper(WishListGameMapper.class);
 	}
@@ -33,7 +34,7 @@ public class WishListGameDAO {
 	
 	public ArrayList<WishListGame> getListByIdUser(int id) {
 		try {
-			getViaMapper();
+			getWlgMapper();
 			return listMapper.getListByIdUser(id);
 		} catch(Exception e) {
 			LOG.logError(e.getMessage());
@@ -47,10 +48,10 @@ public class WishListGameDAO {
 		return new ArrayList<WishListGame>();
 	}
 	
-	public WishListGame getGameFromListByIdUser(int idUser, String url) {
+	public WishListGame getGameFromListByIdUserUrl(int idUser, String url) {
 		try {
-			getViaMapper();
-			return listMapper.getGameFromListByIdUser(idUser, url);
+			getWlgMapper();
+			return listMapper.getGameFromListByIdUserUrl(idUser, url);
 		} catch(Exception e) {
 			LOG.logError(e.getMessage());
 		} finally {
@@ -65,7 +66,7 @@ public class WishListGameDAO {
 	
 	public void addGame2Wishlist(ArrayList<WishListGame> games) {
 		try {
-			getViaMapper();
+			getWlgMapper();
 			for (WishListGame wlg : games) {
 				listMapper.addGame2Wishlist(wlg);
 			}
@@ -81,10 +82,10 @@ public class WishListGameDAO {
 		}
 	}
 	
-	public ArrayList<WishListGame2Scrap> getGameFromListById(int idUser) {
+	public ArrayList<WishListGame2Scrap> getGamesFromListById(int idUser) {
 		try {
-			getViaMapper();
-			return listMapper.getGameFromListById(idUser);
+			getWlgMapper();
+			return listMapper.getGamesFromListById(idUser);
 		} catch(Exception e) {
 			LOG.logError(e.getMessage());
 		} finally {
@@ -95,5 +96,53 @@ public class WishListGameDAO {
 			}
 		}
 		return new ArrayList<WishListGame2Scrap>();
+	}
+	
+	public void deleteGameWishlist(String url, int idList) {
+		try {
+			getWlgMapper();
+			listMapper.deleteGameWishlist(url, idList);;
+			session.commit();
+		} catch(Exception e) {
+			LOG.logError(e.getMessage());
+		} finally {
+			try {
+				closeAll();
+			} catch (Exception e) {
+				LOG.logError(e.getMessage());
+			}
+		}
+	}
+	
+	public void updatePrices(ScrapedGame sg) {
+		try {
+			getWlgMapper();
+			listMapper.updatePrices(sg);
+			session.commit();
+		} catch(Exception e) {
+			LOG.logError(e.getMessage());
+		} finally {
+			try {
+				closeAll();
+			} catch (Exception e) {
+				LOG.logError(e.getMessage());
+			}
+		}
+	}
+	
+	public void updateMinMax(double min, double max, String url, int idList) {
+		try {
+			getWlgMapper();
+			listMapper.updateMinMax(min, max, url, idList);
+			session.commit();
+		} catch(Exception e) {
+			LOG.logError(e.getMessage());
+		} finally {
+			try {
+				closeAll();
+			} catch (Exception e) {
+				LOG.logError(e.getMessage());
+			}
+		}
 	}
 }

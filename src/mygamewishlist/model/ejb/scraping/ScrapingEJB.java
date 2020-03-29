@@ -15,7 +15,6 @@ import org.jsoup.nodes.Document;
 import mygamewishlist.model.pojo.Game2Scrap;
 import mygamewishlist.model.pojo.MyLogger;
 import mygamewishlist.model.pojo.ScrapedGame;
-import mygamewishlist.model.pojo.db.WishListGame;
 import mygamewishlist.model.pojo.db.WishListGame2Scrap;
 
 @Stateless
@@ -97,21 +96,17 @@ public class ScrapingEJB {
 		return doc;
 	}
 	
-	protected static Document getDoc(String url, String name) {
-		Document doc = null;
-		try {
-			doc = Jsoup.connect(new StringBuilder()
+	protected static Document getDoc(String url, String name) throws IOException {
+		Document doc = Jsoup.connect(new StringBuilder()
 						.append(url)
 						.append(name)
-						.toString()
-					)
+						.toString())
 					.get();
-			
-			return doc;
-		} catch (IOException e) {
-			LOG.logError(e.getMessage());
-		}
 		
 		return doc;
+	}
+	
+	protected static String ifnull0(String str) {
+		return str == null ? "0" : str;
 	}
 }

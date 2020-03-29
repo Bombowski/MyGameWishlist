@@ -10,6 +10,7 @@ import mygamewishlist.model.dao.ReviewDAO;
 import mygamewishlist.model.dao.StoreDAO;
 import mygamewishlist.model.dao.UserDAO;
 import mygamewishlist.model.dao.WishListGameDAO;
+import mygamewishlist.model.pojo.ScrapedGame;
 import mygamewishlist.model.pojo.db.Game;
 import mygamewishlist.model.pojo.db.Review;
 import mygamewishlist.model.pojo.db.ReviewList;
@@ -86,8 +87,8 @@ public class CreateQuery {
 		return LIST_DAO.getListByIdUser(idUser);
 	}
 	
-	public WishListGame getGameFromListByIdUser(int idUser, String url) {
-		return LIST_DAO.getGameFromListByIdUser(idUser, url);
+	public WishListGame getGameFromListByIdUserUrl(int idUser, String url) {
+		return LIST_DAO.getGameFromListByIdUserUrl(idUser, url);
 	}
 	
 	public ArrayList<User> getUsersWithList() {
@@ -102,11 +103,23 @@ public class CreateQuery {
 		LIST_DAO.addGame2Wishlist(games);
 	}
 	
-	public ArrayList<WishListGame2Scrap> getGameFromListById(int idUser) {
-		return LIST_DAO.getGameFromListById(idUser);
+	public ArrayList<WishListGame2Scrap> getGamesFromListById(int idUser) {
+		return LIST_DAO.getGamesFromListById(idUser);
 	}
 	
 	public int getIdListByIdUser(int idUser) {
 		return USR_DAO.getIdListByIdUser(idUser);
+	}
+	
+	public void deleteGameWishlist(String url, int idList) {
+		LIST_DAO.deleteGameWishlist(url, idList);
+	}
+	
+	public void updatePrices(ScrapedGame sg) {
+		LIST_DAO.updatePrices(sg);
+	}
+	
+	public void updateMinMax(double min, double max, String url, int idList) {
+		LIST_DAO.updateMinMax(min, max, url, idList);
 	}
 }

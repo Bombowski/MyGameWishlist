@@ -6,9 +6,6 @@ window.onload = function() {
 
 function onSignIn(googleUser) {
 	var profile = googleUser.getBasicProfile();
-//	var imagurl = profile.getImageUrl();
-//	var name = profile.getName();
-//	var email = profile.getEmail();
 	
 	$.post("/MyGameWishlist/Login",
 		{

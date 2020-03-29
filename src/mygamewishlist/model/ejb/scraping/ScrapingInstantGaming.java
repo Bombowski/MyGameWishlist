@@ -37,9 +37,16 @@ public class ScrapingInstantGaming {
 	}
 	
 	protected ScrapedGame getGame(WishListGame2Scrap wlg) {
-		Document doc = ScrapingEJB.getDoc(wlg.getStoreUrl() + wlg.getGameUrl(), wlg.getGameName());
+		Document doc = null;
+		try {
+			doc = ScrapingEJB.getDoc(wlg.getStoreUrl() + wlg.getGameUrl(), wlg.getGameName());
+		} catch (IOException e) {
+			LOG.logError(e.getMessage());
+		}
 		
-		
+		if (doc == null) {
+			return new ScrapedGame();
+		}
 		
 		return null;
 	}

@@ -29,15 +29,11 @@ pageEncoding="UTF-8"%>
 	<jsp:include page="template/Header.jsp">
 		<jsp:param name="" value="" />
 	</jsp:include>
-	
-	<!-- añado el html del nav -->
-	<jsp:include page="template/Nav.jsp">
-		<jsp:param name="" value="" />
-	</jsp:include>
 
 	<main class="content-fluid p-4 mb-5">
 		<div class="w-75 m-auto">
 			LOGIN
+			<div class="g-signin2" data-onsuccess="onSignIn" id="myP"></div>
 		</div>
 	</main>
 	<jsp:include page="template/Footer.jsp">

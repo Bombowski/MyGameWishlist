@@ -14,12 +14,12 @@
 	
 	<select id="getUsersWithList" resultType="User">
 		SELECT
-			DISTINCT(US.ID), US.NAME
+			DISTINCT(US.ID), US.NAME, US.EMAIL
 		FROM
 			USER US, LIST LI, WISHLIST_GAME WG
 		WHERE
 			US.ID = LI.ID_USER AND
-		    LI.ID = WG.ID_LIST;
+		    LI.ID = WG.ID_LIST
 	</select>
 	
 	<select id="getIdListByIdUser" resultType="Integer">

@@ -3,6 +3,7 @@ package mygamewishlist.controller.logged;
 import java.io.IOException;
 
 import javax.ejb.EJB;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -13,12 +14,10 @@ import mygamewishlist.model.ejb.ClientSessionEJB;
 import mygamewishlist.model.ejb.CreateQuery;
 import mygamewishlist.model.pojo.ClassPaths;
 import mygamewishlist.model.pojo.MyLogger;
+import mygamewishlist.model.pojo.db.User;
 
-/**
- * Servlet implementation class DeleteGameWishList
- */
-@WebServlet("/DeleteGameWishList")
-public class DeleteGameWishList extends HttpServlet {
+@WebServlet("/DeleteGameWishlist")
+public class DeleteGameWishlist extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
@@ -33,17 +32,22 @@ public class DeleteGameWishList extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
+			User usr = sc_ejb.getLoggedUser(request);
 			
+			if (usr == null) {
+				RequestDispatcher rd = getServletContext().getRequestDispatcher(cp.LOGIN);
+				rd.forward(request, response);
+				return;
+			}
+			
+			int idList = cq_ejb.getIdListByIdUser(usr.getId());
+			String url = request.getParameter("url");
+			
+			cq_ejb.deleteGameWishlist(url, idList);
 		} catch(Exception e) {
 			LOG.logError(e.getMessage());
 		}
-	}
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		try {
-			
-		} catch(Exception e) {
-			LOG.logError(e.getMessage());
-		}
+		RequestDispatcher rd = getServletContext().getRequestDispatcher(cp.MYLIST);
+		rd.forward(request, response);
 	}
 }

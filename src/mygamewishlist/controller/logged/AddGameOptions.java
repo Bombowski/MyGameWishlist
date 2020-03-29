@@ -41,6 +41,11 @@ public class AddGameOptions extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
+			if (!sc_ejb.isSome1Logged(request.getSession(false))) {
+				response.sendRedirect(cp.REDIRECT_LOGIN);
+				return;
+			}
+			
 			RequestDispatcher rd;
 			
 			if (!games.isEmpty()) {
@@ -62,6 +67,11 @@ public class AddGameOptions extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
+			if (!sc_ejb.isSome1Logged(request.getSession(false))) {
+				response.sendRedirect(cp.REDIRECT_LOGIN);
+				return;
+			}
+			
 			String[] id = request.getParameterValues("games");
 			
 			if (id != null) {

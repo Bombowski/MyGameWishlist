@@ -33,7 +33,7 @@ public class GameInfo extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-			RequestDispatcher rd = getServletContext().getRequestDispatcher(cp.GAME_INFO);
+			RequestDispatcher rd = getServletContext().getRequestDispatcher(cp.JSP_GAME_INFO);
 			rd.forward(request, response);
 		} catch(Exception e) {
 			LOG.logError(e.getMessage());

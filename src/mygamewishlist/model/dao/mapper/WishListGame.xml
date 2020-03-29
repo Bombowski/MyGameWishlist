@@ -18,7 +18,7 @@
 			LI.ID_USER = #{idUser}
 	</select>
 	
-	<select id="getGameFromListByIdUser" resultMap="resultList">
+	<select id="getGameFromListByIdUserUrl" resultMap="resultList">
 		SELECT
 			SH.URL AS STORE_URL, WG.URL AS GAME_URL, ID_LIST, ID_STORE, 
 			WG.NAME, WG.IMG, DEFAULT_PRICE, CURRENT_PRICE, 
@@ -38,7 +38,7 @@
 		VALUES(#{urlGame},#{idList},#{idStore},#{img},#{name},#{defaultPrice},#{currentPrice})
 	</insert>
 	
-	<select id="getGameFromListById" resultMap="games2Scrap">
+	<select id="getGamesFromListById" resultMap="games2Scrap">
 		SELECT
 			ST.URL AS STORE_URL, WG.URL AS GAME_URL, ST.NAME STORE_NAME, 
 			WG.NAME GAME_NAME, WG.IMG, DEFAULT_PRICE, CURRENT_PRICE, MIN_PRICE, MAX_PRICE
@@ -47,10 +47,24 @@
 		WHERE
 			LI.ID = WG.ID_LIST AND
 			ST.ID = WG.ID_STORE AND
-			LI.ID_USER = #{idStore}
+			LI.ID_USER = #{idUser}
 		ORDER BY
 			ST.NAME;
 	</select>
+	
+	<delete id="deleteGameWishlist">
+		DELETE FROM WISHLIST_GAME WHERE URL = #{url} AND ID_LIST = #{idList}
+	</delete>
+	
+	<update id="updatePrices" parameterType="ScrapedGame">
+		UPDATE WISHLIST_GAME SET DEFAULT_PRICE = #{defaultPrice}, CURRENT_PRICE = #{currentPrice}
+		WHERE URL = #{url} AND ID_LIST = #{idList} 
+	</update>
+	
+	<update id="updateMinMax">
+		UPDATE WISHLIST_GAME SET MAX_PRICE = #{max}, MIN_PRICE = #{min}
+		WHERE URL = #{url} AND ID_LIST = #{idList}
+	</update>
 	
 	<resultMap type="WishListGame" id="resultList">
 		<id property="urlGame" column="GAME_URL" />
@@ -67,7 +81,7 @@
 		<result property="maxPrice" column="MAX_PRICE" />
 	</resultMap>
 	
-	<resultMap type="WishListGame" id="games2Scrap">
+	<resultMap type="WishListGame2Scrap" id="games2Scrap">
 		<result property="storeUrl" column="STORE_URL" />
 		<result property="gameUrl" column="GAME_URL" />
 		<result property="storeName" column="STORE_NAME" />

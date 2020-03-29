@@ -18,9 +18,12 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
+import bomboshtml.body.A;
+import bomboshtml.body.Img;
 import bomboshtml.body.table.Tr;
 import mygamewishlist.model.pojo.MyLogger;
 import mygamewishlist.model.pojo.ScrapedGame;
+import mygamewishlist.model.pojo.db.User;
 import mygamewishlist.model.pojo.db.WishListGame;
 
 /**
@@ -47,24 +50,28 @@ public class MailEJB {
 	 * @return String código de verificacion
 	 * @throws MessagingException 
 	 */
-	public void sendMailItemsOnSale(String destination, Hashtable<Integer, ScrapedGame> toSend) throws MessagingException {
+	public void sendMailItemsOnSale(User us, Hashtable<Integer, ScrapedGame> toSend) {
 		Session session = createMailSession();
-		
-		Message messageContent = new MimeMessage(session);
-		messageContent.setFrom(new InternetAddress(USERNAME));
-		messageContent.setRecipients(Message.RecipientType.TO, InternetAddress.parse(destination));
-		messageContent.setSubject("An item from your wishlist is on sale");
 
-		MimeBodyPart mimeBodyPart = new MimeBodyPart();
-		
-		mimeBodyPart.setContent(generateMessage(toSend), "text/html");
-		
-		Multipart multipart = new MimeMultipart();
-		multipart.addBodyPart(mimeBodyPart);
-		
-		messageContent.setContent(multipart);
-		
-		Transport.send(messageContent);
+		try {
+			Message messageContent = new MimeMessage(session);
+			messageContent.setFrom(new InternetAddress(USERNAME));
+			messageContent.setRecipients(Message.RecipientType.TO, InternetAddress.parse(us.getEmail()));
+			messageContent.setSubject("An item from your wishlist is on sale");
+
+			MimeBodyPart mimeBodyPart = new MimeBodyPart();
+			
+	 		mimeBodyPart.setContent(generateMessage(toSend, us), "text/html;charset=utf-8");
+	 		
+			Multipart multipart = new MimeMultipart();
+			multipart.addBodyPart(mimeBodyPart);
+			
+			messageContent.setContent(multipart);
+			
+			Transport.send(messageContent);
+		} catch (MessagingException e) {
+			LOG.logError(e.getMessage());
+		}
 	}
 	
 	private Session createMailSession() {
@@ -86,8 +93,16 @@ public class MailEJB {
 		return session;
 	}
 
-	private String generateMessage(Hashtable<Integer, ScrapedGame> toSend) {
+	private String generateMessage(Hashtable<Integer, ScrapedGame> toSend, User us) {
 		StringBuilder sb = new StringBuilder();
+
+		sb.append("<h3>Hi ")
+			.append(us.getName())
+			.append(", some of the items from your wishlist are on sale!<h3>")
+			.append("<table style='width: 100%; max-width: 100%; margin-bottom: 1rem;") 
+			.append("background-color: transparent; border-collapse: collapse;") 
+			.append("box-sizing: border-box; display: table; border-collapse: separate;") 
+			.append("border-spacing: 2px; border-color: grey;'>");
 		
 		Tr th = new Tr();
 		th.addTd("");
@@ -97,18 +112,22 @@ public class MailEJB {
 		th.addTd("Current Discount");
 		th.addTd("Default Price");
 		
+		sb.append(th.print());
+		
 		for (Integer i : toSend.keySet()) {
 			ScrapedGame sg = toSend.get(i);
 			
 			Tr tr = new Tr();
-			tr.addTd(sg.getImg());
-			tr.addTd(sg.getFullName());
-			tr.addTd(sg.getUrl());
-			
-			sb.append("Some of the items from your wishlist are on sale!");
+			tr.addTd(new Img(sg.getImg(),sg.getFullName()));
+			tr.addTd(new A(sg.getFullName(),sg.getUrl()));
+			tr.addTd(sg.getStoreName());
+			tr.addTd(sg.getCurrentPrice() + "€");
+			tr.addTd(sg.getCurrentDiscount() + "%");
+			tr.addTd(sg.getDefaultPrice() + "€");
 				
+			sb.append(tr.print());
 		}
 		
-		return sb.toString();
+		return sb.append("</table>").toString();
 	}
 }
