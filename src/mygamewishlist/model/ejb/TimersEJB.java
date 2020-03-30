@@ -34,7 +34,7 @@ public class TimersEJB {
 	
 	public TimersEJB() {}
 	
-//	@Schedule(second = "00", minute = "*/10", hour = "*")
+	@Schedule(second = "00", minute = "*/10", hour = "*")
 	public void chkPrices() {
 		System.out.println("Hello");
 		

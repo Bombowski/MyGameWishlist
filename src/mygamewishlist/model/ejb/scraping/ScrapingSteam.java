@@ -57,8 +57,8 @@ public class ScrapingSteam {
 	protected ScrapedGame getGame(WishListGame2Scrap wlg) {
 		Document doc = null;
 		try {
-			doc = ScrapingEJB.getDoc(wlg.getStoreUrl() + wlg.getGameUrl(), wlg.getGameName(), 
-					new Cookie("birthtime", "568022401"));
+			doc = ScrapingEJB.getDoc(wlg.getStoreUrl() + wlg.getGameUrl(), 
+					wlg.getGameName(), new Cookie("birthtime", "568022401"));			
 		} catch (IOException e) {
 			LOG.logError(e.getMessage());
 		}
@@ -67,12 +67,34 @@ public class ScrapingSteam {
 			return new ScrapedGame();
 		}
 		
-		Element ele = doc.selectFirst(".game_purchase_action_bg");
-		ScrapedGame tmp = new ScrapedGame();		
-
+		Elements ele = doc.select(".game_purchase_action_bg");
+		
+		for (Element e : ele) {
+			ScrapedGame tmp = getRowPriceChecking(e);
+			if (tmp == null) {
+				continue;
+			}
+			
+			return tmp;
+		}		
+		
+		return null;
+	}
+	
+	private ScrapedGame getRowPriceChecking(Element ele) {
+		if (ele.select(".btnv6_green_white_innerfade").text().equals("Download")) {
+			return null;
+		}
+		
+		ScrapedGame tmp = new ScrapedGame();
+		
 		String notSale = ele.select(".game_purchase_price").text();
 		
-		if (notSale.equals("")) {		
+		if (notSale.toUpperCase().equals("FREE TO PLAY")) {
+			tmp.setCurrentPrice(0);
+			tmp.setDefaultPrice(0);
+			tmp.setCurrentDiscount(0);
+		} else if (notSale.equals("")) {		
 			String current = ScrapingEJB.splitSpacesReplaceCommasEuros(
 					ele.select(".discount_final_price").text())[0];		
 			String original = ScrapingEJB.splitSpacesReplaceCommasEuros(

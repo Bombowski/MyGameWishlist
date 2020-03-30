@@ -23,13 +23,11 @@ import mygamewishlist.model.pojo.db.Store;
 import mygamewishlist.model.pojo.db.User;
 
 /**
- * Servlet implementation class AddGameWishList
+ * Servlet implementation class AddGameWishlist
  */
 @WebServlet("/AddGameWishlist")
 public class AddGameWishlist extends HttpServlet {
-
 	private static final long serialVersionUID = 1L;
-
 	private static final MyLogger LOG = MyLogger.getLOG();
 	private static final ClassPaths cp = ClassPaths.getCP();
 	
