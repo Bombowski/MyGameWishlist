@@ -55,7 +55,7 @@
 						.append(searchParam)
 						.append("</span>");
 				%>
-				<h5 class="mb-0">
+				<h5 class="mb-0 buttons">
 					<%
 						try {
 							ArrayList<String> stores = (ArrayList<String>)request.getAttribute("stores");
@@ -93,9 +93,27 @@
 								} else {
 									out.append("<div id='")
 										.append(key)
-										.append("tbl'>")
-										.append(games.isEmpty() ? noR : jspF.buildScrapedGameTable(list))
-										.append("</div>");
+										.append("tbl'>");
+									
+										if (list.isEmpty()) { 
+											out.append(noR);
+										} else {
+					%>											
+											<table class='table'>
+												<th></th>
+												<th>Name</th>
+												<th>Default price</th>
+												<th>Current price</th>
+												<th>Current discount</th>
+												<th>Check games you want to add</th>
+												<th colspan="2">prices at which you want to get notified</th>
+												<%
+													out.append(jspF.buildScrapedGameTable(list));									
+												%>
+											</table>
+					<%	
+										}
+									out.append("</div>");
 								}
 								i++;
 							}

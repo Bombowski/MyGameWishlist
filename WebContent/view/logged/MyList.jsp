@@ -1,3 +1,4 @@
+<%@page import="bomboshtml.body.Img"%>
 <%@page import="bomboshtml.body.A"%>
 <%@page import="bomboshtml.body.table.Tr"%>
 <%@page import="mygamewishlist.model.pojo.db.WishListGame"%>
@@ -26,7 +27,7 @@
 
 <html>
 <jsp:include page="../template/Head.jsp">
-	<jsp:param name="" value="" />
+	<jsp:param name="js" value="ResizeImgs" />
 </jsp:include>
 <body>
 	<!-- añado el html del header -->
@@ -53,6 +54,7 @@
 			</div>
 			<table class="table">
 				<tr>
+					<th></th>
 					<th>Name</th>
 					<th>Default price</th>
 					<th>Current price</th>
@@ -68,12 +70,19 @@
 						
 						for (WishListGame g : list) {
 							Tr tr = new Tr();
+							tr.addTd(new Img(g.getImg(),g.getName()));
 							tr.addTd(new A(g.getName(),g.getUrlStore() + g.getUrlGame()));
-							tr.addTd(g.getDefaultPrice() + "");
-							tr.addTd(g.getCurrentPrice() + "");
-							tr.addTd(g.getDiscount() + "%");
-							tr.addTd(g.getMaxPrice() == -1 ? "Not specified" : ">=" + g.getMaxPrice());
-							tr.addTd(g.getMinPrice() == -1 ? "Not specified" : "<=" + g.getMinPrice());
+							tr.addTd(g.getDefaultPrice() + "€");
+							tr.addTd(g.getCurrentPrice() + "€");
+							tr.addTd(Math.round(g.getDiscount() * 100f) / 100f + "%");
+							tr.addTd(g.getMaxPrice() == -1 ? ">=Not specified" : 
+								new StringBuilder()
+									.append(">=")
+									.append(g.getMaxPrice() + "€").toString());
+							tr.addTd(g.getMinPrice() == -1 ? "<=Not specified" : 
+								new StringBuilder()
+									.append("<=")
+									.append(g.getMinPrice() + "€").toString());
 							tr.addTd(new A("Edit", 
 										new StringBuilder()
 											.append(cp.REDIRECT_UPDATE_GAME_WISHLIST)

@@ -137,17 +137,17 @@ public class ScrapingSteam {
 		} else if (price.toUpperCase().equals("FREE TO PLAY") || price.equals("Free")) {
 			currentP = defaultP = 0;
 		} else if(price.equals("Free Demo")) {
-			currentP = defaultP = -1;
+			return null;
 		} else {
 			String[] prices = ScrapingEJB.splitSpacesReplaceCommasEuros(price);
 			
 			if (prices.length == 2) {
 				defaultP = Double.parseDouble(prices[0]);
 				currentP = Double.parseDouble(prices[1]);
-				discount = Double.parseDouble(ele
+				discount = Math.abs(Double.parseDouble(ele
 						.select(".search_discount")
 						.text()
-						.replace("%", ""));
+						.replace("%", "")));
 			} else {
 				currentP = defaultP = Double.parseDouble(prices[0]);
 			}

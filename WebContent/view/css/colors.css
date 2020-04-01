@@ -27,3 +27,8 @@
     transition-delay: 0.1s;
     z-index: 2;
 }
+
+
+.table > tbody > tr > td {
+     vertical-align: middle;
+}

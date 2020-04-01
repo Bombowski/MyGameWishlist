@@ -105,18 +105,7 @@ public class JspFunctions {
 	public String buildScrapedGameTable(ArrayList<ScrapedGame> games) {
 		StringBuilder toReturn = new StringBuilder();
 		int i = 0;
-		
-		toReturn.append("<table class='table'>");
-		
-		Tr th = new Tr();
-		th.addTd("");
-		th.addTd("Name");
-		th.addTd("Default price");
-		th.addTd("Current price");
-		th.addTd("Currect Discount");
-		th.addTd("Check games you want to add");
-		toReturn.append(th.print());
-		
+				
 		for (ScrapedGame sg : games) {
 			Tr tr = new Tr();
 			tr.addTd(new Img(sg.getImg(), sg.getFullName()));
@@ -125,12 +114,14 @@ public class JspFunctions {
 			tr.addTd(getStringPrice(sg.getCurrentPrice()));
 			tr.addTd(sg.getCurrentDiscount() + "%");
 			tr.addTd(new Input("checkbox", "games", sg.getStoreName() + "&" +  i));
+			tr.addTd(">=" + new Input("number", sg.getStoreName() + "&min" +  i).print());
+			tr.addTd("<=" + new Input("number", sg.getStoreName() + "&max" +  i).print());
 			
 			toReturn.append(tr.print());
 			i++;
 		}
 		
-		return toReturn.append("</table>").toString();
+		return toReturn.toString();
 	}
 	
 	private String getStringPrice(double price) {

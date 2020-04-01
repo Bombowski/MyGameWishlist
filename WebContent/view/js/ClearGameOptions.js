@@ -1,3 +1,6 @@
+var buttons; 
+var tables;
+
 window.onbeforeunload = function() {
 	$.ajax({
 	    url: '/MyGameWishlist/AddGameOptions',
@@ -6,41 +9,37 @@ window.onbeforeunload = function() {
 	});
 }
 
-$(window).ready(function() {
-    var tbl1 = document.getElementById("store1");
-    var tbl2 = document.getElementById("store2");
-    var tbl3 = document.getElementById("store3");
+$(window).ready(function() {    
+    tables = document.getElementById("tables").children;
+    buttons = document.getElementsByClassName("buttons")[0].children;
+    var i = 0;
     
-    $("#st1").click(function() {
-        $(tbl1).show();
-        $(tbl2).hide();
-        $(tbl3).hide();
-    });
+    for (i = 0; i < buttons.length; i++) {
+    	$(buttons[i]).click(function() {
+    		var idTbl = this.id + "tbl";
+    		for (var j = 0; j < tables.length; j++) {
+				if (tables[j].id == idTbl) {
+					$(tables[j]).show();
+				} else {
+					$(tables[j]).hide();
+				}
+			}
+        });
+	}
     
-    $("#st2").click(function() {
-        $(tbl2).show();
-        $(tbl1).hide();
-        $(tbl3).hide();
-    });
+    for (i = 0; i < buttons.length; i++) {
+    	var idTbl = tables[i];
+    	if (!$(tables[i]).length) {
+        	$(tables[i]).remove();
+        	$(buttons[i]).remove();
+        	i--;
+        } else if ($(tables[i]).is(":empty")) {
+        	$(tables[i]).hide();
+        	$(idTbl.substring(0, idTbl.indexOf("tbl"))).hide();
+        } 
+	}
     
-    $("#st3").click(function() {
-        $(tbl3).show();
-        $(tbl1).hide();
-        $(tbl2).hide();
-    });
-    
-    if ($(tbl1).is(":empty")) {
-    	$(tbl1).hide();
-    	$("#st1").hide();
-    }
-    
-    if ($(tbl2).is(":empty")) {
-    	$(tbl2).hide();
-    	$("#st2").hide();
-    }
-    
-    if ($(tbl3).is(":empty")) {
-    	$(tbl3).hide();
-    	$("#st3").hide();
-    }
+    for (var i = 1; i < tables.length; i++) {
+		$(tables[i]).hide();
+	}
 });
