@@ -34,8 +34,10 @@
 	</select>
 	
 	<insert id="addGame2Wishlist" parameterType="WishListGame">
-		INSERT INTO WISHLIST_GAME (URL,ID_LIST,ID_STORE,IMG,NAME,DEFAULT_PRICE,CURRENT_PRICE)
-		VALUES(#{urlGame},#{idList},#{idStore},#{img},#{name},#{defaultPrice},#{currentPrice})
+		INSERT INTO WISHLIST_GAME (URL,ID_LIST,ID_STORE,IMG,NAME,DEFAULT_PRICE,
+		CURRENT_PRICE,MAX_PRICE,MIN_PRICE)
+		VALUES(#{urlGame},#{idList},#{idStore},#{img},#{name},
+		#{defaultPrice},#{currentPrice},#{minPrice},#{maxPrice})
 	</insert>
 	
 	<select id="getGamesFromListById" resultMap="games2Scrap">

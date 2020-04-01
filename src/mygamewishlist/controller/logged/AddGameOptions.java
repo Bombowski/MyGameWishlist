@@ -84,7 +84,11 @@ public class AddGameOptions extends HttpServlet {
 				for (String str : stNames) {
 					Hashtable<String,ArrayList<ScrapedGame>> tmp = (Hashtable<String,ArrayList<ScrapedGame>>)request.getAttribute(str);
 					if (tmp != null) {
-						games.putAll(tmp);
+						if (tmp.isEmpty()) {
+							games.put(str, new ArrayList<ScrapedGame>());
+						} else {
+							games.putAll(tmp);
+						}						
 					}
 					
 					request.removeAttribute(str);
@@ -106,9 +110,18 @@ public class AddGameOptions extends HttpServlet {
 		ArrayList<WishListGame> toInsert = new ArrayList<WishListGame>();
 		ArrayList<Store> stores = cq_ejb.getStores();
 		
-		for (String s : id) {
-			int arrPos = Integer.parseInt(s.substring(s.indexOf("&") + 1));
-			String store = s.substring(0,s.indexOf("&"));
+		for (String s : id) {			
+			int arrPos = Integer.parseInt(s.substring(s.lastIndexOf("&") + 1));
+			String store = s.substring(0,s.lastIndexOf("&"));			
+			double max = -1;
+			double min = -1;
+			
+			try {
+				min = Double.parseDouble(request.getParameter(store + "&min" + arrPos));
+				max = Double.parseDouble(request.getParameter(store + "&max" + arrPos));
+			} catch (NumberFormatException e) {
+				LOG.logError(e.getMessage());
+			}			
 			
 			ArrayList<ScrapedGame> stGames = games.get(store);
 			
@@ -127,6 +140,8 @@ public class AddGameOptions extends HttpServlet {
 			wlg.setCurrentPrice(g.getCurrentPrice());
 			wlg.setDiscount(g.getCurrentDiscount());
 			wlg.setImg(g.getImg());
+			wlg.setMinPrice(min); 
+			wlg.setMaxPrice(max);
 			
 			toInsert.add(wlg);
 		}
