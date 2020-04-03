@@ -10,17 +10,15 @@ import org.jsoup.nodes.Document;
 import mygamewishlist.model.pojo.Game2Scrap;
 import mygamewishlist.model.pojo.MyLogger;
 import mygamewishlist.model.pojo.ScrapedGame;
-import mygamewishlist.model.pojo.db.Game;
-import mygamewishlist.model.pojo.db.WishListGame;
 import mygamewishlist.model.pojo.db.WishListGame2Scrap;
 
-public class ScrapingG2A {
+public class ScrapingGOG {
 
 	private static final MyLogger LOG = MyLogger.getLOG();
 	
-	protected ScrapingG2A() {}
+	protected ScrapingGOG() {}
 	
-	protected Hashtable<String,ArrayList<ScrapedGame>> getG2AGames(Game2Scrap g2s) {
+	protected Hashtable<String,ArrayList<ScrapedGame>> getGOGGames(Game2Scrap g2s) {
 		Document doc = null;
 		try {
 			doc = Jsoup.connect(new StringBuilder()
