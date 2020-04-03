@@ -5,7 +5,13 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 
 import javax.servlet.http.Cookie;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.WebTarget;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -13,11 +19,15 @@ import org.jsoup.select.Elements;
 import mygamewishlist.model.pojo.Game2Scrap;
 import mygamewishlist.model.pojo.MyLogger;
 import mygamewishlist.model.pojo.ScrapedGame;
+import mygamewishlist.model.pojo.SecretClass;
+import mygamewishlist.model.pojo.SteamGame;
+import mygamewishlist.model.pojo.db.WishListGame;
 import mygamewishlist.model.pojo.db.WishListGame2Scrap;
 
 public class ScrapingSteam {
 
 	private static final MyLogger LOG = MyLogger.getLOG(); 
+	private static final SecretClass SC = SecretClass.getSC();
 	
 	protected ScrapingSteam() {}
 	
@@ -156,4 +166,29 @@ public class ScrapingSteam {
 		return new ScrapedGame(url, fullName, img, storeName, defaultP, currentP, discount);
 	}
 
+	public ArrayList<SteamGame> getSteamGames() throws JSONException {
+		Client c = ClientBuilder.newClient();
+		WebTarget t = c.target("https://api.steampowered.com/ISteamApps/GetAppList/v2?key=" + SC.steamToken);
+		JSONObject jo = new JSONObject((String)t.request().get(String.class));
+		JSONObject applist = (JSONObject)jo.get("applist");
+		JSONArray jarr = applist.getJSONArray("apps");
+		
+		ArrayList<SteamGame> games = new ArrayList<SteamGame>();
+		
+		for (int i = 0; i < jarr.length(); i++) {
+			JSONObject jobj = jarr.getJSONObject(i);
+			SteamGame sg = new SteamGame();
+			
+			sg.setAppid(jobj.getInt("appid"));
+			sg.setName(jobj.getString("name"));
+			
+			games.add(sg);
+		}
+		
+		return games;
+	}
+	
+	public WishListGame asd() {
+		return null;
+	}
 }

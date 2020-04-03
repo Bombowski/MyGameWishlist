@@ -5,16 +5,20 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.function.Function;
 
+import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.servlet.http.Cookie;
 
+import org.json.JSONException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
+import mygamewishlist.model.ejb.CreateQuery;
 import mygamewishlist.model.pojo.Game2Scrap;
 import mygamewishlist.model.pojo.MyLogger;
 import mygamewishlist.model.pojo.ScrapedGame;
+import mygamewishlist.model.pojo.SteamGame;
 import mygamewishlist.model.pojo.db.WishListGame2Scrap;
 
 @Stateless
@@ -22,6 +26,9 @@ import mygamewishlist.model.pojo.db.WishListGame2Scrap;
 public class ScrapingEJB {
 
 	private static final MyLogger LOG = MyLogger.getLOG(); 
+	
+	@EJB
+	CreateQuery cq_ejb;
 	
 	private Hashtable<String, Function<Game2Scrap, Hashtable<String,ArrayList<ScrapedGame>>>> scraping = 
 			new Hashtable<String, Function<Game2Scrap, Hashtable<String,ArrayList<ScrapedGame>>>>();
@@ -108,5 +115,11 @@ public class ScrapingEJB {
 	
 	protected static String ifnull0(String str) {
 		return str == null ? "0" : str;
+	}
+	
+	public void loadGames() throws JSONException {
+		ArrayList<SteamGame> sg = ss.getSteamGames();
+		
+		cq_ejb.addSteamGame(sg);
 	}
 }

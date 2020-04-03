@@ -1,6 +1,5 @@
 package mygamewishlist.model.ejb;
 
-import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Properties;
 
@@ -23,8 +22,8 @@ import bomboshtml.body.Img;
 import bomboshtml.body.table.Tr;
 import mygamewishlist.model.pojo.MyLogger;
 import mygamewishlist.model.pojo.ScrapedGame;
+import mygamewishlist.model.pojo.SecretClass;
 import mygamewishlist.model.pojo.db.User;
-import mygamewishlist.model.pojo.db.WishListGame;
 
 /**
  * @author Patryk
@@ -36,9 +35,9 @@ import mygamewishlist.model.pojo.db.WishListGame;
 public class MailEJB {
 	
 	private static final MyLogger LOG = MyLogger.getLOG();
+	private static final SecretClass SC = SecretClass.getSC();
 	private static final int PORT = 587;
 	private static final String USERNAME = "bumboxowatosciowowaty@gmail.com";
-	private static final String PASSWORD = "JotDe100";
 	private static final String HOST = "smtp.gmail.com";
 	
 	public MailEJB() {}
@@ -86,7 +85,7 @@ public class MailEJB {
 		Session session = Session.getInstance(prop, new Authenticator() {
 			@Override
 			protected PasswordAuthentication getPasswordAuthentication() {
-				return new PasswordAuthentication(USERNAME, PASSWORD);
+				return new PasswordAuthentication(USERNAME, SC.mailPasswd);
 			}
 		});
 		
