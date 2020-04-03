@@ -30,24 +30,24 @@ public class ScrapingEJB {
 	
 	private static final String STEAM = "Steam";
 	private static final String INSTANT = "Instant Gaming";
-	private static final String G2A = "G2A";
+	private static final String G2A = "GOG";
 	
 	private ScrapingSteam ss;
 	private ScrapingInstantGaming si;
-	private ScrapingG2A sg;
+	private ScrapingGOG gg;
 	
 	public ScrapingEJB() throws IOException {
 		ss = new ScrapingSteam();
-		sg = new ScrapingG2A();
+		gg = new ScrapingGOG();
 		si = new ScrapingInstantGaming();
 		
 		scraping.put(STEAM, ss::getSteamGames);
 		scraping.put(INSTANT, si::getInstantGames);
-		scraping.put(G2A, sg::getG2AGames);
+		scraping.put(G2A, gg::getGOGGames);
 		
 		timerScr.put(STEAM, ss::getGame);
 		timerScr.put(INSTANT, si::getGame);
-		timerScr.put(G2A, sg::getGame);
+		timerScr.put(G2A, gg::getGame);
 	}
 	
 	public Hashtable<String,ArrayList<ScrapedGame>> getGamesByNameUrl(Game2Scrap g2s) {

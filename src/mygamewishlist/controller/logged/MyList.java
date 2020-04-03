@@ -4,19 +4,28 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.ejb.EJB;
+import javax.json.JsonObject;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.WebTarget;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import mygamewishlist.model.ejb.ClientSessionEJB;
 import mygamewishlist.model.ejb.CreateQuery;
 import mygamewishlist.model.pojo.ClassPaths;
 import mygamewishlist.model.pojo.MyLogger;
+import mygamewishlist.model.pojo.SteamGame;
 import mygamewishlist.model.pojo.db.User;
 import mygamewishlist.model.pojo.db.WishListGame;
+
 
 /**
  * Servlet implementation class MyList
@@ -48,7 +57,7 @@ public class MyList extends HttpServlet {
 				ArrayList<WishListGame> list = cq_ejb.getListByIdUser(usr.getId());
 				request.setAttribute("list", list);
 			}
-
+			
 			rd.forward(request, response);
 		} catch(Exception e) {
 			LOG.logError(e.getMessage());
