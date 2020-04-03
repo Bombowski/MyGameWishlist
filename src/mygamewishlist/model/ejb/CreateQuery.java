@@ -7,10 +7,13 @@ import javax.ejb.Stateless;
 
 import mygamewishlist.model.dao.GameDAO;
 import mygamewishlist.model.dao.ReviewDAO;
+import mygamewishlist.model.dao.SteamDAO;
 import mygamewishlist.model.dao.StoreDAO;
 import mygamewishlist.model.dao.UserDAO;
+import mygamewishlist.model.dao.VariablesDAO;
 import mygamewishlist.model.dao.WishListGameDAO;
 import mygamewishlist.model.pojo.ScrapedGame;
+import mygamewishlist.model.pojo.SteamGame;
 import mygamewishlist.model.pojo.db.Game;
 import mygamewishlist.model.pojo.db.Review;
 import mygamewishlist.model.pojo.db.ReviewList;
@@ -28,6 +31,8 @@ public class CreateQuery {
 	private static final WishListGameDAO LIST_DAO = new WishListGameDAO();
 	private static final StoreDAO STORE_DAO = new StoreDAO();
 	private static final ReviewDAO REV_DAO = new ReviewDAO();
+	private static final SteamDAO STEAM_DAO = new SteamDAO();
+	private static final VariablesDAO VAR_DAO = new VariablesDAO();
 	
 	public CreateQuery() {}
 	
@@ -121,5 +126,17 @@ public class CreateQuery {
 	
 	public void updateMinMax(double min, double max, String url, int idList) {
 		LIST_DAO.updateMinMax(min, max, url, idList);
+	}
+	
+	public int getGameIdsByName(String name) {
+		return STEAM_DAO.getGameIdsByName(name);
+	}
+	
+	public void addSteamGame(ArrayList<SteamGame> sg) {
+		STEAM_DAO.addSteamGames(sg);
+	}
+	
+	public String getVariable(String name) {
+		return VAR_DAO.getVariable(name);
 	}
 }

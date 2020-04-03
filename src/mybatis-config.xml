@@ -11,6 +11,7 @@
 		<typeAlias type='mygamewishlist.model.pojo.db.ReviewList' alias='ReviewList'></typeAlias>
 		<typeAlias type='mygamewishlist.model.pojo.db.WishListGame2Scrap' alias='WishListGame2Scrap'></typeAlias>
 		<typeAlias type='mygamewishlist.model.pojo.ScrapedGame' alias='ScrapedGame'></typeAlias>
+		<typeAlias type='mygamewishlist.model.pojo.SteamGame' alias='Steam'></typeAlias>
 	</typeAliases>
 	<environments default='development'>
 		<environment id='development'>
@@ -29,5 +30,7 @@
 		<mapper resource='mygamewishlist/model/dao/mapper/Review.xml' />
 		<mapper resource='mygamewishlist/model/dao/mapper/User.xml' />
 		<mapper resource='mygamewishlist/model/dao/mapper/Store.xml' />
+		<mapper resource='mygamewishlist/model/dao/mapper/Steam.xml' />
+		<mapper resource='mygamewishlist/model/dao/mapper/Variables.xml' />
 	</mappers>
 </configuration>

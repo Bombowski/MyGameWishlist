@@ -7,14 +7,13 @@ import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Schedule;
 import javax.ejb.Stateless;
-import javax.mail.MessagingException;
+
+import org.json.JSONException;
 
 import mygamewishlist.model.ejb.scraping.ScrapingEJB;
 import mygamewishlist.model.pojo.MyLogger;
 import mygamewishlist.model.pojo.ScrapedGame;
-import mygamewishlist.model.pojo.db.Store;
 import mygamewishlist.model.pojo.db.User;
-import mygamewishlist.model.pojo.db.WishListGame;
 import mygamewishlist.model.pojo.db.WishListGame2Scrap;
 
 @LocalBean
@@ -34,9 +33,20 @@ public class TimersEJB {
 	
 	public TimersEJB() {}
 	
+	//@Schedule(second = "00", minute = "00", hour = "12")
+	@Schedule(second = "00", minute = "*/3", hour = "*")
+	public void loadGames() {
+		System.out.println("loadGames");
+		try {
+			scr_ejb.loadGames();
+		} catch (JSONException e) {
+			LOG.logError(e.getMessage());
+		}
+	}
+	
 //	@Schedule(second = "00", minute = "*/10", hour = "*")
 	public void chkPrices() {
-		System.out.println("Hello");
+		System.out.println("chkPrices");
 		
 		Hashtable<String, ScrapedGame> chkedGames = new Hashtable<String, ScrapedGame>();
 		ArrayList<User> users = cq_ejb.getUsersWithList();
