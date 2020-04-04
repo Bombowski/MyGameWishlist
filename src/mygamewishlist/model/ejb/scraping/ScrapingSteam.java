@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
+import javax.ejb.EJB;
 import javax.servlet.http.Cookie;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -16,10 +17,12 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import mygamewishlist.model.ejb.CreateQuery;
 import mygamewishlist.model.pojo.Game2Scrap;
 import mygamewishlist.model.pojo.MyLogger;
 import mygamewishlist.model.pojo.ScrapedGame;
 import mygamewishlist.model.pojo.SecretClass;
+import mygamewishlist.model.pojo.SteamApiLink;
 import mygamewishlist.model.pojo.SteamGame;
 import mygamewishlist.model.pojo.db.WishListGame;
 import mygamewishlist.model.pojo.db.WishListGame2Scrap;
@@ -27,41 +30,71 @@ import mygamewishlist.model.pojo.db.WishListGame2Scrap;
 public class ScrapingSteam {
 
 	private static final MyLogger LOG = MyLogger.getLOG(); 
-	private static final SecretClass SC = SecretClass.getSC();
 	
-	protected ScrapingSteam() {}
+	private String getList;
+	private String getApp;
+	
+	@EJB
+	CreateQuery cq_ejb;
+	
+	protected ScrapingSteam() {
+		getList = "https://api.steampowered.com/ISteamApps/GetAppList/v2/";
+		getApp = "http://store.steampowered.com/api/appdetails/";
+	}
 	
 	protected Hashtable<String, ArrayList<ScrapedGame>> getSteamGames(Game2Scrap g2s) {
-		Document doc = null;
-		try {
-			doc = ScrapingEJB.getDoc(g2s.getUrl(), g2s.getName());
-		} catch (IOException e) {
-			LOG.logError(e.getMessage());
-		}
+		ArrayList<Integer> appids = cq_ejb.getSteamGameIdsByName(g2s.getName());
+		SteamApiLink sal = new SteamApiLink();
+		Client c = ClientBuilder.newClient();
 		
-		if (doc == null) {
-			return new Hashtable<String, ArrayList<ScrapedGame>>();
-		}		
-		if (doc.select("#search_result_container").text().equals("No results were returned for that query.")) {
-			return new Hashtable<String, ArrayList<ScrapedGame>>();
-		}
-		
-		Elements ele = doc.select(".search_result_row");
-		ArrayList<ScrapedGame> games = new ArrayList<ScrapedGame>();
-		
-		
-		for (int i = 0; i < ele.size(); i++) {
-			ScrapedGame sc = getRow(ele.get(i), g2s.getStoreName());
+		for (Integer id : appids) {
+			sal.setLink(getApp);
+			sal.addParam("appids", id + "");
+			WebTarget t = c.target(sal.print());
 			
-			if (sc != null) {
-				games.add(sc);
+			
+			try {
+				JSONObject jo = new JSONObject((String)t.request().get(String.class));
+				JSONObject data = jo.getJSONObject(id + "").getJSONObject("data");
+				
+				int i = 0;
+			} catch (JSONException e) {
+				LOG.logError(e.getMessage());
 			}
 		}
 		
-		Hashtable<String, ArrayList<ScrapedGame>> toReturn = new Hashtable<String, ArrayList<ScrapedGame>>();
-		toReturn.put(g2s.getStoreName(), games);
 		
-		return toReturn;
+//		Document doc = null;
+//		try {
+//			doc = ScrapingEJB.getDoc(g2s.getUrl(), g2s.getName());
+//		} catch (IOException e) {
+//			LOG.logError(e.getMessage());
+//		}
+//		
+//		if (doc == null) {
+//			return new Hashtable<String, ArrayList<ScrapedGame>>();
+//		}		
+//		if (doc.select("#search_result_container").text().equals("No results were returned for that query.")) {
+//			return new Hashtable<String, ArrayList<ScrapedGame>>();
+//		}
+//		
+//		Elements ele = doc.select(".search_result_row");
+//		ArrayList<ScrapedGame> games = new ArrayList<ScrapedGame>();
+//		
+//		
+//		for (int i = 0; i < ele.size(); i++) {
+//			ScrapedGame sc = getRow(ele.get(i), g2s.getStoreName());
+//			
+//			if (sc != null) {
+//				games.add(sc);
+//			}
+//		}
+//		
+//		Hashtable<String, ArrayList<ScrapedGame>> toReturn = new Hashtable<String, ArrayList<ScrapedGame>>();
+//		toReturn.put(g2s.getStoreName(), games);
+//		
+//		return toReturn;
+		return new Hashtable<String, ArrayList<ScrapedGame>>();
 	}
 	
 	protected ScrapedGame getGame(WishListGame2Scrap wlg) {
@@ -167,8 +200,11 @@ public class ScrapingSteam {
 	}
 
 	public ArrayList<SteamGame> getSteamGames() throws JSONException {
+		SteamApiLink sal = new SteamApiLink();
+		sal.setLink(getList);
+		
 		Client c = ClientBuilder.newClient();
-		WebTarget t = c.target("https://api.steampowered.com/ISteamApps/GetAppList/v2?key=" + SC.steamToken);
+		WebTarget t = c.target(sal.print());
 		JSONObject jo = new JSONObject((String)t.request().get(String.class));
 		JSONObject applist = (JSONObject)jo.get("applist");
 		JSONArray jarr = applist.getJSONArray("apps");
@@ -186,9 +222,5 @@ public class ScrapingSteam {
 		}
 		
 		return games;
-	}
-	
-	public WishListGame asd() {
-		return null;
 	}
 }

@@ -31,10 +31,10 @@ public class SteamDAO {
 		session.close();
 	}
 	
-	public int getGameIdsByName(String name) {
+	public ArrayList<Integer> getSteamGameIdsByName(String name) {
 		try {
 			getUserMapper();
-			return steamMapper.getGameIdsByName(name);
+			return steamMapper.getSteamGameIdsByName(name);
 		} catch(Exception e) {
 			LOG.logError(e.getMessage());
 		} finally {
@@ -44,15 +44,16 @@ public class SteamDAO {
 				LOG.logError(e.getMessage());
 			}
 		}
-		return -1;
+		return new ArrayList<Integer>();
 	}
 	
 	public void addSteamGames(ArrayList<SteamGame> sg) {
 		try {
 			getUserMapper();
-			List list = sg;
+			for (SteamGame game : sg) {
+				steamMapper.addGame(game);
+			}
 			
-			steamMapper.addGame(list);
 			session.commit();
 		} catch(Exception e) {
 			LOG.logError(e.getMessage());

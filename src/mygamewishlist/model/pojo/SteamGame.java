@@ -14,11 +14,6 @@ public class SteamGame {
 		this.appid = appid;
 	}
 
-	@Override
-	public String toString() {
-		return "SteamGame [name=" + name + ", appid=" + appid + "]";
-	}
-
 	public SteamGame() {
 		super();
 	}

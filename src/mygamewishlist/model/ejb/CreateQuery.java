@@ -128,11 +128,11 @@ public class CreateQuery {
 		LIST_DAO.updateMinMax(min, max, url, idList);
 	}
 	
-	public int getGameIdsByName(String name) {
-		return STEAM_DAO.getGameIdsByName(name);
+	public ArrayList<Integer> getSteamGameIdsByName(String name) {
+		return STEAM_DAO.getSteamGameIdsByName(name);
 	}
 	
-	public void addSteamGame(ArrayList<SteamGame> sg) {
+	public void addSteamGames(ArrayList<SteamGame> sg) {
 		STEAM_DAO.addSteamGames(sg);
 	}
 	
