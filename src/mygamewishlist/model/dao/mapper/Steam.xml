@@ -4,7 +4,7 @@
   
 <mapper namespace="mygamewishlist.model.dao.mapper.SteamMapper">
 	
-	<select id="getGameIdsByName" resultType="Integer">
+	<select id="getSteamGameIdsByName" resultType="Integer">
 		SELECT APPID FROM STEAM_GAMES WHERE NAME LIKE %#{name}%
 	</select>
 	

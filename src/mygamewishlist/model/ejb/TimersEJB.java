@@ -33,8 +33,8 @@ public class TimersEJB {
 	
 	public TimersEJB() {}
 	
-	//@Schedule(second = "00", minute = "00", hour = "12")
-	@Schedule(second = "00", minute = "*/3", hour = "*")
+	@Schedule(second = "00", minute = "00", hour = "12")
+//	@Schedule(second = "00", minute = "*/3", hour = "*")
 	public void loadGames() {
 		System.out.println("loadGames");
 		try {
