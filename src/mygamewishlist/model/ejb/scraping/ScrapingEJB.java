@@ -43,7 +43,7 @@ public class ScrapingEJB {
 	private ScrapingInstantGaming si;
 	private ScrapingGOG gg;
 	
-	public ScrapingEJB() throws IOException {
+	public ScrapingEJB() {
 		ss = new ScrapingSteam();
 		gg = new ScrapingGOG();
 		si = new ScrapingInstantGaming();
