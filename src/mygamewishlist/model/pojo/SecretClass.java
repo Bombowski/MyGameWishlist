@@ -2,18 +2,18 @@ package mygamewishlist.model.pojo;
 
 import javax.ejb.EJB;
 
-import mygamewishlist.model.ejb.CreateQuery;
+import mygamewishlist.model.ejb.CreateQueryEJB;
 
 public class SecretClass {
 
 	private static SecretClass sc;
 	
 	@EJB
-	CreateQuery cq_ejb;
+	CreateQueryEJB cq_ejb;
 	
 	private SecretClass() {
 		if (cq_ejb == null) {
-			cq_ejb = new CreateQuery();
+			cq_ejb = new CreateQueryEJB();
 		}
 		mailPasswd = cq_ejb.getVariable("emailPasswd");
 		steamToken = cq_ejb.getVariable("steamToken");

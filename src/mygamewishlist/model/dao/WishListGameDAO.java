@@ -9,6 +9,7 @@ import mygamewishlist.model.pojo.MyLogger;
 import mygamewishlist.model.pojo.ScrapedGame;
 import mygamewishlist.model.pojo.db.WishListGame;
 import mygamewishlist.model.pojo.db.WishListGame2Scrap;
+import mygamewishlist.model.pojo.db.WishListGameSteam;
 
 public class WishListGameDAO {
 
@@ -68,7 +69,11 @@ public class WishListGameDAO {
 		try {
 			getWlgMapper();
 			for (WishListGame wlg : games) {
-				listMapper.addGame2Wishlist(wlg);
+				if (wlg instanceof WishListGameSteam) {
+					listMapper.addSteamGame2Wishlist((WishListGameSteam) wlg);
+				} else {
+					listMapper.addGame2Wishlist(wlg);
+				}
 			}
 			session.commit();
 		} catch(Exception e) {

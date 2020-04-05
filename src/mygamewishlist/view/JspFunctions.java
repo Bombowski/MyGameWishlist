@@ -110,8 +110,8 @@ public class JspFunctions {
 			Tr tr = new Tr();
 			tr.addTd(new Img(sg.getImg(), sg.getFullName()));
 			tr.addTd(new A(sg.getFullName().replace("'", "&#39;"), sg.getUrl()));
-			tr.addTd(getStringPrice(sg.getDefaultPrice()));
-			tr.addTd(getStringPrice(sg.getCurrentPrice()));
+			tr.addTd(sg.getDefaultPrice() + "€");
+			tr.addTd(sg.getCurrentPrice() + "€");
 			tr.addTd(sg.getCurrentDiscount() + "%");
 			tr.addTd(new Input("checkbox", "games", sg.getStoreName() + "&" +  i));
 			tr.addTd(">=" + new Input("number", sg.getStoreName() + "&min" +  i).print());
@@ -122,15 +122,5 @@ public class JspFunctions {
 		}
 		
 		return toReturn.toString();
-	}
-	
-	private String getStringPrice(double price) {
-		if (price == 0) {
-			return "Free to play";
-		} else if (price == -1) {
-			return "Free demo";
-		} else {
-			return price + "€";
-		}
 	}
 }
