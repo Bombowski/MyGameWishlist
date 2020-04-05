@@ -1,4 +1,4 @@
-package mygamewishlist.model.ejb.scraping;
+package mygamewishlist.model.scraping;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -8,6 +8,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import mygamewishlist.model.ejb.ScrapingEJB;
 import mygamewishlist.model.pojo.Game2Scrap;
 import mygamewishlist.model.pojo.MyLogger;
 import mygamewishlist.model.pojo.ScrapedGame;
@@ -17,9 +18,9 @@ public class ScrapingInstantGaming {
 
 	private static final MyLogger LOG = MyLogger.getLOG();
 	
-	protected ScrapingInstantGaming() {}
+	public ScrapingInstantGaming() {}
 	
-	protected Hashtable<String,ArrayList<ScrapedGame>> getInstantGames(Game2Scrap g2s) {
+	public Hashtable<String,ArrayList<ScrapedGame>> getInstantGames(Game2Scrap g2s) {
 		Document doc = null;
 		try {
 			doc = ScrapingEJB.getDoc(g2s.getUrl(), g2s.getName());
@@ -66,7 +67,7 @@ public class ScrapingInstantGaming {
 		
 		double discountD;
 		double defaultP;
-		double currentP = Double.parseDouble(ScrapingEJB.splitSpacesReplaceCommasEuros(priceS)[0]);
+		double currentP = Double.parseDouble(ScrapingEJB.replaceCommasEurosPercent(priceS));
 		
 		if (discountS.equals("")) {
 			defaultP = currentP;
@@ -88,7 +89,7 @@ public class ScrapingInstantGaming {
 		return sg;
 	}
 	
-	protected ScrapedGame getGame(WishListGame2Scrap wlg) {
+	public ScrapedGame getGame(WishListGame2Scrap wlg) {
 		
 		
 		return null;

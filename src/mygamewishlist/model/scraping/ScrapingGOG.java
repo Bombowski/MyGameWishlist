@@ -1,4 +1,4 @@
-package mygamewishlist.model.ejb.scraping;
+package mygamewishlist.model.scraping;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -7,6 +7,7 @@ import java.util.Hashtable;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
+import mygamewishlist.model.ejb.ScrapingEJB;
 import mygamewishlist.model.pojo.Game2Scrap;
 import mygamewishlist.model.pojo.MyLogger;
 import mygamewishlist.model.pojo.ScrapedGame;
@@ -16,9 +17,9 @@ public class ScrapingGOG {
 
 	private static final MyLogger LOG = MyLogger.getLOG();
 	
-	protected ScrapingGOG() {}
+	public ScrapingGOG() {}
 	
-	protected Hashtable<String,ArrayList<ScrapedGame>> getGOGGames(Game2Scrap g2s) {
+	public Hashtable<String,ArrayList<ScrapedGame>> getGOGGames(Game2Scrap g2s) {
 		Document doc = null;
 		try {
 			doc = Jsoup.connect(new StringBuilder()
@@ -36,10 +37,10 @@ public class ScrapingGOG {
 		return new Hashtable<String,ArrayList<ScrapedGame>>();
 	}
 	
-	protected ScrapedGame getGame(WishListGame2Scrap wlg) {
+	public ScrapedGame getGame(WishListGame2Scrap wlg) {
 		Document doc = null;
 		try {
-			doc = ScrapingEJB.getDoc(wlg.getStoreUrl() + wlg.getGameUrl(), wlg.getGameName());
+			doc = ScrapingEJB.getDoc(wlg.getUrlStore() + wlg.getUrlGame(), wlg.getGameName());
 		} catch (IOException e) {
 			LOG.logError(e.getMessage());
 		}
