@@ -24,7 +24,7 @@ import mygamewishlist.model.pojo.db.WishListGame2Scrap;
 
 @Stateless
 @LocalBean
-public class CreateQuery {
+public class CreateQueryEJB {
 
 	private static final UserDAO USR_DAO = new UserDAO();
 	private static final GameDAO GAME_DAO = new GameDAO();
@@ -34,7 +34,7 @@ public class CreateQuery {
 	private static final SteamDAO STEAM_DAO = new SteamDAO();
 	private static final VariablesDAO VAR_DAO = new VariablesDAO();
 	
-	public CreateQuery() {}
+	public CreateQueryEJB() {}
 	
 	public User getUserByEmail(String email) {
 		return USR_DAO.getUserByEmail(email);

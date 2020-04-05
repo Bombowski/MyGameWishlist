@@ -1,4 +1,4 @@
-package mygamewishlist.model.ejb.scraping;
+package mygamewishlist.model.ejb;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,12 +14,14 @@ import org.json.JSONException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
-import mygamewishlist.model.ejb.CreateQuery;
 import mygamewishlist.model.pojo.Game2Scrap;
 import mygamewishlist.model.pojo.MyLogger;
 import mygamewishlist.model.pojo.ScrapedGame;
 import mygamewishlist.model.pojo.SteamGame;
 import mygamewishlist.model.pojo.db.WishListGame2Scrap;
+import mygamewishlist.model.scraping.ScrapingGOG;
+import mygamewishlist.model.scraping.ScrapingInstantGaming;
+import mygamewishlist.model.scraping.ScrapingSteam;
 
 @Stateless
 @LocalBean
@@ -28,7 +30,7 @@ public class ScrapingEJB {
 	private static final MyLogger LOG = MyLogger.getLOG(); 
 	
 	@EJB
-	CreateQuery cq_ejb;
+	CreateQueryEJB cq_ejb;
 	
 	private Hashtable<String, Function<Game2Scrap, Hashtable<String,ArrayList<ScrapedGame>>>> scraping = 
 			new Hashtable<String, Function<Game2Scrap, Hashtable<String,ArrayList<ScrapedGame>>>>();
@@ -37,7 +39,7 @@ public class ScrapingEJB {
 	
 	private static final String STEAM = "Steam";
 	private static final String INSTANT = "Instant Gaming";
-	private static final String G2A = "GOG";
+	private static final String GOG = "GOG";
 	
 	private ScrapingSteam ss;
 	private ScrapingInstantGaming si;
@@ -50,11 +52,11 @@ public class ScrapingEJB {
 		
 		scraping.put(STEAM, ss::getSteamGames);
 		scraping.put(INSTANT, si::getInstantGames);
-		scraping.put(G2A, gg::getGOGGames);
+		scraping.put(GOG, gg::getGOGGames);
 		
 		timerScr.put(STEAM, ss::getGame);
 		timerScr.put(INSTANT, si::getGame);
-		timerScr.put(G2A, gg::getGame);
+		timerScr.put(GOG, gg::getGame);
 	}
 	
 	public Hashtable<String,ArrayList<ScrapedGame>> getGamesByNameUrl(Game2Scrap g2s) {
@@ -76,22 +78,15 @@ public class ScrapingEJB {
 		return new ScrapedGame();
 	}
 	
-	protected static String replaceSpaces(String str) {
+	public static String replaceSpaces(String str) {
 		return str.replace(" ", "+");
 	}
 	
-	protected static String[] splitSpacesReplaceCommasEuros(String price) {
-		String prices[] = price.split(" ");
-
-		for (int j = 0; j < prices.length; j++) {						
-			prices[j] = prices[j].replace(",", ".");
-			prices[j] = prices[j].replace("€", "");
-		}
-		
-		return prices;
+	public static String replaceCommasEurosPercent(String price) {
+		return price.replace(",", ".").replace("€", "").replace("%", "");
 	}
 
-	protected static Document getDoc(String url, String name, Cookie ck) throws IOException {
+	public static Document getDoc(String url, String name, Cookie ck) throws IOException {
 		Document doc = Jsoup
 				.connect(new StringBuilder()
 					.append(url)
@@ -103,7 +98,7 @@ public class ScrapingEJB {
 		return doc;
 	}
 	
-	protected static Document getDoc(String url, String name) throws IOException {
+	public static Document getDoc(String url, String name) throws IOException {
 		Document doc = Jsoup.connect(new StringBuilder()
 						.append(url)
 						.append(name)
@@ -113,7 +108,7 @@ public class ScrapingEJB {
 		return doc;
 	}
 	
-	protected static String ifnull0(String str) {
+	public static String ifnull0(String str) {
 		return str == null ? "0" : str;
 	}
 	
