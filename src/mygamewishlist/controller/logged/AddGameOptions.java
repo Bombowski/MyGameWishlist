@@ -13,12 +13,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import mygamewishlist.model.ejb.ClientSessionEJB;
-import mygamewishlist.model.ejb.CreateQuery;
+import mygamewishlist.model.ejb.CreateQueryEJB;
 import mygamewishlist.model.pojo.ClassPaths;
 import mygamewishlist.model.pojo.MyLogger;
 import mygamewishlist.model.pojo.ScrapedGame;
 import mygamewishlist.model.pojo.db.Store;
 import mygamewishlist.model.pojo.db.WishListGame;
+import mygamewishlist.model.pojo.db.WishListGameSteam;
 
 /**
  * Servlet implementation class AddGameOptions
@@ -37,7 +38,7 @@ public class AddGameOptions extends HttpServlet {
 	ClientSessionEJB sc_ejb;
 	
 	@EJB
-	CreateQuery cq_ejb;
+	CreateQueryEJB cq_ejb;
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
@@ -130,12 +131,19 @@ public class AddGameOptions extends HttpServlet {
 			}
 			
 			ScrapedGame g = stGames.get(arrPos);
-			WishListGame wlg = new WishListGame();
+			
+			WishListGame wlg;
+			if (store.equals("Steam")) {
+				wlg = new WishListGame();
+			} else {
+				wlg = new WishListGameSteam();
+				((WishListGameSteam) wlg).setAppid(Integer.parseInt(g.getUrl().substring(g.getUrl().lastIndexOf("/"))));
+			}
 			
 			wlg.setUrlGame(fixUrl(g.getUrl(), stores, g.getStoreName()));
 			wlg.setIdList(cq_ejb.getIdListByIdUser(sc_ejb.getLoggedUser(request).getId()));
 			wlg.setIdStore(cq_ejb.getStoreByName(store).getId());
-			wlg.setName(g.getFullName());
+			wlg.setGameName(g.getFullName());
 			wlg.setDefaultPrice(g.getDefaultPrice());
 			wlg.setCurrentPrice(g.getCurrentPrice());
 			wlg.setDiscount(g.getCurrentDiscount());

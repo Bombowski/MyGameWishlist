@@ -8,8 +8,9 @@
 		<typeAlias type='mygamewishlist.model.pojo.db.Review' alias='Review'></typeAlias>
 		<typeAlias type='mygamewishlist.model.pojo.db.Store' alias='Store'></typeAlias>
 		<typeAlias type='mygamewishlist.model.pojo.db.WishListGame' alias='WishListGame'></typeAlias>
-		<typeAlias type='mygamewishlist.model.pojo.db.ReviewList' alias='ReviewList'></typeAlias>
 		<typeAlias type='mygamewishlist.model.pojo.db.WishListGame2Scrap' alias='WishListGame2Scrap'></typeAlias>
+		<typeAlias type='mygamewishlist.model.pojo.db.WishListGameSteam' alias='WishListGameSteam'></typeAlias>
+		<typeAlias type='mygamewishlist.model.pojo.db.ReviewList' alias='ReviewList'></typeAlias>
 		<typeAlias type='mygamewishlist.model.pojo.ScrapedGame' alias='ScrapedGame'></typeAlias>
 		<typeAlias type='mygamewishlist.model.pojo.SteamGame' alias='Steam'></typeAlias>
 	</typeAliases>

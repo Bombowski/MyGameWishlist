@@ -2,16 +2,15 @@ package mygamewishlist.model.pojo.db;
 
 public class WishListGame {
 
-	private String urlStore;
 	private String urlGame;
+	private String urlStore;
 	private int idList;
 	private int idStore;
-	private String name;
+	private String gameName;
 	private String img;
 	private double defaultPrice;
 	private double currentPrice;
 	private double discount;
-	private double lastNotifiedPrice;
 	private double minPrice;
 	private double maxPrice;
 
@@ -19,30 +18,20 @@ public class WishListGame {
 		super();
 	}
 
-	public WishListGame(String urlStore, String urlGame, int idList, int idStore, String name, String img,
-			double defaultPrice, double currentPrice, double discount, double lastNotifiedPrice, double minPrice,
-			double maxPrice) {
+	public WishListGame(String urlGame, String urlStore, int idList, int idStore, String gameName, String img,
+			double defaultPrice, double currentPrice, double discount, double minPrice, double maxPrice) {
 		super();
-		this.urlStore = urlStore;
 		this.urlGame = urlGame;
+		this.urlStore = urlStore;
 		this.idList = idList;
 		this.idStore = idStore;
-		this.name = name;
+		this.gameName = gameName;
 		this.img = img;
 		this.defaultPrice = defaultPrice;
 		this.currentPrice = currentPrice;
 		this.discount = discount;
-		this.lastNotifiedPrice = lastNotifiedPrice;
 		this.minPrice = minPrice;
 		this.maxPrice = maxPrice;
-	}
-
-	public String getUrlStore() {
-		return urlStore;
-	}
-
-	public void setUrlStore(String urlStore) {
-		this.urlStore = urlStore;
 	}
 
 	public String getUrlGame() {
@@ -51,6 +40,14 @@ public class WishListGame {
 
 	public void setUrlGame(String urlGame) {
 		this.urlGame = urlGame;
+	}
+
+	public String getUrlStore() {
+		return urlStore;
+	}
+
+	public void setUrlStore(String urlStore) {
+		this.urlStore = urlStore;
 	}
 
 	public int getIdList() {
@@ -69,12 +66,12 @@ public class WishListGame {
 		this.idStore = idStore;
 	}
 
-	public String getName() {
-		return name;
+	public String getGameName() {
+		return gameName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setGameName(String gameName) {
+		this.gameName = gameName;
 	}
 
 	public String getImg() {
@@ -107,14 +104,6 @@ public class WishListGame {
 
 	public void setDiscount(double discount) {
 		this.discount = discount;
-	}
-
-	public double getLastNotifiedPrice() {
-		return lastNotifiedPrice;
-	}
-
-	public void setLastNotifiedPrice(double lastNotifiedPrice) {
-		this.lastNotifiedPrice = lastNotifiedPrice;
 	}
 
 	public double getMinPrice() {

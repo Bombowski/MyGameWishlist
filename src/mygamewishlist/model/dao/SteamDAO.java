@@ -1,7 +1,6 @@
 package mygamewishlist.model.dao;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 
@@ -34,7 +33,8 @@ public class SteamDAO {
 	public ArrayList<Integer> getSteamGameIdsByName(String name) {
 		try {
 			getUserMapper();
-			return steamMapper.getSteamGameIdsByName(name);
+			return steamMapper.getSteamGameIdsByName(
+					new StringBuilder().append("%").append(name).append("%").toString());
 		} catch(Exception e) {
 			LOG.logError(e.getMessage());
 		} finally {

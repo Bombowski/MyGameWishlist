@@ -10,7 +10,6 @@ import javax.ejb.Stateless;
 
 import org.json.JSONException;
 
-import mygamewishlist.model.ejb.scraping.ScrapingEJB;
 import mygamewishlist.model.pojo.MyLogger;
 import mygamewishlist.model.pojo.ScrapedGame;
 import mygamewishlist.model.pojo.db.User;
@@ -26,7 +25,7 @@ public class TimersEJB {
 	ScrapingEJB scr_ejb;
 	
 	@EJB
-	CreateQuery cq_ejb;
+	CreateQueryEJB cq_ejb;
 	
 	@EJB
 	MailEJB mail_ejb;
@@ -63,7 +62,7 @@ public class TimersEJB {
 					scGame.setFullName(wlg.getGameName());
 					scGame.setImg(wlg.getImg());
 					scGame.setStoreName(wlg.getStoreName());
-					chkedGames.put(wlg.getGameUrl(), scGame);
+					chkedGames.put(wlg.getUrlGame(), scGame);
 					toSend.put(i, scGame);
 					i++;
 //				}

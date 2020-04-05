@@ -5,7 +5,7 @@
 <mapper namespace="mygamewishlist.model.dao.mapper.SteamMapper">
 	
 	<select id="getSteamGameIdsByName" resultType="Integer">
-		SELECT APPID FROM STEAM_GAMES WHERE NAME LIKE %#{name}%
+		SELECT APPID FROM STEAM_GAMES WHERE NAME LIKE #{name} ORDER BY APPID DESC LIMIT 10
 	</select>
 	
 	<insert id="addGame" parameterType="Steam">

@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import mygamewishlist.model.ejb.ClientSessionEJB;
-import mygamewishlist.model.ejb.CreateQuery;
+import mygamewishlist.model.ejb.CreateQueryEJB;
 import mygamewishlist.model.pojo.ClassPaths;
 import mygamewishlist.model.pojo.MyLogger;
 import mygamewishlist.model.pojo.db.User;
@@ -31,7 +31,7 @@ public class DeleteGame extends HttpServlet {
 	ClientSessionEJB sc_ejb;
 	
 	@EJB
-	CreateQuery cq_ejb;
+	CreateQueryEJB cq_ejb;
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {

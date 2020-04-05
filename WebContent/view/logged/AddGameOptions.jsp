@@ -24,7 +24,7 @@
 
 <html>
 <jsp:include page="../template/Head.jsp">
-	<jsp:param name="js" value="ClearGameOptions" />
+	<jsp:param name="js" value="AddGameOptions,ResizeImgs" />
 </jsp:include>
 <body>
 	<!-- añado el html del header -->

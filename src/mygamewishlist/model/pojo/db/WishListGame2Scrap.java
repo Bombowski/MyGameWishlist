@@ -2,8 +2,8 @@ package mygamewishlist.model.pojo.db;
 
 public class WishListGame2Scrap {
 
-	private String storeUrl;
-	private String gameUrl;
+	private String urlStore;
+	private String urlGame;
 	private String storeName;
 	private String gameName;
 	private String img;
@@ -16,11 +16,11 @@ public class WishListGame2Scrap {
 		super();
 	}
 
-	public WishListGame2Scrap(String storeUrl, String gameUrl, String storeName, String gameName, String img,
+	public WishListGame2Scrap(String urlStore, String urlGame, String storeName, String gameName, String img,
 			double defaultPrice, double currentPrice, double minPrice, double maxPrice) {
 		super();
-		this.storeUrl = storeUrl;
-		this.gameUrl = gameUrl;
+		this.urlStore = urlStore;
+		this.urlGame = urlGame;
 		this.storeName = storeName;
 		this.gameName = gameName;
 		this.img = img;
@@ -30,20 +30,20 @@ public class WishListGame2Scrap {
 		this.maxPrice = maxPrice;
 	}
 
-	public String getStoreUrl() {
-		return storeUrl;
+	public String getUrlStore() {
+		return urlStore;
 	}
 
-	public void setStoreUrl(String storeUrl) {
-		this.storeUrl = storeUrl;
+	public void setUrlStore(String urlStore) {
+		this.urlStore = urlStore;
 	}
 
-	public String getGameUrl() {
-		return gameUrl;
+	public String getUrlGame() {
+		return urlGame;
 	}
 
-	public void setGameUrl(String gameUrl) {
-		this.gameUrl = gameUrl;
+	public void setUrlGame(String urlGame) {
+		this.urlGame = urlGame;
 	}
 
 	public String getStoreName() {

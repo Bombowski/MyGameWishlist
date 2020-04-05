@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import mygamewishlist.model.pojo.ScrapedGame;
 import mygamewishlist.model.pojo.db.WishListGame;
 import mygamewishlist.model.pojo.db.WishListGame2Scrap;
+import mygamewishlist.model.pojo.db.WishListGameSteam;
 
 public interface WishListGameMapper {
 
@@ -15,6 +16,8 @@ public interface WishListGameMapper {
 	public WishListGame getGameFromListByIdUserUrl(@Param("idUser") int idUser, @Param("url") String url);
 	
 	public void addGame2Wishlist(WishListGame wlg);
+	
+	public void addSteamGame2Wishlist(WishListGameSteam wlg);
 	
 	public ArrayList<WishListGame2Scrap> getGamesFromListById(@Param("idUser") int idUser);
 	
