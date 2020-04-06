@@ -110,12 +110,14 @@ public class JspFunctions {
 			Tr tr = new Tr();
 			tr.addTd(new Img(sg.getImg(), sg.getFullName()));
 			tr.addTd(new A(sg.getFullName().replace("'", "&#39;"), sg.getUrl()));
-			tr.addTd(sg.getDefaultPrice() + "€");
-			tr.addTd(sg.getCurrentPrice() + "€");
+			tr.addTd(Math.round(sg.getDefaultPrice() * 100f) / 100f + "€");
+			tr.addTd(Math.round(sg.getCurrentPrice() * 100f) / 100f + "€");
 			tr.addTd(sg.getCurrentDiscount() + "%");
 			tr.addTd(new Input("checkbox", "games", sg.getStoreName() + "&" +  i));
-			tr.addTd(">=" + new Input("number", sg.getStoreName() + "&min" +  i).print());
-			tr.addTd("<=" + new Input("number", sg.getStoreName() + "&max" +  i).print());
+			tr.addTd(">=<input type='number' name='" + sg.getStoreName() + "&min" + i + 
+					"' step='0.01' min='-1'>");
+			tr.addTd(">=<input type='number' name='" + sg.getStoreName() + "&max" + i + 
+					"' step='0.01' min='-1'>");
 			
 			toReturn.append(tr.print());
 			i++;
