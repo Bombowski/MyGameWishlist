@@ -13,7 +13,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import mygamewishlist.model.ejb.CreateQueryEJB;
-import mygamewishlist.model.ejb.ScrapingEJB;
 import mygamewishlist.model.pojo.Game2Scrap;
 import mygamewishlist.model.pojo.MyLogger;
 import mygamewishlist.model.pojo.ScrapedGame;
@@ -43,24 +42,20 @@ public class ScrapingSteam {
 		Client c = ClientBuilder.newClient();
 
 		for (Integer id : appids) {
-			sal.setLink(getApp);
+			sal.setLink(this.getApp);
 			sal.addParam("appids", id + "");
 			WebTarget t = c.target(sal.print());
 
 			try {
-				double start1 = System.currentTimeMillis();
 				JSONObject jo = new JSONObject((String) t.request().get(String.class));
-				System.out.println("Conecting, getting json - " + (System.currentTimeMillis() - start1));
 				JSONObject chk = jo.getJSONObject(id + "");
 
-				double start2 = System.currentTimeMillis();
 				if (chk.getBoolean("success")) {
 					JSONObject data = chk.getJSONObject("data");
 					if (!data.getBoolean("is_free")) {
 						games.add(getRow(data, id, g2s.getUrl(), g2s.getStoreName()));
 					}
 				}
-				System.out.println("Got data from json, adding to list - " + (System.currentTimeMillis() - start2));
 			} catch (JSONException e) {
 				LOG.logError(e.getMessage());
 			}
@@ -82,14 +77,14 @@ public class ScrapingSteam {
 
 		JSONObject prices = data.getJSONObject("price_overview");
 		ssg.setCurrentDiscount(prices.getDouble("discount_percent"));
-		ssg.setCurrentPrice(
-				Double.parseDouble(ScrapingEJB.replaceCommasEurosPercent(prices.getString("final_formatted"))));
+		ssg.setCurrentPrice(Double.parseDouble(
+				ScrapingFunctions.replaceCommasEurosPercent(prices.getString("final_formatted"))));
 		
 		if (ssg.getCurrentDiscount() == 0) {
 			ssg.setDefaultPrice(ssg.getCurrentPrice());
 		} else {
-			ssg.setDefaultPrice(
-					Double.parseDouble(ScrapingEJB.replaceCommasEurosPercent(prices.getString("initial_formatted"))));			
+			ssg.setDefaultPrice(Double.parseDouble(
+					ScrapingFunctions.replaceCommasEurosPercent(prices.getString("initial_formatted"))));			
 		}		
 
 		return ssg;

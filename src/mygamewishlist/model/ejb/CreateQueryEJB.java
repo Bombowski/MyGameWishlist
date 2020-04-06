@@ -120,8 +120,8 @@ public class CreateQueryEJB {
 		LIST_DAO.deleteGameWishlist(url, idList);
 	}
 	
-	public void updatePrices(ScrapedGame sg) {
-		LIST_DAO.updatePrices(sg);
+	public void updatePrices(ArrayList<ScrapedGame> sg, int idList) {
+		LIST_DAO.updatePrices(sg, idList);
 	}
 	
 	public void updateMinMax(double min, double max, String url, int idList) {

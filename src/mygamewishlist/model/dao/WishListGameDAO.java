@@ -119,10 +119,12 @@ public class WishListGameDAO {
 		}
 	}
 	
-	public void updatePrices(ScrapedGame sg) {
+	public void updatePrices(ArrayList<ScrapedGame> games, int idList) {
 		try {
 			getWlgMapper();
-			listMapper.updatePrices(sg);
+			for (ScrapedGame sg : games) {
+				listMapper.updatePrices(sg, idList);
+			}
 			session.commit();
 		} catch(Exception e) {
 			LOG.logError(e.getMessage());

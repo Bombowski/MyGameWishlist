@@ -1,6 +1,5 @@
 package mygamewishlist.model.ejb;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.function.Function;
@@ -8,11 +7,8 @@ import java.util.function.Function;
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
-import javax.servlet.http.Cookie;
 
 import org.json.JSONException;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
 
 import mygamewishlist.model.pojo.Game2Scrap;
 import mygamewishlist.model.pojo.MyLogger;
@@ -76,40 +72,6 @@ public class ScrapingEJB {
 			}
 		}
 		return new ScrapedGame();
-	}
-	
-	public static String replaceSpaces(String str) {
-		return str.replace(" ", "+");
-	}
-	
-	public static String replaceCommasEurosPercent(String price) {
-		return price.replace(",", ".").replace("€", "").replace("%", "");
-	}
-
-	public static Document getDoc(String url, String name, Cookie ck) throws IOException {
-		Document doc = Jsoup
-				.connect(new StringBuilder()
-					.append(url)
-					.append(name)
-					.toString())
-				.cookie(ck.getName(), ck.getValue())
-				.get();
-		
-		return doc;
-	}
-	
-	public static Document getDoc(String url, String name) throws IOException {
-		Document doc = Jsoup.connect(new StringBuilder()
-						.append(url)
-						.append(name)
-						.toString())
-					.get();
-		
-		return doc;
-	}
-	
-	public static String ifnull0(String str) {
-		return str == null ? "0" : str;
 	}
 	
 	public void loadGames() throws JSONException {
