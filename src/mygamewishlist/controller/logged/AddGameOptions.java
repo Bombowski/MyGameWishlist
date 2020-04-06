@@ -118,11 +118,18 @@ public class AddGameOptions extends HttpServlet {
 			double min = -1;
 			
 			try {
-				min = Double.parseDouble(request.getParameter(store + "&min" + arrPos));
-				max = Double.parseDouble(request.getParameter(store + "&max" + arrPos));
+				String minS = request.getParameter(store + "&min" + arrPos);
+				String maxS = request.getParameter(store + "&max" + arrPos);
+				
+				if (!minS.equals("")) {
+					min = Double.parseDouble(request.getParameter(store + "&min" + arrPos));
+				}
+				if (!maxS.equals("")) {
+					max = Double.parseDouble(request.getParameter(store + "&max" + arrPos));
+				}
 			} catch (NumberFormatException e) {
 				LOG.logError(e.getMessage());
-			}			
+			}		
 			
 			ArrayList<ScrapedGame> stGames = games.get(store);
 			
@@ -133,11 +140,11 @@ public class AddGameOptions extends HttpServlet {
 			ScrapedGame g = stGames.get(arrPos);
 			
 			WishListGame wlg;
-			if (store.equals("Steam")) {
+			if (!store.equals("Steam")) {
 				wlg = new WishListGame();
 			} else {
 				wlg = new WishListGameSteam();
-				((WishListGameSteam) wlg).setAppid(Integer.parseInt(g.getUrl().substring(g.getUrl().lastIndexOf("/"))));
+				((WishListGameSteam) wlg).setAppid(Integer.parseInt(g.getUrl().substring(g.getUrl().lastIndexOf("/") + 1)));
 			}
 			
 			wlg.setUrlGame(fixUrl(g.getUrl(), stores, g.getStoreName()));

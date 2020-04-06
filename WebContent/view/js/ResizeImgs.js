@@ -1,7 +1,12 @@
 $(window).ready(function() {
-	var imgs = document.getElementsByClassName("table")[0].getElementsByTagName("img");
+	var tables = document.getElementsByClassName("table");
 	
-	for (var i = 0; i < imgs.length; i++) {
-		imgs[i].width = 125;
+	for (var i = 0; i < tables.length; i++) {
+		var imgs = tables[i].getElementsByTagName("img");
+		
+		for (var j = 0; j < imgs.length; j++) {
+			imgs[j].width = 125;
+		}
 	}
+	
 });
