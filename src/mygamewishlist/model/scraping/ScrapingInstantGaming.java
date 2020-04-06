@@ -8,7 +8,6 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import mygamewishlist.model.ejb.ScrapingEJB;
 import mygamewishlist.model.pojo.Game2Scrap;
 import mygamewishlist.model.pojo.MyLogger;
 import mygamewishlist.model.pojo.ScrapedGame;
@@ -23,7 +22,7 @@ public class ScrapingInstantGaming {
 	public Hashtable<String,ArrayList<ScrapedGame>> getInstantGames(Game2Scrap g2s) {
 		Document doc = null;
 		try {
-			doc = ScrapingEJB.getDoc(g2s.getUrl(), g2s.getName());
+			doc = ScrapingFunctions.getDoc(g2s.getUrl(), g2s.getName());
 		} catch (IOException e) {
 			LOG.logError(e.getMessage());
 			return new Hashtable<String,ArrayList<ScrapedGame>>();
@@ -67,13 +66,14 @@ public class ScrapingInstantGaming {
 		
 		double discountD;
 		double defaultP;
-		double currentP = Double.parseDouble(ScrapingEJB.replaceCommasEurosPercent(priceS));
+		double currentP = Double.parseDouble(ScrapingFunctions.replaceCommasEurosPercent(priceS));
 		
 		if (discountS.equals("")) {
 			defaultP = currentP;
 			discountD = 0;
 		} else {
-			discountD = Math.abs(Double.parseDouble(discountS.replace("%", "")));
+			discountD = Math.abs(Double.parseDouble(
+					ScrapingFunctions.replaceCommasEurosPercent(discountS)));
 			defaultP = currentP * 100 / (100 - discountD);
 		}
 		
@@ -90,8 +90,40 @@ public class ScrapingInstantGaming {
 	}
 	
 	public ScrapedGame getGame(WishListGame2Scrap wlg) {
+		Document doc = null;
+		try {
+			doc = ScrapingFunctions.getDoc(wlg.getUrlStore() + wlg.getUrlGame(), "");
+		} catch (IOException e1) {
+			LOG.logError(e1.getMessage());
+		}
 		
+		if (doc == null) {
+			return new ScrapedGame();
+		}
 		
-		return null;
+		Element e = doc.selectFirst(".prices");
+		
+		String discountS = e.select(".discount").text();
+		
+		double defaultD;
+		double discountD;
+		double priceD = Double.parseDouble(ScrapingFunctions.
+				replaceCommasEurosPercent(e.select(".price").text()));
+		
+		if (discountS.equals("N/A")) {
+			discountD = 0;
+			defaultD = priceD;
+		} else {
+			discountD = Math.abs(Double.parseDouble(
+					ScrapingFunctions.replaceCommasEurosPercent(discountS).replace("%", "")));
+			defaultD = Double.parseDouble(e.select(".retail").attr("data-retail"));
+		}
+		
+		ScrapedGame sc = new ScrapedGame();
+		sc.setCurrentDiscount(discountD);
+		sc.setCurrentPrice(priceD);
+		sc.setDefaultPrice(defaultD);
+		
+		return sc;
 	}
 }

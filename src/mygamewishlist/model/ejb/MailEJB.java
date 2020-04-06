@@ -1,6 +1,6 @@
 package mygamewishlist.model.ejb;
 
-import java.util.Hashtable;
+import java.util.ArrayList;
 import java.util.Properties;
 
 import javax.ejb.LocalBean;
@@ -49,7 +49,7 @@ public class MailEJB {
 	 * @return String código de verificacion
 	 * @throws MessagingException 
 	 */
-	public void sendMailItemsOnSale(User us, Hashtable<Integer, ScrapedGame> toSend) {
+	public void sendMailItemsOnSale(User us, ArrayList<ScrapedGame> toSend) {
 		Session session = createMailSession();
 
 		try {
@@ -92,7 +92,7 @@ public class MailEJB {
 		return session;
 	}
 
-	private String generateMessage(Hashtable<Integer, ScrapedGame> toSend, User us) {
+	private String generateMessage(ArrayList<ScrapedGame> toSend, User us) {
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("<h3>Hi ")
@@ -113,8 +113,7 @@ public class MailEJB {
 		
 		sb.append(th.print());
 		
-		for (Integer i : toSend.keySet()) {
-			ScrapedGame sg = toSend.get(i);
+		for (ScrapedGame sg : toSend) {
 			
 			Tr tr = new Tr();
 			tr.addTd(new Img(sg.getImg(),sg.getFullName()));

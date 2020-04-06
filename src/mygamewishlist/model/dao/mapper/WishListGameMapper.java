@@ -23,7 +23,7 @@ public interface WishListGameMapper {
 	
 	public void deleteGameWishlist(@Param("url") String url, @Param("idList") int idList);
 	
-	public void updatePrices(ScrapedGame sg);
+	public void updatePrices(ScrapedGame sg, @Param("idList") int idList);
 	
 	public void updateMinMax(@Param("min") double min, @Param("max") double max
 			, @Param("url") String url, @Param("idList") int idList);

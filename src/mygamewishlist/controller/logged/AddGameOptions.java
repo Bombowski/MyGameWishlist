@@ -103,10 +103,6 @@ public class AddGameOptions extends HttpServlet {
 		}
 	}
 	
-	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//games.clear();
-	}
-	
 	private ArrayList<WishListGame> addGames(String[] id, HttpServletRequest request) {
 		ArrayList<WishListGame> toInsert = new ArrayList<WishListGame>();
 		ArrayList<Store> stores = cq_ejb.getStores();
