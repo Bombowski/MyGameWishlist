@@ -22,7 +22,7 @@ public class ScrapingInstantGaming {
 	public Hashtable<String,ArrayList<ScrapedGame>> getInstantGames(Game2Scrap g2s) {
 		Document doc = null;
 		try {
-			doc = ScrapingFunctions.getDoc(g2s.getUrl(), g2s.getName());
+			doc = ScrapingFunctions.getDoc(g2s.getUrl() + g2s.getQueryPart(), g2s.getName());
 		} catch (IOException e) {
 			LOG.logError(e.getMessage());
 			return new Hashtable<String,ArrayList<ScrapedGame>>();

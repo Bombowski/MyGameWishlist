@@ -41,7 +41,12 @@ public class ScrapingSteam {
 		SteamApiLink sal = new SteamApiLink();
 		Client c = ClientBuilder.newClient();
 
+		int i = 0;
 		for (Integer id : appids) {
+			if (i == 10) {
+				break;
+			}
+				
 			sal.setLink(this.getApp);
 			sal.addParam("appids", id + "");
 			WebTarget t = c.target(sal.print());
@@ -53,7 +58,8 @@ public class ScrapingSteam {
 				if (chk.getBoolean("success")) {
 					JSONObject data = chk.getJSONObject("data");
 					if (!data.getBoolean("is_free")) {
-						games.add(getRow(data, id, g2s.getUrl(), g2s.getStoreName()));
+						games.add(getRow(data, id, g2s.getUrl() + g2s.getQueryPart(), g2s.getStoreName()));
+						i++;
 					}
 				}
 			} catch (JSONException e) {
@@ -90,7 +96,7 @@ public class ScrapingSteam {
 		return ssg;
 	}
 
-	public ArrayList<SteamGame> getSteamGames() throws JSONException {
+	public ArrayList<SteamGame> getSteamGameList() throws JSONException {
 		SteamApiLink sal = new SteamApiLink();
 		sal.setLink(getList);
 

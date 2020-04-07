@@ -22,21 +22,30 @@ public class TimersEJB {
 	private static final MyLogger LOG = MyLogger.getLOG();
 
 	@EJB
-	ScrapingEJB scr_ejb = new ScrapingEJB();
+	ScrapingEJB scr_ejb;
 
 	@EJB
-	CreateQueryEJB cq_ejb = new CreateQueryEJB();
+	CreateQueryEJB cq_ejb;
 
 	@EJB
-	MailEJB mail_ejb = new MailEJB();
+	MailEJB mail_ejb;
 
 	public TimersEJB() {
 	}
 
+	private void initAll() {
+		if (scr_ejb == null)
+			scr_ejb = new ScrapingEJB();
+		if (cq_ejb == null)
+			cq_ejb = new CreateQueryEJB();
+		if (mail_ejb == null)
+			mail_ejb = new MailEJB();
+	}
+	
 //	@Schedule(second = "00", minute = "00", hour = "12")
 //	@Schedule(second = "00", minute = "*/3", hour = "*")
 	public void loadGames() {
-		System.out.println("loadGames");
+		initAll();
 		try {
 			scr_ejb.loadGames();
 		} catch (JSONException e) {
@@ -44,9 +53,9 @@ public class TimersEJB {
 		}
 	}
 
-//	@Schedule(second = "00", minute = "*/3", hour = "*")
+	@Schedule(second = "00", minute = "*/3", hour = "*")
 	public void chkPrices() {
-		System.out.println("chkPrices");
+		initAll();
 
 		Hashtable<String, ScrapedGame> chkedGames = new Hashtable<String, ScrapedGame>();
 		ArrayList<User> users = cq_ejb.getUsersWithList();
