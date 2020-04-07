@@ -28,18 +28,30 @@ $(window).ready(function() {
 	}
     
     for (i = 0; i < buttons.length; i++) {
-    	var idTbl = tables[i];
-    	if (!$(tables[i]).length) {
-        	$(tables[i]).remove();
-        	$(buttons[i]).remove();
-        	i--;
-        } else if ($(tables[i]).is(":empty")) {
-        	$(tables[i]).hide();
-        	$(idTbl.substring(0, idTbl.indexOf("tbl"))).hide();
-        } 
+    	var bool = removeButton(tables, buttons[i]);    	
+    	
+    	if (!bool) {
+    		$(buttons[i]).remove();
+    		i--;
+    	}
 	}
     
-    for (var i = 1; i < tables.length; i++) {
+    for (var i = tables.length - 2; i >= 0; i--) {
 		$(tables[i]).hide();
 	}
 });
+
+function removeButton(tables, button) {
+	for (var i = 0; i < tables.length; i++) {
+		var table = tables[i];
+		if ($(table).attr("id").replace("tbl","") == $(button).attr("id")) {
+			if ($(table).is(":empty")) {
+	        	$(table).hide();
+	        	$(table).hide();
+	        } 
+			return true;
+		}
+	}
+	return false;
+} 
+

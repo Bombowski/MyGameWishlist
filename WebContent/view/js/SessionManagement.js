@@ -13,7 +13,7 @@ function onSignIn(googleUser) {
 			name: profile.getName()
 		},
 			function() {
-				window.history.back();
+				window.location.href = "/MyGameWishlist/MyList";
 		}
 	);
 }

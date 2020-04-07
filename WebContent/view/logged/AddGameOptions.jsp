@@ -55,7 +55,7 @@
 						.append(searchParam)
 						.append("</span>");
 				%>
-				<h5 class="mb-0 buttons">
+				<div class="mb-0 buttons">
 					<%
 						try {
 							ArrayList<String> stores = (ArrayList<String>)request.getAttribute("stores");
@@ -71,7 +71,7 @@
 							
 							for (String str : stores) {
 								if (str != null) {
-									out.append("<button type='button' class='btn btn-primary' id='")
+									out.append("<button type='button' class='h5 btn btn-primary' id='")
 										.append(str)
 										.append("'>")
 				                        .append(str)
@@ -79,7 +79,7 @@
 								}
 							}
 					%>
-                </h5>
+                </div>
                 <div id="tables">
 					<%
 							String noR = "No results.";

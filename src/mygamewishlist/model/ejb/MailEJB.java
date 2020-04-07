@@ -97,12 +97,13 @@ public class MailEJB {
 
 		sb.append("<h3>Hi ")
 			.append(us.getName())
-			.append(", some of the items from your wishlist are on sale!<h3>")
-			.append("<table style='width: 100%; max-width: 100%; margin-bottom: 1rem;") 
+			.append(", some of the items from your wishlist are on sale!</h3>")
+			.append("<table style='")
+			.append("width: 100%; max-width: 100%; margin-bottom: 1rem;") 
 			.append("background-color: transparent; border-collapse: collapse;") 
 			.append("box-sizing: border-box; display: table; border-collapse: separate;") 
-			.append("border-spacing: 2px; border-color: grey;'>");
-		
+			.append("border-spacing: 2px; border-color: grey;'");
+			
 		Tr th = new Tr();
 		th.addTd("");
 		th.addTd("Name");
@@ -113,8 +114,11 @@ public class MailEJB {
 		
 		sb.append(th.print());
 		
+		sb.append("<h3>")
+			.append(th.print())
+			.append("</h3>");
+		
 		for (ScrapedGame sg : toSend) {
-			
 			Tr tr = new Tr();
 			tr.addTd(new Img(sg.getImg(),sg.getFullName()));
 			tr.addTd(new A(sg.getFullName(),sg.getUrl()));

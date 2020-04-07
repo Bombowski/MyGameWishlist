@@ -82,7 +82,7 @@ public class AddGameWishlist extends HttpServlet {
 				for (Store st : stores) {
 					if (str.equals(st.getName())) {						
 						Hashtable<String,ArrayList<ScrapedGame>> games = 
-								scrap_ejb.getGamesByNameUrl(new Game2Scrap(name, st.getName(), st.getUrl() + st.getQueryPart()));
+								scrap_ejb.getGamesByNameUrl(new Game2Scrap(name, st.getName(), st.getUrl(), st.getQueryPart()));
 						request.setAttribute(st.getName(), games);
 						break;
 					}
