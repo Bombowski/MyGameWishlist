@@ -77,20 +77,4 @@ public class UserDAO {
 		}
 		return new ArrayList<User>();
 	}
-	
-	public int getIdListByIdUser(int idUser) {
-		try {
-			getUserMapper();
-			return userMapper.getIdListByIdUser(idUser);
-		} catch(Exception e) {
-			LOG.logError(e.getMessage());
-		} finally {
-			try {
-				closeAll();
-			} catch (Exception e) {
-				LOG.logError(e.getMessage());
-			}
-		}
-		return 0;
-	}
 }

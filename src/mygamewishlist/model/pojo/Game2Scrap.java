@@ -4,18 +4,18 @@ public class Game2Scrap {
 
 	private String name;
 	private String storeName;
-	private String url;
+	private String storeUrl;
 	private String queryPart;
 
 	public Game2Scrap() {
 		super();
 	}
 
-	public Game2Scrap(String name, String storeName, String url, String queryPart) {
+	public Game2Scrap(String name, String storeName, String storeUrl, String queryPart) {
 		super();
 		this.name = name;
 		this.storeName = storeName;
-		this.url = url;
+		this.storeUrl = storeUrl;
 		this.queryPart = queryPart;
 	}
 
@@ -35,12 +35,12 @@ public class Game2Scrap {
 		this.storeName = storeName;
 	}
 
-	public String getUrl() {
-		return url;
+	public String getStoreUrl() {
+		return storeUrl;
 	}
 
-	public void setUrl(String url) {
-		this.url = url;
+	public void setStoreUrl(String url) {
+		this.storeUrl = url;
 	}
 
 	public String getQueryPart() {

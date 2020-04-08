@@ -6,45 +6,45 @@
 	
 	<select id="getListByIdUser" resultMap="resultList">
 		SELECT
-			SH.URL AS STORE_URL, WG.URL AS GAME_URL, ID_LIST, ID_STORE, 
+			SH.URL AS STORE_URL, WG.URL AS GAME_URL, ID_USER, ID_STORE, 
 			WG.NAME, WG.IMG, DEFAULT_PRICE, CURRENT_PRICE, 
 			(100 - (CURRENT_PRICE * 100 / DEFAULT_PRICE)) AS DISCOUNT,
 			MIN_PRICE, MAX_PRICE
 		FROM
-			WISHLIST_GAME WG, LIST LI, STORE SH
+			WISHLIST_GAME WG, USER US, STORE SH
 		WHERE
-			LI.ID = WG.ID_LIST AND
+			US.ID = WG.ID_USER AND
 			SH.ID = WG.ID_STORE AND
-			LI.ID_USER = #{idUser}
+			US.ID = #{idUser}
 	</select>
 	
 	<select id="getGameFromListByIdUserUrl" resultMap="resultList">
 		SELECT
-			SH.URL AS STORE_URL, WG.URL AS GAME_URL, ID_LIST, ID_STORE, 
+			SH.URL AS STORE_URL, WG.URL AS GAME_URL, ID_USER, ID_STORE, 
 			WG.NAME, WG.IMG, DEFAULT_PRICE, CURRENT_PRICE, 
 			(100 - (CURRENT_PRICE * 100 / DEFAULT_PRICE)) AS DISCOUNT,
 			MIN_PRICE, MAX_PRICE
 		FROM
-			WISHLIST_GAME WG, LIST LI, STORE SH
+			WISHLIST_GAME WG, USER US, STORE SH
 		WHERE
-			LI.ID = WG.ID_LIST AND
+			US.ID = WG.ID_USER AND
 			SH.ID = WG.ID_STORE AND
-			LI.ID_USER = #{idUser} AND
-		    WG.URL = #{url}
+			US.ID = #{idUser} AND
+		    WG.URL = #{url};
 	</select>
 	
-	<insert id="addGame2Wishlist" parameterType="WishListGame">
-		INSERT INTO WISHLIST_GAME (URL,ID_LIST,ID_STORE,IMG,NAME,DEFAULT_PRICE,
+	<insert id="addGame2Wishlist">
+		INSERT INTO WISHLIST_GAME (URL,ID_USER,ID_STORE,IMG,NAME,DEFAULT_PRICE,
 		CURRENT_PRICE,MAX_PRICE,MIN_PRICE)
-		VALUES(#{urlGame},#{idList},#{idStore},#{img},#{gameName},
-		#{defaultPrice},#{currentPrice},#{minPrice},#{maxPrice})
+		VALUES(#{wlg.urlGame},#{idUser},#{wlg.idStore},#{wlg.img},#{wlg.gameName},
+		#{wlg.defaultPrice},#{wlg.currentPrice},#{wlg.minPrice},#{wlg.maxPrice})
 	</insert>
 	
-	<insert id="addSteamGame2Wishlist" parameterType="WishListGameSteam">
-		INSERT INTO WISHLIST_GAME (URL,ID_LIST,ID_STORE, STEAM_APPID, IMG,NAME,
+	<insert id="addSteamGame2Wishlist">
+		INSERT INTO WISHLIST_GAME (URL,ID_USER,ID_STORE, STEAM_APPID, IMG,NAME,
 		DEFAULT_PRICE, CURRENT_PRICE,MAX_PRICE,MIN_PRICE)
-		VALUES(#{urlGame},#{idList},#{idStore}, #{appid}, #{img},#{gameName},
-		#{defaultPrice},#{currentPrice},#{minPrice},#{maxPrice})
+		VALUES(#{wlg.urlGame},#{idUser},#{wlg.idStore}, #{wlg.appid}, #{wlg.img},#{wlg.gameName},
+		#{wlg.defaultPrice},#{wlg.currentPrice},#{wlg.minPrice},#{wlg.maxPrice})
 	</insert>
 	
 	<select id="getGamesFromListById" resultMap="games2Scrap">
@@ -52,32 +52,45 @@
 			ST.URL AS STORE_URL, WG.URL AS GAME_URL, ST.NAME STORE_NAME, 
 			WG.NAME GAME_NAME, WG.IMG, DEFAULT_PRICE, CURRENT_PRICE, MIN_PRICE, MAX_PRICE
 		FROM
-			WISHLIST_GAME WG, LIST LI, STORE ST
+			WISHLIST_GAME WG, STORE ST
 		WHERE
-			LI.ID = WG.ID_LIST AND
 			ST.ID = WG.ID_STORE AND
-			LI.ID_USER = #{idUser}
+			WG.ID_USER = #{idUser} AND
+			WG.STEAM_APPID IS NULL
+		ORDER BY
+			ST.NAME;
+	</select>
+	
+	<select id="getSteamGamesFromListById" resultMap="games2ScrapSteam">
+		SELECT
+			STEAM_APPID, ST.URL AS STORE_URL, WG.URL AS GAME_URL, ST.NAME STORE_NAME, 
+			WG.NAME GAME_NAME, WG.IMG, DEFAULT_PRICE, CURRENT_PRICE, MIN_PRICE, MAX_PRICE
+		FROM
+			WISHLIST_GAME WG, STORE ST
+		WHERE
+			ST.ID = WG.ID_STORE AND
+			WG.ID_USER = #{idUser} AND
+			WG.STEAM_APPID IS NOT NULL
 		ORDER BY
 			ST.NAME;
 	</select>
 	
 	<delete id="deleteGameWishlist">
-		DELETE FROM WISHLIST_GAME WHERE URL = #{url} AND ID_LIST = #{idList}
+		DELETE FROM WISHLIST_GAME WHERE URL = #{url} AND ID_USER = #{idUser}
 	</delete>
 	
-	<update id="updatePrices" parameterType="ScrapedGame">
-		UPDATE WISHLIST_GAME SET DEFAULT_PRICE = #{defaultPrice}, CURRENT_PRICE = #{currentPrice}
-		WHERE URL = #{url} AND ID_LIST = #{idList} 
+	<update id="updatePrices">
+		UPDATE WISHLIST_GAME SET DEFAULT_PRICE = #{sg.defaultPrice}, CURRENT_PRICE = #{sg.currentPrice}
+		WHERE URL = #{sg.urlGame} AND ID_USER = #{idUser} 
 	</update>
 	
 	<update id="updateMinMax">
 		UPDATE WISHLIST_GAME SET MAX_PRICE = #{max}, MIN_PRICE = #{min}
-		WHERE URL = #{url} AND ID_LIST = #{idList}
+		WHERE URL = #{urlGame} AND ID_USER = #{idUser}
 	</update>
 	
 	<resultMap type="WishListGame" id="resultList">
 		<id property="urlGame" column="GAME_URL" />
-		<id property="idList" column="ID_LIST" />
 		<result property="urlStore" column="STORE_URL" />
 		<result property="idStore" column="ID_STORE" />
 		<result property="gameName" column="NAME" />
@@ -90,6 +103,19 @@
 	</resultMap>
 	
 	<resultMap type="WishListGame2Scrap" id="games2Scrap">
+		<result property="urlStore" column="STORE_URL" />
+		<result property="urlGame" column="GAME_URL" />
+		<result property="storeName" column="STORE_NAME" />
+		<result property="gameName" column="GAME_NAME" />
+		<result property="img" column="IMG" />
+		<result property="defaultPrice" column="DEFAULT_PRICE" />
+		<result property="currentPrice" column="CURRENT_PRICE" />
+		<result property="minPrice" column="MIN_PRICE" />
+		<result property="maxPrice" column="MAX_PRICE" />
+	</resultMap>
+	
+	<resultMap type="WishListGame2ScrapSteam" id="games2ScrapSteam">
+		<result property="appid" column="STEAM_APPID" />
 		<result property="urlStore" column="STORE_URL" />
 		<result property="urlGame" column="GAME_URL" />
 		<result property="storeName" column="STORE_NAME" />

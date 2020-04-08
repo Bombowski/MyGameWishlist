@@ -22,7 +22,7 @@ public class ScrapingInstantGaming {
 	public Hashtable<String,ArrayList<ScrapedGame>> getInstantGames(Game2Scrap g2s) {
 		Document doc = null;
 		try {
-			doc = ScrapingFunctions.getDoc(g2s.getUrl() + g2s.getQueryPart(), g2s.getName());
+			doc = ScrapingFunctions.getDoc(g2s.getStoreUrl() + g2s.getQueryPart(), g2s.getName());
 		} catch (IOException e) {
 			LOG.logError(e.getMessage());
 			return new Hashtable<String,ArrayList<ScrapedGame>>();
@@ -40,7 +40,7 @@ public class ScrapingInstantGaming {
 		ArrayList<ScrapedGame> games = new ArrayList<ScrapedGame>();
 		
 		for (Element element : e) {
-			ScrapedGame sg = getRow(element, g2s.getStoreName());
+			ScrapedGame sg = getRow(element, g2s);
 			
 			if (sg != null) {
 				games.add(sg);
@@ -53,8 +53,9 @@ public class ScrapingInstantGaming {
 		return toReturn;
 	}
 	
-	private ScrapedGame getRow(Element e, String storeName) {
+	private ScrapedGame getRow(Element e, Game2Scrap g2s) {
 		String url = e.select(".cover").attr("href");
+		url = url.substring(0, url.length() - 1);
 		String img = e.select(".picture").attr("src");
 		String name = e.select(".name").text();
 		String priceS = e.select(".price").text();
@@ -78,9 +79,10 @@ public class ScrapingInstantGaming {
 		}
 		
 		ScrapedGame sg = new ScrapedGame();
-		sg.setUrl(url);
+		sg.setUrlStore(g2s.getStoreUrl());
+		sg.setUrlGame(url.substring(url.lastIndexOf("/")));
 		sg.setImg(img);
-		sg.setStoreName(storeName);
+		sg.setStoreName(g2s.getStoreName());
 		sg.setFullName(name);
 		sg.setDefaultPrice(defaultP);
 		sg.setCurrentPrice(currentP);

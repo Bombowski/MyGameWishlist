@@ -17,7 +17,7 @@ import mygamewishlist.model.ejb.CreateQueryEJB;
 import mygamewishlist.model.pojo.ClassPaths;
 import mygamewishlist.model.pojo.MyLogger;
 import mygamewishlist.model.pojo.ScrapedGame;
-import mygamewishlist.model.pojo.db.Store;
+import mygamewishlist.model.pojo.db.User;
 import mygamewishlist.model.pojo.db.WishListGame;
 import mygamewishlist.model.pojo.db.WishListGameSteam;
 
@@ -68,7 +68,8 @@ public class AddGameOptions extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-			if (!sc_ejb.isSome1Logged(request.getSession(false))) {
+			User usr = sc_ejb.getLoggedUser(request);
+			if (usr == null) {
 				response.sendRedirect(cp.REDIRECT_LOGIN);
 				return;
 			}
@@ -76,7 +77,7 @@ public class AddGameOptions extends HttpServlet {
 			String[] id = request.getParameterValues("games");
 			
 			if (id != null) {
-				cq_ejb.addGame2Wishlist(addGames(id, request));
+				cq_ejb.addGame2Wishlist(addGames(id, request), usr.getId());
 				games.clear();
 				response.sendRedirect(cp.REDIRECT_MYLIST);
 			} else {
@@ -105,7 +106,6 @@ public class AddGameOptions extends HttpServlet {
 	
 	private ArrayList<WishListGame> addGames(String[] id, HttpServletRequest request) {
 		ArrayList<WishListGame> toInsert = new ArrayList<WishListGame>();
-		ArrayList<Store> stores = cq_ejb.getStores();
 		
 		for (String s : id) {			
 			int arrPos = Integer.parseInt(s.substring(s.lastIndexOf("&") + 1));
@@ -138,13 +138,13 @@ public class AddGameOptions extends HttpServlet {
 			WishListGame wlg;
 			if (!store.equals("Steam")) {
 				wlg = new WishListGame();
+				wlg.setUrlGame(g.getUrlGame());
 			} else {
 				wlg = new WishListGameSteam();
-				((WishListGameSteam) wlg).setAppid(Integer.parseInt(g.getUrl().substring(g.getUrl().lastIndexOf("/") + 1)));
+				((WishListGameSteam) wlg).setAppid(Integer.parseInt(g.getUrlGame().substring(g.getUrlGame().lastIndexOf("/") + 1)));
+				wlg.setUrlGame(g.getUrlGame());
 			}
 			
-			wlg.setUrlGame(fixUrl(g.getUrl(), stores, g.getStoreName()));
-			wlg.setIdList(cq_ejb.getIdListByIdUser(sc_ejb.getLoggedUser(request).getId()));
 			wlg.setIdStore(cq_ejb.getStoreByName(store).getId());
 			wlg.setGameName(g.getFullName());
 			wlg.setDefaultPrice(g.getDefaultPrice());
@@ -159,15 +159,4 @@ public class AddGameOptions extends HttpServlet {
 		
 		return toInsert;
 	}
-	
-	private String fixUrl(String url, ArrayList<Store> stores, String storeName) {
-		for (Store s : stores) {
-			if (s.getName().equals(storeName)) {
-				url = url.replace(s.getUrl(), "");
-				return url;
-			}
-		}
-		
-		return url;
-	}	
 }

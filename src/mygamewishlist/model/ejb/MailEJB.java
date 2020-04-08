@@ -18,7 +18,6 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
 import bomboshtml.body.A;
-import bomboshtml.body.Img;
 import bomboshtml.body.table.Tr;
 import mygamewishlist.model.pojo.MyLogger;
 import mygamewishlist.model.pojo.ScrapedGame;
@@ -112,16 +111,14 @@ public class MailEJB {
 		th.addTd("Current Discount");
 		th.addTd("Default Price");
 		
-		sb.append(th.print());
-		
 		sb.append("<h3>")
 			.append(th.print())
 			.append("</h3>");
 		
 		for (ScrapedGame sg : toSend) {
 			Tr tr = new Tr();
-			tr.addTd(new Img(sg.getImg(),sg.getFullName()));
-			tr.addTd(new A(sg.getFullName(),sg.getUrl()));
+			tr.addTd("<img src='" + sg.getImg() + "' alt='" + sg.getFullName() + "' width='125'>");
+			tr.addTd(new A(sg.getFullName(),sg.getUrlStore() + sg.getUrlGame()));
 			tr.addTd(sg.getStoreName());
 			tr.addTd(sg.getCurrentPrice() + "€");
 			tr.addTd(sg.getCurrentDiscount() + "%");

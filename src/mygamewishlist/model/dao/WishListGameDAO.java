@@ -9,6 +9,7 @@ import mygamewishlist.model.pojo.MyLogger;
 import mygamewishlist.model.pojo.ScrapedGame;
 import mygamewishlist.model.pojo.db.WishListGame;
 import mygamewishlist.model.pojo.db.WishListGame2Scrap;
+import mygamewishlist.model.pojo.db.WishListGame2ScrapSteam;
 import mygamewishlist.model.pojo.db.WishListGameSteam;
 
 public class WishListGameDAO {
@@ -65,14 +66,14 @@ public class WishListGameDAO {
 		return new WishListGame();
 	}
 	
-	public void addGame2Wishlist(ArrayList<WishListGame> games) {
+	public void addGame2Wishlist(ArrayList<WishListGame> games, int idUser) {
 		try {
 			getWlgMapper();
 			for (WishListGame wlg : games) {
 				if (wlg instanceof WishListGameSteam) {
-					listMapper.addSteamGame2Wishlist((WishListGameSteam) wlg);
+					listMapper.addSteamGame2Wishlist((WishListGameSteam) wlg, idUser);
 				} else {
-					listMapper.addGame2Wishlist(wlg);
+					listMapper.addGame2Wishlist(wlg, idUser);
 				}
 			}
 			session.commit();
@@ -103,10 +104,26 @@ public class WishListGameDAO {
 		return new ArrayList<WishListGame2Scrap>();
 	}
 	
-	public void deleteGameWishlist(String url, int idList) {
+	public ArrayList<WishListGame2ScrapSteam> getSteamGamesFromListById(int idUser) {
 		try {
 			getWlgMapper();
-			listMapper.deleteGameWishlist(url, idList);;
+			return listMapper.getSteamGamesFromListById(idUser);
+		} catch(Exception e) {
+			LOG.logError(e.getMessage());
+		} finally {
+			try {
+				closeAll();
+			} catch (Exception e) {
+				LOG.logError(e.getMessage());
+			}
+		}
+		return new ArrayList<WishListGame2ScrapSteam>();
+	}
+	
+	public void deleteGameWishlist(String url, int idUser) {
+		try {
+			getWlgMapper();
+			listMapper.deleteGameWishlist(url, idUser);;
 			session.commit();
 		} catch(Exception e) {
 			LOG.logError(e.getMessage());
@@ -119,11 +136,11 @@ public class WishListGameDAO {
 		}
 	}
 	
-	public void updatePrices(ArrayList<ScrapedGame> games, int idList) {
+	public void updatePrices(ArrayList<ScrapedGame> games, int idUser) {
 		try {
 			getWlgMapper();
 			for (ScrapedGame sg : games) {
-				listMapper.updatePrices(sg, idList);
+				listMapper.updatePrices(sg, idUser);
 			}
 			session.commit();
 		} catch(Exception e) {
@@ -137,10 +154,10 @@ public class WishListGameDAO {
 		}
 	}
 	
-	public void updateMinMax(double min, double max, String url, int idList) {
+	public void updateMinMax(double min, double max, String url, int idUser) {
 		try {
 			getWlgMapper();
-			listMapper.updateMinMax(min, max, url, idList);
+			listMapper.updateMinMax(min, max, url, idUser);
 			session.commit();
 		} catch(Exception e) {
 			LOG.logError(e.getMessage());

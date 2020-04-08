@@ -34,12 +34,9 @@ public class TimersEJB {
 	}
 
 	private void initAll() {
-		if (scr_ejb == null)
-			scr_ejb = new ScrapingEJB();
-		if (cq_ejb == null)
-			cq_ejb = new CreateQueryEJB();
-		if (mail_ejb == null)
-			mail_ejb = new MailEJB();
+		scr_ejb = new ScrapingEJB();
+		cq_ejb = new CreateQueryEJB();
+		mail_ejb = new MailEJB();
 	}
 	
 //	@Schedule(second = "00", minute = "00", hour = "12")
@@ -62,11 +59,14 @@ public class TimersEJB {
 
 		for (User us : users) {
 			ArrayList<WishListGame2Scrap> games = cq_ejb.getGamesFromListById(us.getId());
+			games.addAll(cq_ejb.getSteamGamesFromListById(us.getId()));
+			
 			ArrayList<ScrapedGame> toSend = new ArrayList<ScrapedGame>();
 
 			for (WishListGame2Scrap wlg : games) {
 				ScrapedGame scGame;
 				boolean add = false;
+				
 				if (chkedGames.keySet().contains(wlg.getUrlGame())) {
 					scGame = chkedGames.get(wlg.getUrlGame());
 
@@ -81,7 +81,8 @@ public class TimersEJB {
 						scGame.setFullName(wlg.getGameName());
 						scGame.setImg(wlg.getImg());
 						scGame.setStoreName(wlg.getStoreName());
-						scGame.setUrl(wlg.getUrlStore() + wlg.getUrlGame());
+						scGame.setUrlGame(wlg.getUrlGame());
+						scGame.setUrlStore(wlg.getUrlStore());
 						chkedGames.put(wlg.getUrlGame(), scGame);
 					}
 				}
@@ -93,7 +94,7 @@ public class TimersEJB {
 
 			if (!toSend.isEmpty()) {
 				mail_ejb.sendMailItemsOnSale(us, toSend);
-				cq_ejb.updatePrices(toSend, cq_ejb.getIdListByIdUser(us.getId()));
+				cq_ejb.updatePrices(toSend, us.getId());
 			}
 		}
 	}

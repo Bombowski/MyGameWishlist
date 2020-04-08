@@ -109,7 +109,7 @@ public class JspFunctions {
 		for (ScrapedGame sg : games) {
 			Tr tr = new Tr();
 			tr.addTd(new Img(sg.getImg(), sg.getFullName()));
-			tr.addTd(new A(sg.getFullName().replace("'", "&#39;"), sg.getUrl()));
+			tr.addTd(new A(sg.getFullName().replace("'", "&#39;"), sg.getUrlStore() + sg.getUrlGame()));
 			tr.addTd(Math.round(sg.getDefaultPrice() * 100f) / 100f + "€");
 			tr.addTd(Math.round(sg.getCurrentPrice() * 100f) / 100f + "€");
 			tr.addTd(sg.getCurrentDiscount() + "%");

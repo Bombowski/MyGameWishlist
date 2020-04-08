@@ -21,6 +21,7 @@ import mygamewishlist.model.pojo.db.Store;
 import mygamewishlist.model.pojo.db.User;
 import mygamewishlist.model.pojo.db.WishListGame;
 import mygamewishlist.model.pojo.db.WishListGame2Scrap;
+import mygamewishlist.model.pojo.db.WishListGame2ScrapSteam;
 
 @Stateless
 @LocalBean
@@ -104,28 +105,28 @@ public class CreateQueryEJB {
 		return STORE_DAO.getStoreByName(name);
 	}
 	
-	public void addGame2Wishlist(ArrayList<WishListGame> games) {
-		LIST_DAO.addGame2Wishlist(games);
+	public void addGame2Wishlist(ArrayList<WishListGame> games, int idUser) {
+		LIST_DAO.addGame2Wishlist(games, idUser);
 	}
 	
 	public ArrayList<WishListGame2Scrap> getGamesFromListById(int idUser) {
 		return LIST_DAO.getGamesFromListById(idUser);
 	}
 	
-	public int getIdListByIdUser(int idUser) {
-		return USR_DAO.getIdListByIdUser(idUser);
+	public ArrayList<WishListGame2ScrapSteam> getSteamGamesFromListById(int idUser) {
+		return LIST_DAO.getSteamGamesFromListById(idUser);
 	}
 	
-	public void deleteGameWishlist(String url, int idList) {
-		LIST_DAO.deleteGameWishlist(url, idList);
+	public void deleteGameWishlist(String url, int idUser) {
+		LIST_DAO.deleteGameWishlist(url, idUser);
 	}
 	
-	public void updatePrices(ArrayList<ScrapedGame> sg, int idList) {
-		LIST_DAO.updatePrices(sg, idList);
+	public void updatePrices(ArrayList<ScrapedGame> sg, int idUser) {
+		LIST_DAO.updatePrices(sg, idUser);
 	}
 	
-	public void updateMinMax(double min, double max, String url, int idList) {
-		LIST_DAO.updateMinMax(min, max, url, idList);
+	public void updateMinMax(double min, double max, String url, int idUser) {
+		LIST_DAO.updateMinMax(min, max, url, idUser);
 	}
 	
 	public ArrayList<Integer> getSteamGameIdsByName(String name) {

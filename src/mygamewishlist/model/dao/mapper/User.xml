@@ -16,19 +16,8 @@
 		SELECT
 			DISTINCT(US.ID), US.NAME, US.EMAIL
 		FROM
-			USER US, LIST LI, WISHLIST_GAME WG
+			USER US, WISHLIST_GAME WG
 		WHERE
-			US.ID = LI.ID_USER AND
-		    LI.ID = WG.ID_LIST
-	</select>
-	
-	<select id="getIdListByIdUser" resultType="Integer">
-		SELECT
-			LI.ID
-		FROM
-			USER US, LIST LI
-		WHERE
-			US.ID = LI.ID AND
-			US.ID = #{idUser};
+			US.ID = WG.ID_USER
 	</select>
 </mapper>
