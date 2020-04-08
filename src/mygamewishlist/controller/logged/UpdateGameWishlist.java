@@ -80,7 +80,7 @@ public class UpdateGameWishlist extends HttpServlet {
 			double min = lowerThan0(Double.parseDouble(request.getParameter("min")));
 			double max = lowerThan0(Double.parseDouble(request.getParameter("max")));
 			
-			cq_ejb.updateMinMax(min, max, url, cq_ejb.getIdListByIdUser(usr.getId()));
+			cq_ejb.updateMinMax(min, max, url, usr.getId());
 			response.sendRedirect(cp.REDIRECT_MYLIST);			
 		} catch(Exception e) {
 			LOG.logError(e.getMessage());

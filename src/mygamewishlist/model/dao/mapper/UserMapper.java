@@ -13,6 +13,4 @@ public interface UserMapper {
 	public void addUser(User usr);
 	
 	public ArrayList<User> getUsersWithList();
-	
-	public Integer getIdListByIdUser(@Param("idUser") int idUser);
 }

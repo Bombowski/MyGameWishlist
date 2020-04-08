@@ -2,7 +2,8 @@ package mygamewishlist.model.pojo;
 
 public class ScrapedGame {
 
-	private String url;
+	private String urlStore;
+	private String urlGame;
 	private String fullName;
 	private String img;
 	private String storeName;
@@ -14,10 +15,11 @@ public class ScrapedGame {
 		super();
 	}
 
-	public ScrapedGame(String url, String fullName, String img, String storeName, double defaultPrice,
-			double currentPrice, double currentDiscount) {
+	public ScrapedGame(String urlStore, String urlGame, String fullName, String img, String storeName,
+			double defaultPrice, double currentPrice, double currentDiscount) {
 		super();
-		this.url = url;
+		this.urlStore = urlStore;
+		this.urlGame = urlGame;
 		this.fullName = fullName;
 		this.img = img;
 		this.storeName = storeName;
@@ -26,12 +28,20 @@ public class ScrapedGame {
 		this.currentDiscount = currentDiscount;
 	}
 
-	public String getUrl() {
-		return url;
+	public String getUrlStore() {
+		return urlStore;
 	}
 
-	public void setUrl(String url) {
-		this.url = url;
+	public void setUrlStore(String urlStore) {
+		this.urlStore = urlStore;
+	}
+
+	public String getUrlGame() {
+		return urlGame;
+	}
+
+	public void setUrlGame(String urlGame) {
+		this.urlGame = urlGame;
 	}
 
 	public String getFullName() {

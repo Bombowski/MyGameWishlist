@@ -40,10 +40,9 @@ public class DeleteGameWishlist extends HttpServlet {
 				return;
 			}
 			
-			int idList = cq_ejb.getIdListByIdUser(usr.getId());
 			String url = request.getParameter("url");
 			
-			cq_ejb.deleteGameWishlist(url, idList);
+			cq_ejb.deleteGameWishlist(url, usr.getId());
 		} catch(Exception e) {
 			LOG.logError(e.getMessage());
 		}

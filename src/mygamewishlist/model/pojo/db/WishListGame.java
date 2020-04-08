@@ -4,7 +4,6 @@ public class WishListGame {
 
 	private String urlGame;
 	private String urlStore;
-	private int idList;
 	private int idStore;
 	private String gameName;
 	private String img;
@@ -18,12 +17,11 @@ public class WishListGame {
 		super();
 	}
 
-	public WishListGame(String urlGame, String urlStore, int idList, int idStore, String gameName, String img,
+	public WishListGame(String urlGame, String urlStore, int idStore, String gameName, String img,
 			double defaultPrice, double currentPrice, double discount, double minPrice, double maxPrice) {
 		super();
 		this.urlGame = urlGame;
 		this.urlStore = urlStore;
-		this.idList = idList;
 		this.idStore = idStore;
 		this.gameName = gameName;
 		this.img = img;
@@ -48,14 +46,6 @@ public class WishListGame {
 
 	public void setUrlStore(String urlStore) {
 		this.urlStore = urlStore;
-	}
-
-	public int getIdList() {
-		return idList;
-	}
-
-	public void setIdList(int idList) {
-		this.idList = idList;
 	}
 
 	public int getIdStore() {

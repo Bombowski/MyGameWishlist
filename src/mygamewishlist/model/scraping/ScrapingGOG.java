@@ -27,7 +27,7 @@ public class ScrapingGOG {
 	
 	public Hashtable<String,ArrayList<ScrapedGame>> getGOGGames(Game2Scrap g2s) {
 		Client c = ClientBuilder.newClient();
-		WebTarget t = c.target(searchURL + g2s.getName());		
+		WebTarget t = c.target(searchURL + g2s.getName().replace(" ", "+"));		
 		Hashtable<String,ArrayList<ScrapedGame>> toReturn = new Hashtable<String, ArrayList<ScrapedGame>>();
 		ArrayList<ScrapedGame> games = new ArrayList<ScrapedGame>();
 		
@@ -36,7 +36,7 @@ public class ScrapingGOG {
 			JSONArray arr = obj.getJSONArray("products");
 			
 			for (int i = 0; i < arr.length(); i++) {
-				ScrapedGame sg = getRow(arr.getJSONObject(i), g2s.getStoreName(), g2s.getUrl());
+				ScrapedGame sg = getRow(arr.getJSONObject(i), g2s);
 				
 				if (sg != null) {
 					games.add(sg);
@@ -51,12 +51,13 @@ public class ScrapingGOG {
 		return toReturn;
 	}
 	
-	private ScrapedGame getRow(JSONObject json, String storeName, String url) throws JSONException {
+	private ScrapedGame getRow(JSONObject json, Game2Scrap g2s) throws JSONException {
 		ScrapedGame sg = new ScrapedGame();
 		
-		sg.setStoreName(storeName);
+		sg.setStoreName(g2s.getStoreName());
 		sg.setFullName(json.getString("title"));
-		sg.setUrl(url + json.getString("url"));
+		sg.setUrlStore(g2s.getStoreUrl());
+		sg.setUrlGame(json.getString("url"));
 		sg.setImg("https:" + json.getString("image") + ".jpg");
 		
 		JSONObject price = json.getJSONObject("price");
