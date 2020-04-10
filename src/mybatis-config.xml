@@ -11,6 +11,8 @@
 		<typeAlias type='mygamewishlist.model.pojo.db.WishListGameSteam' alias='WishListGameSteam'></typeAlias>
 		<typeAlias type='mygamewishlist.model.pojo.db.WishListGame2Scrap' alias='WishListGame2Scrap'></typeAlias>
 		<typeAlias type='mygamewishlist.model.pojo.db.WishListGame2ScrapSteam' alias='WishListGame2ScrapSteam'></typeAlias>
+		<typeAlias type='mygamewishlist.model.pojo.db.TimelineGame' alias='TimelineGame'></typeAlias>
+		<typeAlias type='mygamewishlist.model.pojo.db.TimelineGameDetailed' alias='TimelineGameDetailed'></typeAlias>
 		<typeAlias type='mygamewishlist.model.pojo.db.ReviewList' alias='ReviewList'></typeAlias>
 		<typeAlias type='mygamewishlist.model.pojo.ScrapedGame' alias='ScrapedGame'></typeAlias>
 		<typeAlias type='mygamewishlist.model.pojo.SteamGame' alias='Steam'></typeAlias>
@@ -34,5 +36,6 @@
 		<mapper resource='mygamewishlist/model/dao/mapper/Store.xml' />
 		<mapper resource='mygamewishlist/model/dao/mapper/Steam.xml' />
 		<mapper resource='mygamewishlist/model/dao/mapper/Variables.xml' />
+		<mapper resource='mygamewishlist/model/dao/mapper/Timeline.xml' />
 	</mappers>
 </configuration>
