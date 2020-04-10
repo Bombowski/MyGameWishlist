@@ -9,6 +9,7 @@ import mygamewishlist.model.dao.GameDAO;
 import mygamewishlist.model.dao.ReviewDAO;
 import mygamewishlist.model.dao.SteamDAO;
 import mygamewishlist.model.dao.StoreDAO;
+import mygamewishlist.model.dao.TimelineDAO;
 import mygamewishlist.model.dao.UserDAO;
 import mygamewishlist.model.dao.VariablesDAO;
 import mygamewishlist.model.dao.WishListGameDAO;
@@ -18,6 +19,8 @@ import mygamewishlist.model.pojo.db.Game;
 import mygamewishlist.model.pojo.db.Review;
 import mygamewishlist.model.pojo.db.ReviewList;
 import mygamewishlist.model.pojo.db.Store;
+import mygamewishlist.model.pojo.db.TimelineGame;
+import mygamewishlist.model.pojo.db.TimelineGameDetailed;
 import mygamewishlist.model.pojo.db.User;
 import mygamewishlist.model.pojo.db.WishListGame;
 import mygamewishlist.model.pojo.db.WishListGame2Scrap;
@@ -34,6 +37,7 @@ public class CreateQueryEJB {
 	private static final ReviewDAO REV_DAO = new ReviewDAO();
 	private static final SteamDAO STEAM_DAO = new SteamDAO();
 	private static final VariablesDAO VAR_DAO = new VariablesDAO();
+	private static final TimelineDAO TIM_DAO = new TimelineDAO();
 	
 	public CreateQueryEJB() {}
 	
@@ -139,5 +143,17 @@ public class CreateQueryEJB {
 	
 	public String getVariable(String name) {
 		return VAR_DAO.getVariable(name);
+	}
+	
+	public void add2Timeline(ScrapedGame sg, String time) {
+		TIM_DAO.add2Timeline(sg, time);
+	}
+	
+	public TimelineGame getTimelineByUrl(String url) {
+		return TIM_DAO.getTimelineByUrl(url);
+	}
+	
+	public TimelineGameDetailed getTimelineByUrlDetailed(String url) {
+		return TIM_DAO.getTimelineByUrlDetailed(url);
 	}
 }

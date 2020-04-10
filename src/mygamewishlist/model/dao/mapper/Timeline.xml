@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
+  'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+  
+<mapper namespace="mygamewishlist.model.dao.mapper.TimelineMapper">
+	
+	<insert id="add2Timeline">
+		INSERT INTO PRICE_TIMELINE (URL,TIME,PRICE,DISCOUNT)
+		VALUES(#{sg.urlGame},#{time},#{sg.currentPrice},#{sg.currentDiscount})	
+	</insert>
+	
+	<select id="getTimelineByUrl" resultMap="tlSimple">
+		SELECT * FROM PRICE_TIMELINE WHERE URL = #{url}
+	</select>
+	
+	<select id="getTimelineByUrlDetailed" resultMap="tlDetailed">
+		SELECT 
+			PT.*, WG.NAME, ST.URL AS URL_STORE
+		FROM 
+			PRICE_TIMELINE PT, WISHLIST_GAME WG, STORE ST
+		WHERE
+			PT.URL = WG.URL AND
+		    WG.ID_STORE = ST.ID AND
+			WG.URL = #{url}
+	</select>
+	
+	<resultMap type="TimelineGame" id="tlDetailed">
+		<id property="urlGame" column="URL" />
+		<result property="time" column="TIME" />
+		<result property="price" column="PRICE" />
+		<result property="discount" column="DISCOUNT" />
+		<result property="name" column="NAME" />
+		<result property="urlStore" column="URL_STORE" />
+	</resultMap>
+	
+	<resultMap type="TimelineGameDetailed" id="tlSimple">
+		<id property="urlGame" column="URL" />
+		<result property="time" column="TIME" />
+		<result property="price" column="PRICE" />
+		<result property="discount" column="DISCOUNT" />
+	</resultMap>
+</mapper>
