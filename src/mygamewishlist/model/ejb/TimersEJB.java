@@ -1,6 +1,7 @@
 package mygamewishlist.model.ejb;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Hashtable;
 
 import javax.ejb.EJB;
@@ -50,7 +51,7 @@ public class TimersEJB {
 		}
 	}
 
-	@Schedule(second = "00", minute = "*/3", hour = "*")
+	@Schedule(second = "00", minute = "*/1", hour = "*")
 	public void chkPrices() {
 		initAll();
 
@@ -85,6 +86,8 @@ public class TimersEJB {
 						scGame.setUrlStore(wlg.getUrlStore());
 						chkedGames.put(wlg.getUrlGame(), scGame);
 					}
+					
+					add2Timeline(scGame);
 				}
 
 				if (add) {
@@ -121,5 +124,24 @@ public class TimersEJB {
 		}
 
 		return false;
+	}
+
+	private void add2Timeline(ScrapedGame sg) {
+		StringBuilder sb = new StringBuilder();
+		Calendar c = Calendar.getInstance();
+		
+		sb.append(c.get(Calendar.YEAR))
+			.append("-")
+			.append(c.get(Calendar.MONTH))
+			.append("-")
+			.append(c.get(Calendar.DAY_OF_MONTH))
+			.append(" ")
+			.append(c.get(Calendar.HOUR))
+			.append(":")
+			.append(c.get(Calendar.MINUTE))
+			.append(":")
+			.append(c.get(Calendar.SECOND));
+		
+		cq_ejb.add2Timeline(sg, sb.toString());
 	}
 }
