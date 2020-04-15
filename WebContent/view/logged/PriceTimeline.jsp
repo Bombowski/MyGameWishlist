@@ -1,7 +1,8 @@
-<%@page import="mygamewishlist.model.pojo.ClassPaths"%>
-<%@page import="mygamewishlist.view.JspFunctions"%>
-<%@page import="mygamewishlist.model.pojo.MyLogger"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="mygamewishlist.model.pojo.db.User"%>
+<%@page import="mygamewishlist.model.pojo.ClassPaths"%>
+<%@page import="mygamewishlist.model.pojo.MyLogger"%>
+<%@page import="mygamewishlist.view.JspFunctions"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE>
@@ -43,7 +44,13 @@
 
 	<main class="content-fluid p-4 mb-5">
 		<div class="w-75 m-auto">
-			
+			<%
+				String[] games = request.getParameterValues("games");
+				
+				for (String str : games) {
+					out.append(str);
+				}
+			%>
 		</div>
 	</main>
 	<jsp:include page="../template/Footer.jsp">

@@ -3,6 +3,7 @@ package mygamewishlist.controller.logged;
 import java.io.IOException;
 
 import javax.ejb.EJB;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,14 +15,11 @@ import mygamewishlist.model.ejb.CreateQueryEJB;
 import mygamewishlist.model.pojo.ClassPaths;
 import mygamewishlist.model.pojo.MyLogger;
 
-/**
- * Servlet implementation class GameHistory
- */
-@WebServlet("/GameHistory")
-public class GameHistory extends HttpServlet {
-
+@WebServlet("/PriceTimeline")
+public class PriceTimeline extends HttpServlet {
+	
 	private static final long serialVersionUID = 1L;
-
+	
 	private static final MyLogger LOG = MyLogger.getLOG();
 	private static final ClassPaths cp = ClassPaths.getCP();
 	
@@ -33,7 +31,8 @@ public class GameHistory extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-			
+			RequestDispatcher rd = getServletContext().getRequestDispatcher(cp.JSP_PRICE_TIMELINE);
+			rd.forward(request, response);
 		} catch(Exception e) {
 			LOG.logError(e.getMessage());
 		}

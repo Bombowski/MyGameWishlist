@@ -15,6 +15,7 @@ import mygamewishlist.model.ejb.ClientSessionEJB;
 import mygamewishlist.model.ejb.CreateQueryEJB;
 import mygamewishlist.model.pojo.ClassPaths;
 import mygamewishlist.model.pojo.MyLogger;
+import mygamewishlist.model.pojo.db.Store;
 import mygamewishlist.model.pojo.db.User;
 import mygamewishlist.model.pojo.db.WishListGame;
 
@@ -46,8 +47,10 @@ public class MyList extends HttpServlet {
 			} else {
 				rd = getServletContext().getRequestDispatcher(cp.JSP_MYLIST);
 				
+				ArrayList<Store> stores = cq_ejb.getStores();
 				ArrayList<WishListGame> list = cq_ejb.getListByIdUser(usr.getId());
-				request.setAttribute("list", list);
+				request.setAttribute("stores", stores);
+				request.setAttribute("list", list);				
 			}
 			
 			rd.forward(request, response);

@@ -79,13 +79,14 @@ public class TimersEJB {
 
 					if (lowerPrice(wlg, scGame)) {
 						add = true;
-						scGame.setFullName(wlg.getGameName());
-						scGame.setImg(wlg.getImg());
-						scGame.setStoreName(wlg.getStoreName());
-						scGame.setUrlGame(wlg.getUrlGame());
-						scGame.setUrlStore(wlg.getUrlStore());
-						chkedGames.put(wlg.getUrlGame(), scGame);
 					}
+					
+					scGame.setFullName(wlg.getGameName());
+					scGame.setImg(wlg.getImg());
+					scGame.setStoreName(wlg.getStoreName());
+					scGame.setUrlGame(wlg.getUrlGame());
+					scGame.setUrlStore(wlg.getUrlStore());
+					chkedGames.put(wlg.getUrlGame(), scGame);
 					
 					add2Timeline(scGame);
 				}
@@ -132,11 +133,11 @@ public class TimersEJB {
 		
 		sb.append(c.get(Calendar.YEAR))
 			.append("-")
-			.append(c.get(Calendar.MONTH))
+			.append(c.get(Calendar.MONTH) + 1)
 			.append("-")
 			.append(c.get(Calendar.DAY_OF_MONTH))
 			.append(" ")
-			.append(c.get(Calendar.HOUR))
+			.append(c.get(Calendar.HOUR_OF_DAY))
 			.append(":")
 			.append(c.get(Calendar.MINUTE))
 			.append(":")
