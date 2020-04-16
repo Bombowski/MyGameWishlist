@@ -1,5 +1,7 @@
 package mygamewishlist.model.dao.mapper;
 
+import java.util.ArrayList;
+
 import org.apache.ibatis.annotations.Param;
 
 import mygamewishlist.model.pojo.ScrapedGame;
@@ -10,7 +12,7 @@ public interface TimelineMapper {
 
 	public void add2Timeline(@Param("sg") ScrapedGame sg, @Param("time") String time);
 	
-	public TimelineGame getTimelineByUrl(@Param("url") String url);
+	public ArrayList<TimelineGame> getTimelineByUrl(@Param("url") String url);
 	
-	public TimelineGameDetailed getTimelineByUrlDetailed(@Param("url") String url);
+	public ArrayList<TimelineGameDetailed> getTimelineByUrlDetailed(@Param("url") String url);
 }

@@ -1,5 +1,7 @@
 package mygamewishlist.model.dao;
 
+import java.util.ArrayList;
+
 import org.apache.ibatis.session.SqlSession;
 
 import mygamewishlist.model.dao.mapper.TimelineMapper;
@@ -46,7 +48,7 @@ public class TimelineDAO {
 		}
 	}
 	
-	public TimelineGame getTimelineByUrl(String url) {
+	public ArrayList<TimelineGame> getTimelineByUrl(String url) {
 		try {
 			getTimMapper();
 			return timelineMapper.getTimelineByUrl(url);
@@ -59,10 +61,10 @@ public class TimelineDAO {
 				LOG.logError(e.getMessage());
 			}
 		}
-		return new TimelineGame();
+		return new ArrayList<TimelineGame>();
 	}
 	
-	public TimelineGameDetailed getTimelineByUrlDetailed(String url) {
+	public ArrayList<TimelineGameDetailed> getTimelineByUrlDetailed(String url) {
 		try {
 			getTimMapper();
 			return timelineMapper.getTimelineByUrlDetailed(url);
@@ -75,6 +77,6 @@ public class TimelineDAO {
 				LOG.logError(e.getMessage());
 			}
 		}
-		return new TimelineGameDetailed();
+		return new ArrayList<TimelineGameDetailed>();
 	}
 }

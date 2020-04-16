@@ -24,7 +24,7 @@
 			WG.URL = #{url}
 	</select>
 	
-	<resultMap type="TimelineGame" id="tlDetailed">
+	<resultMap type="TimelineGameDetailed" id="tlDetailed">
 		<id property="urlGame" column="URL" />
 		<result property="time" column="TIME" />
 		<result property="price" column="PRICE" />
@@ -33,7 +33,7 @@
 		<result property="urlStore" column="URL_STORE" />
 	</resultMap>
 	
-	<resultMap type="TimelineGameDetailed" id="tlSimple">
+	<resultMap type="TimelineGame" id="tlSimple">
 		<id property="urlGame" column="URL" />
 		<result property="time" column="TIME" />
 		<result property="price" column="PRICE" />

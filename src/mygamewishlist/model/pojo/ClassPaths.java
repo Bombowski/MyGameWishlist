@@ -17,11 +17,11 @@ public class ClassPaths {
 		return cp;
 	}
 	
-	public final String PROJECT = "/MyGameWishlist";
-	public final String JSP = ".jsp";
-	public final String VIEW = "/view";
-	public final String LOGGED = new StringBuilder().append(VIEW).append("/logged").toString();
-	public final String ADMIN = new StringBuilder().append(LOGGED).append("/admin").toString();	
+	private final String PROJECT = "/MyGameWishlist";
+	private final String JSP = ".jsp";
+	private final String VIEW = "/view";
+	private final String LOGGED = new StringBuilder().append(VIEW).append("/logged").toString();
+	private final String ADMIN = new StringBuilder().append(LOGGED).append("/admin").toString();	
 	
 	public final String LOGIN = "/Login";
 	public final String REVIEW_LIST = "/ReviewList";

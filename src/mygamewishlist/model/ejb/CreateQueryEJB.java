@@ -149,11 +149,11 @@ public class CreateQueryEJB {
 		TIM_DAO.add2Timeline(sg, time);
 	}
 	
-	public TimelineGame getTimelineByUrl(String url) {
+	public ArrayList<TimelineGame> getTimelineByUrl(String url) {
 		return TIM_DAO.getTimelineByUrl(url);
 	}
 	
-	public TimelineGameDetailed getTimelineByUrlDetailed(String url) {
+	public ArrayList<TimelineGameDetailed> getTimelineByUrlDetailed(String url) {
 		return TIM_DAO.getTimelineByUrlDetailed(url);
 	}
 }

@@ -31,6 +31,8 @@ public class TimersEJB {
 	@EJB
 	MailEJB mail_ejb;
 
+	private Calendar time = Calendar.getInstance();
+	
 	public TimersEJB() {
 	}
 
@@ -51,10 +53,18 @@ public class TimersEJB {
 		}
 	}
 
-	@Schedule(second = "00", minute = "*/1", hour = "*")
+	@Schedule(second = "00", minute = "00", hour = "*/1")
 	public void chkPrices() {
 		initAll();
 
+		// if it is 23 (11pm) this function will insert current game prices
+		// into the timeline table.
+		boolean newDay = false;
+		time = Calendar.getInstance();
+		if (time.get(Calendar.HOUR_OF_DAY) == 23) {
+			 newDay = true;
+		}
+		
 		Hashtable<String, ScrapedGame> chkedGames = new Hashtable<String, ScrapedGame>();
 		ArrayList<User> users = cq_ejb.getUsersWithList();
 
@@ -66,20 +76,11 @@ public class TimersEJB {
 
 			for (WishListGame2Scrap wlg : games) {
 				ScrapedGame scGame;
-				boolean add = false;
 				
 				if (chkedGames.keySet().contains(wlg.getUrlGame())) {
 					scGame = chkedGames.get(wlg.getUrlGame());
-
-					if (lowerPrice(wlg, scGame)) {
-						add = true;
-					}
 				} else {
 					scGame = scr_ejb.getGame(wlg);
-
-					if (lowerPrice(wlg, scGame)) {
-						add = true;
-					}
 					
 					scGame.setFullName(wlg.getGameName());
 					scGame.setImg(wlg.getImg());
@@ -88,10 +89,12 @@ public class TimersEJB {
 					scGame.setUrlStore(wlg.getUrlStore());
 					chkedGames.put(wlg.getUrlGame(), scGame);
 					
-					add2Timeline(scGame);
+					if (newDay) {
+						add2Timeline(scGame);
+					}
 				}
 
-				if (add) {
+				if (lowerPrice(wlg, scGame)) {
 					toSend.add(scGame);
 				}
 			}
