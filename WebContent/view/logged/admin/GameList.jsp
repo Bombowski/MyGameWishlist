@@ -50,6 +50,7 @@
 			<table class="table">
 				<%
 					try {
+						@SuppressWarnings("unchecked")
 						ArrayList<Game> games = (ArrayList<Game>) request.getAttribute("games"); 
 						StringBuilder sb = new StringBuilder();
 						

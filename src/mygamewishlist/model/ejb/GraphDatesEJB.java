@@ -24,9 +24,9 @@ public class GraphDatesEJB {
 	public Hashtable<String, ArrayList<TimelineGameDetailed>> generateTimeline(
 			Hashtable<String, ArrayList<TimelineGameDetailed>> list) {
 		Calendar c = Calendar.getInstance();
-		LocalDate finish = LocalDate.of(c.get(Calendar.YEAR), c.get(Calendar.MONTH) + 1, c.get(Calendar.DAY_OF_MONTH));
+		LocalDate finish = LocalDate.of(c.get(Calendar.YEAR), c.get(Calendar.MONTH) + 1, c.get(Calendar.DAY_OF_MONTH) + 1);
 		c.add(Calendar.DAY_OF_MONTH, -14);
-		LocalDate start = LocalDate.of(c.get(Calendar.YEAR), c.get(Calendar.MONTH) + 1, c.get(Calendar.DAY_OF_MONTH));
+		LocalDate start = LocalDate.of(c.get(Calendar.YEAR), c.get(Calendar.MONTH) + 1, c.get(Calendar.DAY_OF_MONTH) + 1);
 		dates = getDatesBetween(start, finish);
 
 		Hashtable<String, ArrayList<TimelineGameDetailed>> toReturn = new Hashtable<String, ArrayList<TimelineGameDetailed>>();
@@ -39,14 +39,15 @@ public class GraphDatesEJB {
 				tmp.add(new TimelineGameDetailed());
 			}
 
+			int i = 0;
 			for (LocalDate ld : dates) {
-				int i = 0;
 				for (TimelineGameDetailed tlgd : arr) {
 					if (str2Date(tlgd.getTime()).equals(ld)) {
 						tmp.set(i, tlgd);
+						break;
 					}
-					i++;
 				}
+				i++;
 			}
 			
 			toReturn.put(key, tmp);
@@ -56,7 +57,6 @@ public class GraphDatesEJB {
 	}
 
 	private LocalDate str2Date(String str) {
-		str = str.substring(0, str.indexOf(" "));
 		String[] split = str.split("-");
 		LocalDate ld = LocalDate.of(Integer.parseInt(split[0]), Integer.parseInt(split[1]), Integer.parseInt(split[2]));
 

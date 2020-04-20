@@ -62,6 +62,7 @@
 					<div class="col">
 						<%
 							try {
+								@SuppressWarnings("unchecked")
 								ArrayList<Store> stores = (ArrayList<Store>) request.getAttribute("stores");
 								StringBuilder sb = new StringBuilder();
 								

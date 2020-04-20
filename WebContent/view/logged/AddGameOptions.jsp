@@ -58,7 +58,9 @@
 				<div class="mb-0 buttons">
 					<%
 						try {
+							@SuppressWarnings("unchecked")
 							ArrayList<String> stores = (ArrayList<String>)request.getAttribute("stores");
+							@SuppressWarnings("unchecked")
 							Hashtable<String,ArrayList<ScrapedGame>> games = 
 									(Hashtable<String,ArrayList<ScrapedGame>>)request.getAttribute("games"); 
 							
@@ -100,16 +102,20 @@
 										} else {
 					%>											
 											<table class='table'>
-												<th></th>
-												<th>Name</th>
-												<th>Default price</th>
-												<th>Current price</th>
-												<th>Current discount</th>
-												<th>Check games you want to add</th>
-												<th colspan="2">prices at which you want to get notified</th>
-												<%
-													out.append(jspF.buildScrapedGameTable(list));									
-												%>
+												<tbody>
+													<tr>
+														<th></th>
+														<th>Name</th>
+														<th>Default price</th>
+														<th>Current price</th>
+														<th>Current discount</th>
+														<th>Check games you want to add</th>
+														<th colspan="2">prices at which you want to get notified</th>
+													</tr>
+													<%
+														out.append(jspF.buildScrapedGameTable(list));									
+													%>
+												</tbody>
 											</table>
 					<%	
 										}

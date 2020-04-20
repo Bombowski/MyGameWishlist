@@ -138,13 +138,7 @@ public class TimersEJB {
 			.append("-")
 			.append(c.get(Calendar.MONTH) + 1)
 			.append("-")
-			.append(c.get(Calendar.DAY_OF_MONTH))
-			.append(" ")
-			.append(c.get(Calendar.HOUR_OF_DAY))
-			.append(":")
-			.append(c.get(Calendar.MINUTE))
-			.append(":")
-			.append(c.get(Calendar.SECOND));
+			.append(c.get(Calendar.DAY_OF_MONTH));
 		
 		cq_ejb.add2Timeline(sg, sb.toString());
 	}

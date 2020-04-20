@@ -17,6 +17,7 @@ import mygamewishlist.model.ejb.CreateQueryEJB;
 import mygamewishlist.model.ejb.GraphDatesEJB;
 import mygamewishlist.model.pojo.ClassPaths;
 import mygamewishlist.model.pojo.MyLogger;
+import mygamewishlist.model.pojo.db.Store;
 import mygamewishlist.model.pojo.db.TimelineGameDetailed;
 import mygamewishlist.model.pojo.db.User;
 
@@ -50,13 +51,33 @@ public class PriceTimeline extends HttpServlet {
 					rd = getServletContext().getRequestDispatcher(cp.MYLIST);
 				} else {
 					Hashtable<String, ArrayList<TimelineGameDetailed>> list = new Hashtable<String, ArrayList<TimelineGameDetailed>>();
+					ArrayList<Store> stores = cq_ejb.getStores();
+					ArrayList<String> names = new ArrayList<String>();
+					
 					for (String str : games) {
-						list.put(str, cq_ejb.getTimelineByUrlDetailed(str));						
+						String[] split = str.split("&");
+						if (split.length != 3) {
+							continue;
+						}
+						
+						int idStore = Integer.parseInt(split[1]);						
+						list.put(str, cq_ejb.getTimelineByUrlDetailed(split[0]));
+						
+						for (Store st : stores) {
+							if (st.getId() == idStore) {
+								names.add(new StringBuilder()
+										.append(split[2])
+										.append(" ")
+										.append(st.getName())
+										.toString());
+							}
+						}												
 					}
 					
 					rd = getServletContext().getRequestDispatcher(cp.JSP_PRICE_TIMELINE);
 					request.setAttribute("list", gd_ejb.generateTimeline(list));
 					request.setAttribute("dates", gd_ejb.getDates());
+					request.setAttribute("names", names);
 				}
 			}
 			

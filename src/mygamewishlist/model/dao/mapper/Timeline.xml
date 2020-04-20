@@ -15,12 +15,12 @@
 	
 	<select id="getTimelineByUrlDetailed" resultMap="tlDetailed">
 		SELECT 
-			PT.*, WG.NAME, ST.URL AS URL_STORE
+			DISTINCT(TIME), PT.URL, PT.PRICE, PT.DISCOUNT, WG.NAME, ST.URL AS URL_STORE
 		FROM 
 			PRICE_TIMELINE PT, WISHLIST_GAME WG, STORE ST
 		WHERE
 			PT.URL = WG.URL AND
-		    WG.ID_STORE = ST.ID AND
+			WG.ID_STORE = ST.ID AND
 			WG.URL = #{url}
 	</select>
 	

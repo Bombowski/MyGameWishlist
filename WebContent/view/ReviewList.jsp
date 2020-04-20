@@ -49,6 +49,7 @@ pageEncoding="UTF-8"%>
 			<table class="table">
 				<%
 					try {
+						@SuppressWarnings("unchecked")
 						ArrayList<ReviewList> reviews = (ArrayList<ReviewList>)request.getAttribute("reviews");
 						
 						StringBuilder sb = new StringBuilder();

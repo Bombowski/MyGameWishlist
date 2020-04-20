@@ -11,7 +11,6 @@ import javax.ejb.Stateless;
 import org.json.JSONException;
 
 import mygamewishlist.model.pojo.Game2Scrap;
-import mygamewishlist.model.pojo.MyLogger;
 import mygamewishlist.model.pojo.ScrapedGame;
 import mygamewishlist.model.pojo.SteamGame;
 import mygamewishlist.model.pojo.db.WishListGame2Scrap;
@@ -22,8 +21,6 @@ import mygamewishlist.model.scraping.ScrapingSteam;
 @Stateless
 @LocalBean
 public class ScrapingEJB {
-
-	private static final MyLogger LOG = MyLogger.getLOG(); 
 	
 	@EJB
 	CreateQueryEJB cq_ejb;

@@ -71,7 +71,9 @@
 										<th><input type="checkbox" id="chkAll"></th>
 									</tr>
 									<%
+										@SuppressWarnings("unchecked")
 										ArrayList<WishListGame> list = (ArrayList<WishListGame>) request.getAttribute("list");
+										@SuppressWarnings("unchecked")
 										ArrayList<Store> stores = (ArrayList<Store>) request.getAttribute("stores"); 
 										try {
 											StringBuilder sb = new StringBuilder();
@@ -84,7 +86,13 @@
 														break;	
 													}
 												}
-												tr.addTd(new Input("checkbox", "games", wlg.getUrlGame()));
+												tr.addTd(new Input("checkbox", "games", new StringBuilder()
+														.append(wlg.getUrlGame())
+														.append("&")
+														.append(wlg.getIdStore())
+														.append("&")
+														.append(wlg.getGameName())
+														.toString()));
 												
 												sb.append(tr.print());
 											}

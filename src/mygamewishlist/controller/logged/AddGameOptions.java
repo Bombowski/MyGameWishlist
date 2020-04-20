@@ -84,6 +84,7 @@ public class AddGameOptions extends HttpServlet {
 				ArrayList<String> stNames = cq_ejb.getStoreNames();
 				
 				for (String str : stNames) {
+					@SuppressWarnings("unchecked")
 					Hashtable<String,ArrayList<ScrapedGame>> tmp = (Hashtable<String,ArrayList<ScrapedGame>>)request.getAttribute(str);
 					if (tmp != null) {
 						if (tmp.isEmpty()) {
