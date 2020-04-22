@@ -14,6 +14,9 @@ import mygamewishlist.model.ejb.ClientSessionEJB;
 import mygamewishlist.model.ejb.CreateQueryEJB;
 import mygamewishlist.model.pojo.ClassPaths;
 import mygamewishlist.model.pojo.MyLogger;
+import mygamewishlist.model.pojo.db.Game;
+import mygamewishlist.model.pojo.db.Review;
+import mygamewishlist.model.pojo.db.User;
 
 /**
  * Servlet implementation class GameInfo
@@ -25,6 +28,8 @@ public class GameInfo extends HttpServlet {
 	private static final MyLogger LOG = MyLogger.getLOG();
 	private static final ClassPaths cp = ClassPaths.getCP();
 	
+	private int idGame = -1;
+	
 	@EJB
 	ClientSessionEJB sc_ejb;
 	
@@ -33,20 +38,35 @@ public class GameInfo extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
+			idGame = Integer.parseInt(request.getParameter("id"));
+			
+			Game g = cq_ejb.getGame(idGame);
+			
 			RequestDispatcher rd = getServletContext().getRequestDispatcher(cp.JSP_GAME_INFO);
+			request.setAttribute("game", g);
 			rd.forward(request, response);
 		} catch(Exception e) {
 			LOG.logError(e.getMessage());
-			response.sendRedirect(cp.REDIRECT_LOGIN);
+			RequestDispatcher rd = getServletContext().getRequestDispatcher(cp.JSP_REVIEW_LIST);
+			rd.forward(request, response);
 		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-				
+			User usr = sc_ejb.getLoggedUser(request);
+			double rating = Double.parseDouble(request.getParameter("rating"));
+			
+			if (usr == null || idGame == -1 || rating < 0 || rating > 10) {
+				response.sendRedirect(cp.REDIRECT_REVIEW_LIST);
+				return;
+			}
+			
+			cq_ejb.addOrUpdateReview(new Review(usr.getId(), idGame, rating));
+			response.sendRedirect(cp.REDIRECT_REVIEW_LIST);
 		} catch(Exception e) {
 			LOG.logError(e.getMessage());
-			response.sendRedirect(cp.REDIRECT_LOGIN);
+			response.sendRedirect(cp.REDIRECT_REVIEW_LIST);
 		}
 	}
 }

@@ -1,3 +1,5 @@
+<%@page import="mygamewishlist.model.pojo.ClassPaths"%>
+<%@page import="bomboshtml.body.Input"%>
 <%@page import="bomboshtml.body.A"%>
 <%@page import="bomboshtml.body.table.Tr"%>
 <%@page import="bomboshtml.body.table.Table"%>
@@ -13,6 +15,7 @@ pageEncoding="UTF-8"%>
 <%!
 	JspFunctions jspF = JspFunctions.getJspF();
 	MyLogger log = MyLogger.getLOG();
+	ClassPaths cp = ClassPaths.getCP();
 %>
 
 <%
@@ -47,6 +50,13 @@ pageEncoding="UTF-8"%>
 	<main class="content-fluid p-4 mb-5">
 		<div class="w-75 m-auto">
 			<table class="table">
+				<tr>
+					<th>Average rating</th>
+					<th>Game</th>
+					<th><% out.append(usr == null ? "Your rating: (not logged)" : "Your rating:"); %></th>
+					<th>Rate</th>
+					<th></th>
+				</tr>
 				<%
 					try {
 						@SuppressWarnings("unchecked")
@@ -54,17 +64,28 @@ pageEncoding="UTF-8"%>
 						
 						StringBuilder sb = new StringBuilder();
 						
-						Tr th = new Tr();
-						th.addTd("Average rating");
-						th.addTd("Game");
-						th.addTd(usr == null ? "Your rating: (not logged)" : "Your rating:");
-						sb.append(th.print());
+						String rateInfo = usr == null ? "Game info" : "Rate/ Game info";
 						
 						for (ReviewList rl : reviews) {
 							Tr tr = new Tr();
-							tr.addTd(new A(rl.getAverageRating() + "", "/MyGameWishlist/GameInfo?id=" + rl.getIdGame()));
+							tr.addTd(rl.getAverageRating() + "");
 							tr.addTd(rl.getName());
-							tr.addTd(rl.getUserRating() == -1 ? "" : rl.getUserRating() + "");
+							
+							if (rl.getUserRating() == -1) {
+								if (usr == null) {
+									tr.addTd("");
+								} else {
+									tr.addTd("Not rated yet.");
+								}
+							} else {
+								tr.addTd(rl.getUserRating() + "");
+							}
+							
+							tr.addTd(new A(rateInfo, new StringBuilder()
+									.append(cp.REDIRECT_GAME_INFO)
+									.append("?id=")
+									.append(rl.getIdGame())
+									.toString()));
 							
 							sb.append(tr.print());
 						}

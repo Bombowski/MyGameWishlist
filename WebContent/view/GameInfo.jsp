@@ -1,3 +1,6 @@
+<%@page import="bomboshtml.body.Input"%>
+<%@page import="mygamewishlist.model.pojo.db.Game"%>
+<%@page import="mygamewishlist.model.pojo.ClassPaths"%>
 <%@page import="bomboshtml.body.A"%>
 <%@page import="bomboshtml.body.table.Tr"%>
 <%@page import="bomboshtml.body.table.Table"%>
@@ -13,6 +16,7 @@ pageEncoding="UTF-8"%>
 <%!
 	JspFunctions jspF = JspFunctions.getJspF();
 	MyLogger log = MyLogger.getLOG();
+	ClassPaths cp = ClassPaths.getCP();
 %>
 
 <%
@@ -46,7 +50,31 @@ pageEncoding="UTF-8"%>
 
 	<main class="content-fluid p-4 mb-5">
 		<div class="w-75 m-auto">
-			GAME INFO
+			<%
+			Game g = null;
+				try {
+					g = (Game) request.getAttribute("game");
+				} catch(Exception e) {
+					 log.logError(e.getMessage());
+					 response.sendRedirect(cp.REDIRECT_GAME_LIST);
+				}
+			
+				StringBuilder sb = new StringBuilder();
+				sb.append("<h2>")
+					.append(g.getName())
+					.append("</h2>")
+					.append("<p>")
+					.append(g.getDescription())
+					.append("</p>");
+				
+				out.append(sb.toString());
+			%>
+			<form method="post" action="<% out.append(cp.REDIRECT_GAME_INFO); %>">
+				<input type="number" name="rating" step="0.1" min="0" max="10" value="0">
+				<button type="submit">
+					Rate
+				</button>
+			</form>
 		</div>
 	</main>
 	<jsp:include page="template/Footer.jsp">

@@ -4,17 +4,17 @@ public class Review {
 
 	private int idUser;
 	private int idGame;
-	private int rating;
+	private double rating;
 
-	public Review(int idUser, int idGame, int rating) {
+	public Review() {
+		super();
+	}
+
+	public Review(int idUser, int idGame, double rating) {
 		super();
 		this.idUser = idUser;
 		this.idGame = idGame;
 		this.rating = rating;
-	}
-
-	public Review() {
-		super();
 	}
 
 	public int getIdUser() {
@@ -33,11 +33,11 @@ public class Review {
 		this.idGame = idGame;
 	}
 
-	public int getRating() {
+	public double getRating() {
 		return rating;
 	}
 
-	public void setRating(int rating) {
+	public void setRating(double rating) {
 		this.rating = rating;
 	}
 

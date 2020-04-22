@@ -30,7 +30,6 @@ public class ClassPaths {
 	public final String ADD_GAME_WISHLIST = "/AddGameWishlist";
 	public final String UPDATE_GAME_WISHLIST = "/UpdateGameWishlist";
 	public final String DELETE_GAME_WISHLIST = "/DeleteGameWishlist";
-	public final String GAME_HISTORY = "/GameHistory";
 	public final String LOGOUT = "/Logout";
 	public final String MYLIST = "/MyList";
 	public final String PRICE_TIMELINE = "/PriceTimeline";
@@ -46,7 +45,6 @@ public class ClassPaths {
 	public final String REDIRECT_ADD_GAME_WISHLIST = redirect(ADD_GAME_WISHLIST);
 	public final String REDIRECT_UPDATE_GAME_WISHLIST = redirect(UPDATE_GAME_WISHLIST);
 	public final String REDIRECT_DELETE_GAME_WISHLIST = redirect(DELETE_GAME_WISHLIST);
-	public final String REDIRECT_GAME_HISTORY = redirect(GAME_HISTORY);
 	public final String REDIRECT_LOGOUT = redirect(LOGOUT);
 	public final String REDIRECT_MYLIST = redirect(MYLIST);
 	public final String REDIRECT_PRICE_TIMELINE = redirect(PRICE_TIMELINE);
@@ -61,7 +59,6 @@ public class ClassPaths {
 	public final String JSP_ADD_GAME_OPTIONS = jsp(LOGGED,ADD_GAME_OPTIONS);
 	public final String JSP_ADD_GAME_WISHLIST = jsp(LOGGED,ADD_GAME_WISHLIST);
 	public final String JSP_UPDATE_GAME_WISHLIST = jsp(LOGGED,UPDATE_GAME_WISHLIST);
-	public final String JSP_GAME_HISTORY = jsp(LOGGED,GAME_HISTORY);
 	public final String JSP_MYLIST = jsp(LOGGED,MYLIST);
 	public final String JSP_PRICE_TIMELINE = jsp(LOGGED,PRICE_TIMELINE);
 	public final String JSP_ADD_GAME = jsp(ADMIN,ADD_GAME);

@@ -6,14 +6,15 @@
 
 	<select id="getReviewList" resultMap="reviewListMap">
 		SELECT
-			AVG(RE.RATING) AS AVERAGE_RATING, USER_RATING, GA.ID AS ID_GAME, GA.NAME AS NAME
+			AVG(RE.RATING) AS AVERAGE_RATING, IFNULL(USER_RATING, -1) AS USER_RATING, 
+			GA.ID AS ID_GAME, GA.NAME AS NAME
 		FROM
 			GAME GA, REVIEW RE, USER US,
 		    (
 				SELECT
 					GA.ID AS IDG, RATING AS USER_RATING
 				FROM
-					GAME GA LEFT JOIN REVIEW RE ON GA.ID = RE.ID_GAME AND RE.ID_USER = 1
+					GAME GA LEFT JOIN REVIEW RE ON GA.ID = RE.ID_GAME AND RE.ID_USER = #{idUser}
 		        ORDER BY
 					GA.ID
 		    ) SUB
@@ -40,8 +41,10 @@
 			GA.ID;
 	</select>
 	
-	<update id="updateReview" parameterType="Review">
-		UPDATE REVIEW SET RATING = #{rating} WHERE ID_USER = #{idUser} AND ID_GAME = #{idGame}
+	<update id="addOrUpdateReview" parameterType="Review">
+		INSERT INTO REVIEW (ID_USER, ID_GAME, RATING) VALUES
+			(#{idUser},#{idGame},#{rating}) ON DUPLICATE KEY UPDATE
+			RATING = #{rating}
 	</update>
 	
 	<delete id="deleteReview" parameterType="Review">

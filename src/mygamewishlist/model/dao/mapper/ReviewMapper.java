@@ -13,7 +13,7 @@ public interface ReviewMapper {
 	
 	public ArrayList<ReviewList> getReviewListNotLogged();
 	
-	public void updateReview(Review rev);
+	public void addOrUpdateReview(Review rev);
 	
 	public void deleteReview(@Param("idUser") int idUser, @Param("idGame") int idGame);
 }

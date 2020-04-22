@@ -57,8 +57,8 @@ public class CreateQueryEJB {
 		return REV_DAO.getReviewListNotLogged();
 	}
 	
-	public void updateReview(Review rev) {
-		REV_DAO.updateReview(rev);
+	public void addOrUpdateReview(Review rev) {
+		REV_DAO.addOrUpdateReview(rev);
 	}
 	
 	public void deleteReview(int idUser, int idGame) {

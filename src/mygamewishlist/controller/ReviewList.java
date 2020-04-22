@@ -49,13 +49,4 @@ public class ReviewList extends HttpServlet {
 			response.sendRedirect(cp.REDIRECT_LOGIN);
 		}
 	}
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		try {
-					
-		} catch(Exception e) {
-			LOG.logError(e.getMessage());
-			response.sendRedirect(cp.REDIRECT_LOGIN);
-		}
-	}
 }

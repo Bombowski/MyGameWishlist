@@ -63,10 +63,10 @@ public class ReviewDAO {
 		return new ArrayList<ReviewList>();
 	}
 	
-	public void updateReview(Review rev) {
+	public void addOrUpdateReview(Review rev) {
 		try {
-			getRevMapper();
-			reviewMapper.updateReview(rev);
+			getRevMapper();			
+			reviewMapper.addOrUpdateReview(rev);
 			session.commit();
 		} catch(Exception e) {
 			LOG.logError(e.getMessage());
