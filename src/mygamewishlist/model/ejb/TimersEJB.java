@@ -30,8 +30,6 @@ public class TimersEJB {
 
 	@EJB
 	MailEJB mail_ejb;
-
-	private Calendar time = Calendar.getInstance();
 	
 	public TimersEJB() {
 	}
@@ -42,8 +40,7 @@ public class TimersEJB {
 		mail_ejb = new MailEJB();
 	}
 	
-//	@Schedule(second = "00", minute = "00", hour = "12")
-//	@Schedule(second = "00", minute = "*/3", hour = "*")
+	@Schedule(second = "00", minute = "00", hour = "12")
 	public void loadGames() {
 		initAll();
 		try {
@@ -57,14 +54,6 @@ public class TimersEJB {
 	public void chkPrices() {
 		initAll();
 
-		// if it is 23 (11pm) this function will insert current game prices
-		// into the timeline table.
-		boolean newDay = false;
-		time = Calendar.getInstance();
-		if (time.get(Calendar.HOUR_OF_DAY) == 23) {
-			 newDay = true;
-		}
-		
 		Hashtable<String, ScrapedGame> chkedGames = new Hashtable<String, ScrapedGame>();
 		ArrayList<User> users = cq_ejb.getUsersWithList();
 
@@ -87,11 +76,9 @@ public class TimersEJB {
 					scGame.setStoreName(wlg.getStoreName());
 					scGame.setUrlGame(wlg.getUrlGame());
 					scGame.setUrlStore(wlg.getUrlStore());
-					chkedGames.put(wlg.getUrlGame(), scGame);
+					chkedGames.put(wlg.getUrlGame(), scGame);					
 					
-					if (newDay) {
-						add2Timeline(scGame);
-					}
+					add2Timeline(scGame);					
 				}
 
 				if (lowerPrice(wlg, scGame)) {

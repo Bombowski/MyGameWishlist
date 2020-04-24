@@ -71,11 +71,30 @@ public class WishListGameDAO {
 			getWlgMapper();
 			for (WishListGame wlg : games) {
 				if (wlg instanceof WishListGameSteam) {
-					listMapper.addSteamGame2Wishlist((WishListGameSteam) wlg, idUser);
+					listMapper.addUrlWLPT(wlg.getUrlGame(), ((WishListGameSteam) wlg).getAppid() + "");
 				} else {
-					listMapper.addGame2Wishlist(wlg, idUser);
-				}
+					listMapper.addUrlWLPT(wlg.getUrlGame(), null);
+				}	
+				
+				listMapper.addGame2Wishlist(wlg, idUser, 
+						listMapper.getIdUrlByUrl(wlg.getUrlGame()));
 			}
+			session.commit();
+		} catch(Exception e) {
+			LOG.logError(e.getMessage());
+		} finally {
+			try {
+				closeAll();
+			} catch (Exception e) {
+				LOG.logError(e.getMessage());
+			}
+		}
+	}
+	
+	private void addUrlWLPT(String url, int steamAppid) {
+		try {
+			getWlgMapper();
+//			listMapper.addUrlWLPT(url, steamAppid == -1 ? null : steamAppid);
 			session.commit();
 		} catch(Exception e) {
 			LOG.logError(e.getMessage());
@@ -123,7 +142,7 @@ public class WishListGameDAO {
 	public void deleteGameWishlist(String url, int idUser) {
 		try {
 			getWlgMapper();
-			listMapper.deleteGameWishlist(url, idUser);;
+			listMapper.deleteGameWishlist(listMapper.getIdUrlByUrl(url), idUser);
 			session.commit();
 		} catch(Exception e) {
 			LOG.logError(e.getMessage());
@@ -140,7 +159,7 @@ public class WishListGameDAO {
 		try {
 			getWlgMapper();
 			for (ScrapedGame sg : games) {
-				listMapper.updatePrices(sg, idUser);
+				listMapper.updatePrices(sg, idUser, listMapper.getIdUrlByUrl(sg.getUrlGame()));
 			}
 			session.commit();
 		} catch(Exception e) {
@@ -157,7 +176,7 @@ public class WishListGameDAO {
 	public void updateMinMax(double min, double max, String url, int idUser) {
 		try {
 			getWlgMapper();
-			listMapper.updateMinMax(min, max, url, idUser);
+			listMapper.updateMinMax(min, max, listMapper.getIdUrlByUrl(url), idUser);
 			session.commit();
 		} catch(Exception e) {
 			LOG.logError(e.getMessage());
@@ -168,5 +187,21 @@ public class WishListGameDAO {
 				LOG.logError(e.getMessage());
 			}
 		}
+	}
+	
+	public int getIdUrlByUrl(String url) {
+		try {
+			getWlgMapper();
+			return listMapper.getIdUrlByUrl(url);
+		} catch(Exception e) {
+			LOG.logError(e.getMessage());
+		} finally {
+			try {
+				closeAll();
+			} catch (Exception e) {
+				LOG.logError(e.getMessage());
+			}
+		}
+		return -1;
 	}
 }

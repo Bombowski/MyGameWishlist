@@ -101,19 +101,23 @@ public class MailEJB {
 			.append("width: 100%; max-width: 100%; margin-bottom: 1rem;") 
 			.append("background-color: transparent; border-collapse: collapse;") 
 			.append("box-sizing: border-box; display: table; border-collapse: separate;") 
-			.append("border-spacing: 2px; border-color: grey;'");
-			
-		Tr th = new Tr();
-		th.addTd("");
-		th.addTd("Name");
-		th.addTd("Store");
-		th.addTd("Current Price");
-		th.addTd("Current Discount");
-		th.addTd("Default Price");
-		
-		sb.append("<h3>")
-			.append(th.print())
-			.append("</h3>");
+			.append("border-spacing: 2px; border-color: grey;'")
+			.append("<tr>")
+			.append("<th>")
+			.append("</th>")
+			.append("<th>")
+			.append("Name")
+			.append("</th>")
+			.append("<th>")
+			.append("Store")
+			.append("</th>")
+			.append("<th>")
+			.append("Current Price")
+			.append("</th>")
+			.append("<th>")
+			.append("Default Price")
+			.append("</th>")
+			.append("</tr>");
 		
 		for (ScrapedGame sg : toSend) {
 			Tr tr = new Tr();

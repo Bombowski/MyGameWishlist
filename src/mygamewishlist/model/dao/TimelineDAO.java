@@ -32,10 +32,10 @@ public class TimelineDAO {
 		session.close();
 	}
 		
-	public void add2Timeline(ScrapedGame sg, String time) {
+	public void add2Timeline(ScrapedGame sg, String time, int idUrl) {
 		try {
 			getTimMapper();
-			timelineMapper.add2Timeline(sg, time);
+			timelineMapper.add2Timeline(sg, time, idUrl);
 			session.commit();
 		} catch(Exception e) {
 			LOG.logError(e.getMessage());

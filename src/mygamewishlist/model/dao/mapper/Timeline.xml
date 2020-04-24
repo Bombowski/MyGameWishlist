@@ -5,23 +5,32 @@
 <mapper namespace="mygamewishlist.model.dao.mapper.TimelineMapper">
 	
 	<insert id="add2Timeline">
-		INSERT INTO PRICE_TIMELINE (URL,TIME,PRICE,DISCOUNT)
-		VALUES(#{sg.urlGame},#{time},#{sg.currentPrice},#{sg.currentDiscount})	
+		INSERT INTO PRICE_TIMELINE (ID_URL,TIME,PRICE,DISCOUNT)
+		VALUES(#{idUrl},#{time},#{sg.currentPrice},#{sg.currentDiscount})
+		ON DUPLICATE KEY UPDATE	
+		CURRENT = #{sg.currentPrice}, DISCOUNT = #{sg.currentDiscount}
 	</insert>
 	
 	<select id="getTimelineByUrl" resultMap="tlSimple">
-		SELECT * FROM PRICE_TIMELINE WHERE URL = #{url}
+		SELECT 
+			PT.*
+		FROM 
+			PRICE_TIMELINE PT, WISHLIST_GAME_PRICE_TIMELINE WGPT
+		WHERE 
+			PT.ID_URL = WGPT.ID AND
+			WGPT.URL = #{url};
 	</select>
 	
 	<select id="getTimelineByUrlDetailed" resultMap="tlDetailed">
 		SELECT 
-			DISTINCT(TIME), PT.URL, PT.PRICE, PT.DISCOUNT, WG.NAME, ST.URL AS URL_STORE
+			TIME, WGPT.URL, PT.PRICE, PT.DISCOUNT, WG.NAME, ST.URL AS URL_STORE
 		FROM 
-			PRICE_TIMELINE PT, WISHLIST_GAME WG, STORE ST
+			PRICE_TIMELINE PT, WISHLIST_GAME WG, STORE ST, WISHLIST_GAME_PRICE_TIMELINE WGPT
 		WHERE
-			PT.URL = WG.URL AND
+			WGPT.ID = WG.ID_URL AND
+		    PT.ID_URL = WGPT.ID AND
 			WG.ID_STORE = ST.ID AND
-			WG.URL = #{url}
+			WGPT.URL = #{url}
 	</select>
 	
 	<resultMap type="TimelineGameDetailed" id="tlDetailed">

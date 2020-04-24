@@ -51,9 +51,9 @@ pageEncoding="UTF-8"%>
 	<main class="content-fluid p-4 mb-5">
 		<div class="w-75 m-auto">
 			<%
-			Game g = null;
+				Game g = null;
 				try {
-					g = (Game) request.getAttribute("game");
+					 g = (Game) request.getAttribute("game");
 				} catch(Exception e) {
 					 log.logError(e.getMessage());
 					 response.sendRedirect(cp.REDIRECT_GAME_LIST);

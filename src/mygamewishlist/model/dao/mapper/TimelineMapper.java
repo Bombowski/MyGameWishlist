@@ -10,7 +10,8 @@ import mygamewishlist.model.pojo.db.TimelineGameDetailed;
 
 public interface TimelineMapper {
 
-	public void add2Timeline(@Param("sg") ScrapedGame sg, @Param("time") String time);
+	public void add2Timeline(@Param("sg") ScrapedGame sg, @Param("time") String time,
+			@Param("idUrl") int idUrl);
 	
 	public ArrayList<TimelineGame> getTimelineByUrl(@Param("url") String url);
 	

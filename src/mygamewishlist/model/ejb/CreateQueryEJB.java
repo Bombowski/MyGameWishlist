@@ -146,7 +146,11 @@ public class CreateQueryEJB {
 	}
 	
 	public void add2Timeline(ScrapedGame sg, String time) {
-		TIM_DAO.add2Timeline(sg, time);
+		TIM_DAO.add2Timeline(sg, time, this.getIdUrlByUrl(sg.getUrlGame()));
+	}
+	
+	private int getIdUrlByUrl(String url) {
+		return LIST_DAO.getIdUrlByUrl(url);
 	}
 	
 	public ArrayList<TimelineGame> getTimelineByUrl(String url) {

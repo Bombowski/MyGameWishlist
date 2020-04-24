@@ -85,10 +85,18 @@ public class JspFunctions {
 			tr.addTd(Math.round(sg.getCurrentPrice() * 100f) / 100f + "€");
 			tr.addTd(sg.getCurrentDiscount() + "%");
 			tr.addTd(new Input("checkbox", "games", sg.getStoreName() + "&" +  i));
-			tr.addTd(">=<input type='number' name='" + sg.getStoreName() + "&min" + i + 
-					"' step='0.01' min='-1'>");
-			tr.addTd(">=<input type='number' name='" + sg.getStoreName() + "&max" + i + 
-					"' step='0.01' min='-1'>");
+			tr.addTd(new StringBuilder()
+						.append(">=<input type='number' name='")
+						.append(sg.getStoreName())
+						.append("&min")
+						.append(i + "' step='0.01' min='-1'>")
+						.toString());
+			tr.addTd(new StringBuilder()
+						.append(">=<input type='number' name='")
+						.append(sg.getStoreName())
+						.append("&max")
+						.append(i + "' step='0.01' min='-1'>")
+						.toString());
 			
 			toReturn.append(tr.print());
 			i++;

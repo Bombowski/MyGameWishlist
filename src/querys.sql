@@ -5,17 +5,33 @@ SELECT * FROM WISHLIST_GAME;
 SELECT * FROM SECRET_VARIABLES;
 SELECT * FROM STEAM_GAMES;
 SELECT * FROM PRICE_TIMELINE;
+SELECT * FROM WISHLIST_GAME_PRICE_TIMELINE;
 
 DELETE FROM PRICE_TIMELINE WHERE URL != '' AND TIME > 0;
-
-INSERT INTO PRICE_TIMELINE (URL,TIME,PRICE,DISCOUNT) VALUES
-	('/6323-buy-key-steam-deep-rock-galactic','2020-04-19',20,10),
-    ('/6323-buy-key-steam-deep-rock-galactic','2020-04-18',20,10),
-    ('/app/782330','2020-04-19',40,10),
-    ('/app/782330','2020-04-18',40,10);
     
 UPDATE PRICE_TIMELINE SET PRICE = 25 WHERE URL = '/6323-buy-key-steam-deep-rock-galactic' AND TIME = '2020-04-15 13:11:00';
 
 INSERT INTO REVIEW (ID_USER, ID_GAME, RATING) VALUES
 		(1,4,10) ON DUPLICATE KEY UPDATE
 		RATING = 1;
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
