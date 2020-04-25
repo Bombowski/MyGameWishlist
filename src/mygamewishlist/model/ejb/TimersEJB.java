@@ -40,7 +40,7 @@ public class TimersEJB {
 		mail_ejb = new MailEJB();
 	}
 	
-	@Schedule(second = "00", minute = "00", hour = "12")
+	@Schedule(second = "00", minute = "00", hour = "13")
 	public void loadGames() {
 		initAll();
 		try {
@@ -50,7 +50,7 @@ public class TimersEJB {
 		}
 	}
 
-	@Schedule(second = "00", minute = "00", hour = "*/1")
+	@Schedule(second = "00", minute = "*/1", hour = "*")
 	public void chkPrices() {
 		initAll();
 

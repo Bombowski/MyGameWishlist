@@ -8,7 +8,7 @@
 		INSERT INTO PRICE_TIMELINE (ID_URL,TIME,PRICE,DISCOUNT)
 		VALUES(#{idUrl},#{time},#{sg.currentPrice},#{sg.currentDiscount})
 		ON DUPLICATE KEY UPDATE	
-		CURRENT = #{sg.currentPrice}, DISCOUNT = #{sg.currentDiscount}
+		PRICE = #{sg.currentPrice}, DISCOUNT = #{sg.currentDiscount}
 	</insert>
 	
 	<select id="getTimelineByUrl" resultMap="tlSimple">

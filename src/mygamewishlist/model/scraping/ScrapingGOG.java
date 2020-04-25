@@ -81,10 +81,12 @@ public class ScrapingGOG {
 		}
 		
 		ScrapedGame sc = new ScrapedGame();		
+		String toLog = doc.selectFirst(".product-actions-price__base-amount").text();
 		
-		sc.setDefaultPrice(Double.parseDouble(doc.select(".product-actions-price__base-amount").text()));		
-		sc.setCurrentPrice(Double.parseDouble(
-				doc.select(".product-actions-price__final-amount").text()));
+		System.out.println(wlg.getGameName() + " - " + wlg.getUrlGame() + " - " + wlg.getUrlStore() + " - " + toLog);
+		
+		sc.setDefaultPrice(Double.parseDouble(toLog.replace(",", ".")));		
+		sc.setCurrentPrice(Double.parseDouble(toLog));
 		
 		if (sc.getCurrentPrice() == sc.getDefaultPrice()) {
 			sc.setCurrentDiscount(0);
