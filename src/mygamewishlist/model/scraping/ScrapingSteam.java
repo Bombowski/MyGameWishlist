@@ -53,7 +53,7 @@ public class ScrapingSteam {
 			WebTarget t = c.target(sal.print());
 
 			try {
-				JSONObject jo = new JSONObject((String) t.request().get(String.class));
+				JSONObject jo = new JSONObject(t.request().get(String.class));
 				JSONObject chk = jo.getJSONObject(id + "");
 
 				if (chk.getBoolean("success")) {
@@ -104,7 +104,7 @@ public class ScrapingSteam {
 
 		Client c = ClientBuilder.newClient();
 		WebTarget t = c.target(sal.print());
-		JSONObject jo = new JSONObject((String) t.request().get(String.class));
+		JSONObject jo = new JSONObject(t.request().get(String.class));
 		JSONObject applist = (JSONObject) jo.get("applist");
 		JSONArray jarr = applist.getJSONArray("apps");
 
@@ -134,7 +134,7 @@ public class ScrapingSteam {
 		Client c = ClientBuilder.newClient();
 		WebTarget t = c.target(sal.print());
 		try {
-			JSONObject jo = new JSONObject((String) t.request().get(String.class));
+			JSONObject jo = new JSONObject(t.request().get(String.class));
 			
 			JSONObject chk = jo.getJSONObject(wlgs.getAppid() + "");
 			if (chk.getBoolean("success")) {

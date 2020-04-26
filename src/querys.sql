@@ -32,6 +32,3 @@ INSERT INTO REVIEW (ID_USER, ID_GAME, RATING) VALUES
         
         
         
-        
-        
-        
