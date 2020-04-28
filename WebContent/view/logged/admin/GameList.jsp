@@ -30,55 +30,58 @@
 <jsp:include page="../../template/Head.jsp">
 	<jsp:param name="" value="" />
 </jsp:include>
-<body>
-	<!-- añado el html del header -->
+<jsp:include page="../../template/BodyContainerFront.jsp">
+	<jsp:param name="" value="" />
+</jsp:include>
 	<jsp:include page="../../template/Header.jsp">
 		<jsp:param name="" value="" />
 	</jsp:include>
-	<!-- añado el html del nav -->
 	<jsp:include page="../../template/NavAdmin.jsp">
 		<jsp:param name="" value="" />
 	</jsp:include>
-
-	<main class="content-fluid p-4 mb-5">
-		<div class="w-75 m-auto">
-			<div class="row m-2">
-				<a class="btn btn-primary" href="/MyGameWishlist/AddGame">
-					Add game
-				</a>
-			</div>
-			<table class="table">
-				<%
-					try {
-						@SuppressWarnings("unchecked")
-						ArrayList<Game> games = (ArrayList<Game>) request.getAttribute("games"); 
-						StringBuilder sb = new StringBuilder();
-						
-						Tr th = new Tr();
-						th.addTd("Name");
-						th.addTd("Description");
-						sb.append(th.print());
-						
-						for (Game g : games) {
-							Tr tr = new Tr();
-							tr.addTd(g.getName());
-							tr.addTd(g.getDescription() == null ? "No description" : g.getDescription());
-							tr.addTd(new A("Modify","/MyGameWishlist/UpdateGame?id=" + g.getId()));
-							tr.addTd(new A("Delete","/MyGameWishlist/DeleteGame?id=" + g.getId()));
-							sb.append(tr.print());
-						}
-						
-						out.print(sb.toString());
-					} catch(Exception e) {
-						log.logError(e.getMessage());
-						response.sendRedirect(cp.REDIRECT_GAME_LIST);
-					}
-				%>
-			</table>
+	<jsp:include page="../../template/MainFront.jsp">
+		<jsp:param name="" value="" />
+	</jsp:include>
+		<div class="row m-2">
+			<a class="btn btn-primary" href="/MyGameWishlist/AddGame">
+				Add game
+			</a>
 		</div>
-	</main>
+		<table class="table">
+			<%
+				try {
+					@SuppressWarnings("unchecked")
+					ArrayList<Game> games = (ArrayList<Game>) request.getAttribute("games"); 
+					StringBuilder sb = new StringBuilder();
+					
+					Tr th = new Tr();
+					th.addTd("Name");
+					th.addTd("Description");
+					sb.append(th.print());
+					
+					for (Game g : games) {
+						Tr tr = new Tr();
+						tr.addTd(g.getName());
+						tr.addTd(g.getDescription() == null ? "No description" : g.getDescription());
+						tr.addTd(new A("Modify","/MyGameWishlist/UpdateGame?id=" + g.getId()));
+						tr.addTd(new A("Delete","/MyGameWishlist/DeleteGame?id=" + g.getId()));
+						sb.append(tr.print());
+					}
+					
+					out.print(sb.toString());
+				} catch(Exception e) {
+					log.logError(e.getMessage());
+					response.sendRedirect(cp.REDIRECT_GAME_LIST);
+				}
+			%>
+		</table>
+	<jsp:include page="../../template/MainBack.jsp">
+		<jsp:param name="" value="" />
+	</jsp:include>
 	<jsp:include page="../../template/Footer.jsp">
 		<jsp:param name="" value="" />
 	</jsp:include>
-</body>
+<jsp:include page="../../template/BodyContainerBack.jsp">
+	<jsp:param name="" value="" />
+</jsp:include>
 </html>

@@ -20,7 +20,7 @@ public class TimelineDAO {
 	 * Crea la conexion con la base de datos y consigue
 	 * la interfaz
 	 */
-	private static void getTimMapper() {
+	private static void getTimeMapper() {
 		session = MyBatisUtil.getSqlSessionFactory().openSession();
 		timelineMapper = session.getMapper(TimelineMapper.class);
 	}
@@ -34,7 +34,7 @@ public class TimelineDAO {
 		
 	public void add2Timeline(ScrapedGame sg, String time, int idUrl) {
 		try {
-			getTimMapper();
+			getTimeMapper();
 			timelineMapper.add2Timeline(sg, time, idUrl);
 			session.commit();
 		} catch(Exception e) {
@@ -50,7 +50,7 @@ public class TimelineDAO {
 	
 	public ArrayList<TimelineGame> getTimelineByUrl(String url) {
 		try {
-			getTimMapper();
+			getTimeMapper();
 			return timelineMapper.getTimelineByUrl(url);
 		} catch(Exception e) {
 			LOG.logError(e.getMessage());
@@ -66,7 +66,7 @@ public class TimelineDAO {
 	
 	public ArrayList<TimelineGameDetailed> getTimelineByUrlDetailed(String url) {
 		try {
-			getTimMapper();
+			getTimeMapper();
 			return timelineMapper.getTimelineByUrlDetailed(url);
 		} catch(Exception e) {
 			LOG.logError(e.getMessage());

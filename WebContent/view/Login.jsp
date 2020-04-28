@@ -24,20 +24,28 @@ pageEncoding="UTF-8"%>
 <jsp:include page="template/Head.jsp">
 	<jsp:param name="" value="" />
 </jsp:include>
-<body>
-	<!-- añado el html del header -->
+<jsp:include page="template/BodyContainerFront.jsp">
+	<jsp:param name="" value="" />
+</jsp:include>
 	<jsp:include page="template/Header.jsp">
 		<jsp:param name="" value="" />
 	</jsp:include>
-
-	<main class="content-fluid p-4 mb-5">
-		<div class="w-75 m-auto">
-			LOGIN
-			<div class="g-signin2" data-onsuccess="onSignIn" id="myP"></div>
-		</div>
-	</main>
+	<jsp:include page="template/Nav.jsp">
+		<jsp:param name="" value="" />
+	</jsp:include>
+	<jsp:include page="template/MainFront.jsp">
+		<jsp:param name="" value="" />
+	</jsp:include>
+		<h4 class="text-center">
+			Login with your google account! It's free and you dont need to remember a password!
+		</h4>
+	<jsp:include page="template/MainBack.jsp">
+		<jsp:param name="" value="" />
+	</jsp:include>
 	<jsp:include page="template/Footer.jsp">
 		<jsp:param name="" value="" />
 	</jsp:include>
-</body>
+<jsp:include page="template/BodyContainerBack.jsp">
+	<jsp:param name="" value="" />
+</jsp:include>
 </html>

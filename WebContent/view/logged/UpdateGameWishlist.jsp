@@ -25,13 +25,12 @@
 <jsp:include page="../template/Head.jsp">
 	<jsp:param name="" value="" />
 </jsp:include>
-<body>
-	<!-- añado el html del header -->
+<jsp:include page="../template/BodyContainerFront.jsp">
+	<jsp:param name="" value="" />
+</jsp:include>
 	<jsp:include page="../template/Header.jsp">
 		<jsp:param name="" value="" />
 	</jsp:include>
-	
-	<!-- añado el html del nav -->
 	<% if (usr.getAdmin() == 1) { %>
 	<jsp:include page="../template/NavAdmin.jsp">
 		<jsp:param name="" value="" />
@@ -42,43 +41,47 @@
 	</jsp:include>	
 	<% } %>
 
-	<main class="content-fluid p-4 mb-5">
-		<div class="w-75 m-auto">
-			<%
-				WishListGame wlg = (WishListGame)request.getAttribute("game");
-			
-				if (wlg == null) {
-					response.sendRedirect(cp.REDIRECT_MYLIST);
-					return;
-				}
-			%>
-			<form action="<% out.append(cp.REDIRECT_UPDATE_GAME_WISHLIST); %>" method="post">
-				<div class="form-row">
-					<div class="col">
-						Notify me when this game goes below or equal:
-					</div>
-					<div class="col">
-						<input name="min" type="number" value="<% out.append(wlg.getMinPrice() + ""); %>"
-							step="0.01" min="-1" class="form-control">
-					</div>
+	<jsp:include page="../template/MainFront.jsp">
+		<jsp:param name="" value="" />
+	</jsp:include>
+		<%
+			WishListGame wlg = (WishListGame)request.getAttribute("game");
+		
+			if (wlg == null) {
+				response.sendRedirect(cp.REDIRECT_MYLIST);
+				return;
+			}
+		%>
+		<form action="<% out.append(cp.REDIRECT_UPDATE_GAME_WISHLIST); %>" method="post">
+			<div class="form-row">
+				<div class="col">
+					Notify me when this game goes below or equal:
 				</div>
-				<div class="form-row">
-					<div class="col">
-						Notify me when this game goes above or equal:
-					</div>
-					<div class="col">
-						<input name="max" type="number" value="<% out.append(wlg.getMaxPrice() + ""); %>"
-							step="0.01" min="-1" class="form-control">
-					</div>
+				<div class="col">
+					<input name="min" type="number" value="<% out.append(wlg.getMinPrice() + ""); %>"
+						step="0.01" min="-1" class="form-control">
 				</div>
-				<button type="submit" class="btn btn-primary">
-					Change
-				</button>
-			</form>
-		</div>
-	</main>
+			</div>
+			<div class="form-row">
+				<div class="col">
+					Notify me when this game goes above or equal:
+				</div>
+				<div class="col">
+					<input name="max" type="number" value="<% out.append(wlg.getMaxPrice() + ""); %>"
+						step="0.01" min="-1" class="form-control">
+				</div>
+			</div>
+			<button type="submit" class="btn btn-primary">
+				Change
+			</button>
+		</form>
+	<jsp:include page="../template/MainBack.jsp">
+		<jsp:param name="" value="" />
+	</jsp:include>
 	<jsp:include page="../template/Footer.jsp">
 		<jsp:param name="" value="" />
 	</jsp:include>
-</body>
+<jsp:include page="../template/BodyContainerBack.jsp">
+	<jsp:param name="" value="" />
+</jsp:include>
 </html>

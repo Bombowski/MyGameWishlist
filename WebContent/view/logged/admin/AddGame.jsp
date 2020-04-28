@@ -26,43 +26,46 @@
 <jsp:include page="../../template/Head.jsp">
 	<jsp:param name="" value="" />
 </jsp:include>
-<body>
-	<!-- añado el html del header -->
+<jsp:include page="../../template/BodyContainerFront.jsp">
+	<jsp:param name="" value="" />
+</jsp:include>
 	<jsp:include page="../../template/Header.jsp">
 		<jsp:param name="" value="" />
 	</jsp:include>
-	<!-- añado el html del nav -->
 	<jsp:include page="../../template/NavAdmin.jsp">
 		<jsp:param name="" value="" />
 	</jsp:include>
-
-	<main class="content-fluid p-4 mb-5">
-		<div class="w-75 m-auto">
-			<form action="<% out.print(cp.REDIRECT_ADD_GAME); %>" method="post">
-				<div class="form-row">
-					<div class="col">
-						<label class="" for="text">Name</label>
-					</div>
-					<div class="col">
-						<input type="text" name="name" class="col form-control">
-					</div>
+	<jsp:include page="../../template/MainFront.jsp">
+		<jsp:param name="" value="" />
+	</jsp:include>
+		<form action="<% out.print(cp.REDIRECT_ADD_GAME); %>" method="post">
+			<div class="form-row">
+				<div class="col">
+					<label class="" for="text">Name</label>
 				</div>
-				<div class="form-row">
-					<div class="col">
-						<label class="" for="description">Description</label>
-					</div>
-					<div class="col">
-						<input type="text" name="description" class="col form-control">
-					</div>
+				<div class="col">
+					<input type="text" name="name" class="col form-control">
 				</div>
-				<button type="submit" class="btn btn-primary">
-					Add game
-				</button>
-			</form>
-		</div>
-	</main>
+			</div>
+			<div class="form-row">
+				<div class="col">
+					<label class="" for="description">Description</label>
+				</div>
+				<div class="col">
+					<input type="text" name="description" class="col form-control">
+				</div>
+			</div>
+			<button type="submit" class="btn btn-primary">
+				Add game
+			</button>
+		</form>
+	<jsp:include page="../../template/MainBack.jsp">
+		<jsp:param name="" value="" />
+	</jsp:include>
 	<jsp:include page="../../template/Footer.jsp">
 		<jsp:param name="" value="" />
 	</jsp:include>
-</body>
+<jsp:include page="../../template/BodyContainerBack.jsp">
+	<jsp:param name="" value="" />
+</jsp:include>
 </html>

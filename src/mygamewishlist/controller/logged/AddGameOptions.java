@@ -41,13 +41,14 @@ public class AddGameOptions extends HttpServlet {
 	CreateQueryEJB cq_ejb;
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		try {
+		try {			
+			RequestDispatcher rd;
+			
 			if (!sc_ejb.isSome1Logged(request.getSession(false))) {
-				response.sendRedirect(cp.REDIRECT_LOGIN);
+				rd = getServletContext().getRequestDispatcher(cp.LOGIN);
+				rd.forward(request, response);
 				return;
 			}
-			
-			RequestDispatcher rd;
 			
 			if (!games.isEmpty()) {
 				rd = getServletContext().getRequestDispatcher(cp.JSP_ADD_GAME_OPTIONS);

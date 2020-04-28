@@ -27,13 +27,12 @@
 <jsp:include page="../template/Head.jsp">
 	<jsp:param name="" value="" />
 </jsp:include>
-<body>
-	<!-- añado el html del header -->
+<jsp:include page="../template/BodyContainerFront.jsp">
+	<jsp:param name="" value="" />
+</jsp:include>
 	<jsp:include page="../template/Header.jsp">
 		<jsp:param name="" value="" />
 	</jsp:include>
-	
-	<!-- añado el html del nav -->
 	<% if (usr.getAdmin() == 1) { %>
 	<jsp:include page="../template/NavAdmin.jsp">
 		<jsp:param name="" value="" />
@@ -44,56 +43,60 @@
 	</jsp:include>	
 	<% } %>
 
-	<main class="content-fluid p-4 mb-5">
-		<div class="w-75 m-auto">
-			<form action="<% out.append(cp.REDIRECT_ADD_GAME_WISHLIST); %>" method="post">
-				<div class="form-row">
-					<div class="col">
-						Name
-					</div>
-					<div class="col">
-						<input class="form-control" type="text" name="name" required>
-					</div>
+	<jsp:include page="../template/MainFront.jsp">
+		<jsp:param name="" value="" />
+	</jsp:include>
+		<form action="<% out.append(cp.REDIRECT_ADD_GAME_WISHLIST); %>" method="post">
+			<div class="form-row">
+				<div class="col">
+					Name
 				</div>
-				<div class="form-row">
-					<div class="col">
-						Online stores in which you are interested
-					</div>
-					<div class="col">
-						<%
-							try {
-								@SuppressWarnings("unchecked")
-								ArrayList<Store> stores = (ArrayList<Store>) request.getAttribute("stores");
-								StringBuilder sb = new StringBuilder();
-								
-								for (Store st : stores) {
-									sb.append(new Input("checkbox","store",st.getName()).print())
-										.append(st.getName());
-								}
-								
-								out.append(sb.toString());
-							} catch(Exception e) {
-								log.logError(e.getMessage());
-								response.sendRedirect(cp.REDIRECT_GAME_LIST);
+				<div class="col color-black">
+					<input class="form-control" type="text" name="name" required>
+				</div>
+			</div>
+			<div class="form-row">
+				<div class="col">
+					Online stores in which you are interested
+				</div>
+				<div class="col">
+					<%
+						try {
+							@SuppressWarnings("unchecked")
+							ArrayList<Store> stores = (ArrayList<Store>) request.getAttribute("stores");
+							StringBuilder sb = new StringBuilder();
+							
+							for (Store st : stores) {
+								sb.append(new Input("checkbox","store",st.getName()).print())
+									.append(st.getName());
 							}
-						%>
-					</div>
-					<button class="btn btn-primary" type="submit">
-					 	Add game
-					</button>
+							
+							out.append(sb.toString());
+						} catch(Exception e) {
+							log.logError(e.getMessage());
+							response.sendRedirect(cp.REDIRECT_GAME_LIST);
+						}
+					%>
 				</div>
-			</form>
-			<%
-				try {
-					
-				} catch(Exception e) {
-					log.logError(e.getMessage());
-				}
-			%>
-		</div>
-	</main>
+				<button class="btn btn-primary" type="submit">
+				 	Add game
+				</button>
+			</div>
+		</form>
+		<%
+			try {
+				
+			} catch(Exception e) {
+				log.logError(e.getMessage());
+			}
+		%>
+	<jsp:include page="../template/MainBack.jsp">
+		<jsp:param name="" value="" />
+	</jsp:include>
 	<jsp:include page="../template/Footer.jsp">
 		<jsp:param name="" value="" />
 	</jsp:include>
-</body>
+<jsp:include page="../template/BodyContainerBack.jsp">
+	<jsp:param name="" value="" />
+</jsp:include>
 </html>

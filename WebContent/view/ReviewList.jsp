@@ -26,13 +26,12 @@ pageEncoding="UTF-8"%>
 <jsp:include page="template/Head.jsp">
 	<jsp:param name="" value="" />
 </jsp:include>
-<body>
-	<!-- añado el html del header -->
+<jsp:include page="template/BodyContainerFront.jsp">
+	<jsp:param name="" value="" />
+</jsp:include>
 	<jsp:include page="template/Header.jsp">
 		<jsp:param name="" value="" />
 	</jsp:include>
-	
-	<!-- añado el html del nav -->
 	<% if (usr == null) { %>
 	<jsp:include page="template/Nav.jsp">
 		<jsp:param name="" value="" />
@@ -46,60 +45,63 @@ pageEncoding="UTF-8"%>
 		<jsp:param name="" value="" />
 	</jsp:include>	
 	<% } %>
-
-	<main class="content-fluid p-4 mb-5">
-		<div class="w-75 m-auto">
-			<table class="table">
-				<tr>
-					<th>Average rating</th>
-					<th>Game</th>
-					<th><% out.append(usr == null ? "Your rating: (not logged)" : "Your rating:"); %></th>
-					<th>Rate</th>
-					<th></th>
-				</tr>
-				<%
-					try {
-						@SuppressWarnings("unchecked")
-						ArrayList<ReviewList> reviews = (ArrayList<ReviewList>)request.getAttribute("reviews");
+	<jsp:include page="template/MainFront.jsp">
+		<jsp:param name="" value="" />
+	</jsp:include>
+		<table class="table">
+			<tr>
+				<th>Average rating</th>
+				<th>Game</th>
+				<th><% out.append(usr == null ? "Your rating: (not logged)" : "Your rating:"); %></th>
+				<th>Rate</th>
+				<th></th>
+			</tr>
+			<%
+				try {
+					@SuppressWarnings("unchecked")
+					ArrayList<ReviewList> reviews = (ArrayList<ReviewList>)request.getAttribute("reviews");
+					
+					StringBuilder sb = new StringBuilder();
+					
+					String rateInfo = usr == null ? "Game info" : "Rate/ Game info";
+					
+					for (ReviewList rl : reviews) {
+						Tr tr = new Tr();
+						tr.addTd(rl.getAverageRating() + "");
+						tr.addTd(rl.getName());
 						
-						StringBuilder sb = new StringBuilder();
-						
-						String rateInfo = usr == null ? "Game info" : "Rate/ Game info";
-						
-						for (ReviewList rl : reviews) {
-							Tr tr = new Tr();
-							tr.addTd(rl.getAverageRating() + "");
-							tr.addTd(rl.getName());
-							
-							if (rl.getUserRating() == -1) {
-								if (usr == null) {
-									tr.addTd("");
-								} else {
-									tr.addTd("Not rated yet.");
-								}
+						if (rl.getUserRating() == -1) {
+							if (usr == null) {
+								tr.addTd("");
 							} else {
-								tr.addTd(rl.getUserRating() + "");
+								tr.addTd("Not rated yet.");
 							}
-							
-							tr.addTd(new A(rateInfo, new StringBuilder()
-									.append(cp.REDIRECT_GAME_INFO)
-									.append("?id=")
-									.append(rl.getIdGame())
-									.toString()));
-							
-							sb.append(tr.print());
+						} else {
+							tr.addTd(rl.getUserRating() + "");
 						}
 						
-						out.print(sb.toString());
-					} catch(Exception e) {
-						log.logError(e.getMessage());
+						tr.addTd(new A(rateInfo, new StringBuilder()
+								.append(cp.REDIRECT_GAME_INFO)
+								.append("?id=")
+								.append(rl.getIdGame())
+								.toString()));
+						
+						sb.append(tr.print());
 					}
-				%>
-			</table>
-		</div>
-	</main>
+					
+					out.print(sb.toString());
+				} catch(Exception e) {
+					log.logError(e.getMessage());
+				}
+			%>
+		</table>
+	<jsp:include page="template/MainBack.jsp">
+		<jsp:param name="" value="" />
+	</jsp:include>
 	<jsp:include page="template/Footer.jsp">
 		<jsp:param name="" value="" />
 	</jsp:include>
-</body>
+<jsp:include page="template/BodyContainerBack.jsp">
+	<jsp:param name="" value="" />
+</jsp:include>
 </html>
