@@ -51,8 +51,8 @@
 	<jsp:include page="../template/MainFront.jsp">
 		<jsp:param name="" value="" />
 	</jsp:include>
-		<div style="width: 900px; height: 300px;">
-            <canvas id="ctx" class="bg-gray">
+		<div style="width: 900px; height: 300px;" class="m-auto color-white">
+            <canvas id="ctx" class="bg-gray color-white">
                 <script>
 	                <%
 	                @SuppressWarnings("unchecked")
@@ -110,6 +110,23 @@
                                 yAxes: [{
                                     ticks: {
                                         beginAtZero: true
+                                    }
+                                }]
+                            },
+                            legend: {
+                                labels: {
+                                    fontColor: "white"
+                                }
+                            },
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        fontColor: "white"
+                                    }
+                                }],
+                                xAxes: [{
+                                    ticks: {
+                                        fontColor: "white"
                                     }
                                 }]
                             }

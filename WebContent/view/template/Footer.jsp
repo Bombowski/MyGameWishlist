@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<footer class="container-fluid justify-content-center">
+<footer class="container-fluid fixed-bottom justify-content-center">
     <div class="row">
         <div class="h5 text-center p-3 col-6 my-auto">
             Patryk Stefaniak <span id="copyLeft">&copy;</span> Proyecto de final de curso

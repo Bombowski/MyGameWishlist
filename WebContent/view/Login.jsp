@@ -37,7 +37,7 @@ pageEncoding="UTF-8"%>
 		<jsp:param name="" value="" />
 	</jsp:include>
 		<h4 class="text-center">
-			Login with your google account! It's free and you dont need to remember a password!
+			Login with your google account! It's free and you don't need to remember a new password!
 		</h4>
 	<jsp:include page="template/MainBack.jsp">
 		<jsp:param name="" value="" />

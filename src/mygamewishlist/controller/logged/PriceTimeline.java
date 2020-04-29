@@ -39,16 +39,21 @@ public class PriceTimeline extends HttpServlet {
 	GraphDatesEJB gd_ejb;
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		RequestDispatcher rd = getServletContext().getRequestDispatcher(cp.MYLIST);
+		rd.forward(request, response);
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			User usr = sc_ejb.getLoggedUser(request);
-			RequestDispatcher rd;
+			
 			if (usr == null) {
-				rd = getServletContext().getRequestDispatcher(cp.LOGIN);
+				response.sendRedirect(cp.REDIRECT_LOGIN);
 			} else {
 				String[] games = request.getParameterValues("games");
 				
 				if (games == null) {
-					rd = getServletContext().getRequestDispatcher(cp.MYLIST);
+					response.sendRedirect(cp.REDIRECT_MYLIST);
 				} else {
 					Hashtable<String, ArrayList<TimelineGameDetailed>> list = new Hashtable<String, ArrayList<TimelineGameDetailed>>();
 					ArrayList<Store> stores = cq_ejb.getStores();
@@ -74,26 +79,16 @@ public class PriceTimeline extends HttpServlet {
 						}												
 					}
 					
-					rd = getServletContext().getRequestDispatcher(cp.JSP_PRICE_TIMELINE);
+					RequestDispatcher rd = getServletContext().getRequestDispatcher(cp.JSP_PRICE_TIMELINE);
 					request.setAttribute("list", gd_ejb.generateTimeline(list));
 					request.setAttribute("dates", gd_ejb.getDates());
 					request.setAttribute("names", names);
+					rd.forward(request, response);
 				}
 			}
-			
-			rd.forward(request, response);
 		} catch(Exception e) {
 			LOG.logError(e.getMessage());
-			RequestDispatcher rd = getServletContext().getRequestDispatcher(cp.MYLIST);
-			rd.forward(request, response);
-		}
-	}
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		try {
-			
-		} catch(Exception e) {
-			LOG.logError(e.getMessage());
+			response.sendRedirect(cp.REDIRECT_MYLIST);
 		}
 	}
 }
