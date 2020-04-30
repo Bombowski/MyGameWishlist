@@ -56,13 +56,14 @@ public class GameInfo extends HttpServlet {
 		try {
 			User usr = sc_ejb.getLoggedUser(request);
 			double rating = Double.parseDouble(request.getParameter("rating"));
+			String review = request.getParameter("review");
 			
 			if (usr == null || idGame == -1 || rating < 0 || rating > 10) {
 				response.sendRedirect(cp.REDIRECT_REVIEW_LIST);
 				return;
 			}
 			
-			cq_ejb.addOrUpdateReview(new Review(usr.getId(), idGame, rating));
+			cq_ejb.addOrUpdateReview(new Review(usr.getId(), idGame, rating, review));
 			response.sendRedirect(cp.REDIRECT_REVIEW_LIST);
 		} catch(Exception e) {
 			LOG.logError(e.getMessage());

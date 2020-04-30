@@ -1,12 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<header class="container-fluid bgLightGray">
+<header class="container-fluid">
 	<div class="row">
-		<div class="col-3 justify-content-end d-flex">
-			<img src="view/imgs/logo.png" width="200">
+		<div class="col-md-3 col-12 justify-content-center d-flex">
+			<img src="view/imgs/logo.png" alt="" width="200" />
 		</div>
-		<div class="col-7 d-flex align-content-center">
-			<h1 class="align-self-center">My Game Wishlist</h1>
+		<div class="col-md-7 col-12 d-flex text-md-left text-center">
+			<h1 class="my-auto mx-md-0 mx-auto">My Game Wishlist</h1>
 		</div>
 	</div>
 </header>

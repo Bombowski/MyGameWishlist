@@ -1,3 +1,5 @@
+<%@page import="bomboshtml.body.Img"%>
+<%@page import="bomboshtml.body.table.Table"%>
 <%@page import="bomboshtml.body.A"%>
 <%@page import="mygamewishlist.model.pojo.db.Game"%>
 <%@page import="java.util.ArrayList"%>
@@ -47,34 +49,49 @@
 				Add game
 			</a>
 		</div>
-		<table class="table">
 			<%
 				try {
 					@SuppressWarnings("unchecked")
-					ArrayList<Game> games = (ArrayList<Game>) request.getAttribute("games"); 
-					StringBuilder sb = new StringBuilder();
+					ArrayList<Game> games = (ArrayList<Game>) request.getAttribute("games");
 					
+					Table tbl = new Table();
+					tbl.addClass("table");
 					Tr th = new Tr();
+					th.addClass("h4");
 					th.addTd("Name");
 					th.addTd("Description");
-					sb.append(th.print());
+					th.addTd("Genres");
+					th.addTd("Developer");
+					th.addTd("Release date");
+					th.addTd("Edit");
+					th.addTd("Delete");
+					
+					tbl.addRow(th);
+					
+					Img edit = new Img("view/imgs/edit.png");
+					edit.addClass("table-icon");
+					Img del = new Img("view/imgs/delete.png");
+					del.addClass("table-icon");
 					
 					for (Game g : games) {
 						Tr tr = new Tr();
 						tr.addTd(g.getName());
 						tr.addTd(g.getDescription() == null ? "No description" : g.getDescription());
-						tr.addTd(new A("Modify","/MyGameWishlist/UpdateGame?id=" + g.getId()));
-						tr.addTd(new A("Delete","/MyGameWishlist/DeleteGame?id=" + g.getId()));
-						sb.append(tr.print());
+						tr.addTd(g.getGenres());
+						tr.addTd(g.getDeveloper());
+						tr.addTd(g.getReleaseDate());
+						tr.addTd(new A(edit.print(),"/MyGameWishlist/UpdateGame?id=" + g.getId()));
+						tr.addTd(new A(del.print(),"/MyGameWishlist/DeleteGame?id=" + g.getId()));
+						
+						tbl.addRow(tr);
 					}
 					
-					out.print(sb.toString());
+					out.print(tbl.print());
 				} catch(Exception e) {
 					log.logError(e.getMessage());
 					response.sendRedirect(cp.REDIRECT_GAME_LIST);
 				}
 			%>
-		</table>
 	<jsp:include page="../../template/MainBack.jsp">
 		<jsp:param name="" value="" />
 	</jsp:include>

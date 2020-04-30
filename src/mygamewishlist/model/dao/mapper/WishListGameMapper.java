@@ -26,8 +26,7 @@ public interface WishListGameMapper {
 	
 	public void deleteGameWishlist(@Param("idUrl") int idUrl, @Param("idUser") int idUser);
 	
-	public void updatePrices(@Param("sg") ScrapedGame sg, @Param("idUser") int idUser,
-			@Param("idUrl") int idUrl);
+	public void updatePrices(@Param("sg") ScrapedGame sg, @Param("idUrl") int idUrl);
 	
 	public void updateMinMax(@Param("min") double min, @Param("max") double max, 
 			@Param("idUrl") int idUrl, @Param("idUser") int idUser);

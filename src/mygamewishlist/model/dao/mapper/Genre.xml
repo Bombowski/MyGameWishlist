@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
+  'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+  
+<mapper namespace="mygamewishlist.model.dao.mapper.GenreMapper">
+
+	<select id="getGenres" resultType="Genre">
+		SELECT * FROM GENRE
+	</select>
+	
+	<select id="getGenreById" resultType="Genre">
+		SELECT * FROM GENRE WHERE ID = #{id}
+	</select>
+	
+	<select id="getGenreByName" resultType="Genre">
+		SELECT * FROM GENRE WHERE NAME = #{name}
+	</select>
+</mapper>

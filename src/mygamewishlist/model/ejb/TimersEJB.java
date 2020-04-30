@@ -88,7 +88,7 @@ public class TimersEJB {
 
 			if (!toSend.isEmpty()) {
 				mail_ejb.sendMailItemsOnSale(us, toSend);
-				cq_ejb.updatePrices(toSend, us.getId());
+				cq_ejb.updatePrices(toSend);
 			}
 		}
 	}

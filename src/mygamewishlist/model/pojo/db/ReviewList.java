@@ -6,17 +6,19 @@ public class ReviewList {
 	private String name;
 	private int userRating;
 	private int idGame;
+	private String genres;
 
-	public ReviewList(double averageRating, String name, int userRating, int idGame) {
+	public ReviewList() {
+		super();
+	}
+
+	public ReviewList(double averageRating, String name, int userRating, int idGame, String genres) {
 		super();
 		this.averageRating = averageRating;
 		this.name = name;
 		this.userRating = userRating;
 		this.idGame = idGame;
-	}
-
-	public ReviewList() {
-		super();
+		this.genres = genres;
 	}
 
 	public double getAverageRating() {
@@ -49,6 +51,14 @@ public class ReviewList {
 
 	public void setIdGame(int idGame) {
 		this.idGame = idGame;
+	}
+
+	public String getGenres() {
+		return genres;
+	}
+
+	public void setGenres(String genres) {
+		this.genres = genres;
 	}
 
 }

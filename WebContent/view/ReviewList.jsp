@@ -47,54 +47,65 @@ pageEncoding="UTF-8"%>
 	<% } %>
 	<jsp:include page="template/MainFront.jsp">
 		<jsp:param name="" value="" />
-	</jsp:include>
-		<table class="table">
-			<tr>
-				<th>Average rating</th>
-				<th>Game</th>
-				<th><% out.append(usr == null ? "Your rating: (not logged)" : "Your rating:"); %></th>
-				<th>Rate</th>
-				<th></th>
-			</tr>
-			<%
-				try {
-					@SuppressWarnings("unchecked")
-					ArrayList<ReviewList> reviews = (ArrayList<ReviewList>)request.getAttribute("reviews");
-					
-					StringBuilder sb = new StringBuilder();
-					
-					String rateInfo = usr == null ? "Game info" : "Rate/ Game info";
-					
-					for (ReviewList rl : reviews) {
-						Tr tr = new Tr();
-						tr.addTd(rl.getAverageRating() + "");
-						tr.addTd(rl.getName());
-						
-						if (rl.getUserRating() == -1) {
-							if (usr == null) {
-								tr.addTd("");
-							} else {
-								tr.addTd("Not rated yet.");
-							}
-						} else {
-							tr.addTd(rl.getUserRating() + "");
-						}
-						
-						tr.addTd(new A(rateInfo, new StringBuilder()
-								.append(cp.REDIRECT_GAME_INFO)
-								.append("?id=")
-								.append(rl.getIdGame())
-								.toString()));
-						
-						sb.append(tr.print());
-					}
-					
-					out.print(sb.toString());
-				} catch(Exception e) {
-					log.logError(e.getMessage());
+	</jsp:include>	
+		<div class="d-flex row justify-content-center">
+		<%
+		try {
+			@SuppressWarnings("unchecked")
+			ArrayList<ReviewList> reviews = (ArrayList<ReviewList>)request.getAttribute("reviews");
+			
+			String rateInfo = usr == null ? "Game info" : "Rate/ Game info";
+			
+			for (ReviewList rl : reviews) {
+				double avgRating = rl.getAverageRating();
+				String rating = avgRating + "";
+				StringBuilder sb = new StringBuilder()
+						.append(cp.REDIRECT_GAME_INFO)
+						.append("?id=")
+						.append(rl.getIdGame());
+				String color;
+				
+				if (avgRating == -1) {
+					color = "bg-dark";
+					rating = "-";
+				} else if (avgRating < 4) {
+					color = "bg-danger";
+				} else if (avgRating < 7) {
+					color = "bg-warning";
+				} else {
+					color = "bg-success";
 				}
-			%>
-		</table>
+		%>
+             <div class="flex-column bg-gray col-xl-2 col-lg-3 col-md-4 col-sm-5 col-12 justify-content-center text-center p-0 ml-2 mt-3">
+                 <div class="m-1 mt-2">
+                     <u><span class="h4"><% out.append(rl.getName()); %></span></u>
+                </div>
+                <div class="d-flex mt-3 flex-row justify-content-center">
+                    <div class="mr-3 my-auto">
+                        Average score
+                    </div>
+                    <div class="ml-3 align-self-end">
+                        <div class="<% out.append(color); %> p-2 h5 my-auto">
+                            <% out.append(rating); %>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-1 p-1">
+                    <% out.append(rl.getGenres()); %>
+                </div>
+                <div class="mt-2 mb-3">
+                    <a class="btn btn-dark" href="<% out.append(sb.toString()); %>">
+                        See more info
+                    </a>
+                </div>
+            </div>
+		<% 
+			}				
+			} catch(Exception e) {
+				log.logError(e.getMessage());
+			} 
+		%>
+        </div>
 	<jsp:include page="template/MainBack.jsp">
 		<jsp:param name="" value="" />
 	</jsp:include>

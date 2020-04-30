@@ -4,23 +4,73 @@
   
 <mapper namespace="mygamewishlist.model.dao.mapper.GameMapper">
 	
-	<select id="getGame" resultType="Game">
-		SELECT * FROM GAME WHERE ID = #{id}
+	<select id="getGame" resultMap="gameGenreList">
+		SELECT
+			GA.ID, GA.NAME, GA.DESCRIPTION, GA.RELEASE_DATE,
+    		GROUP_CONCAT(GE.NAME) AS GENRES, GROUP_CONCAT(GE.ID) AS GENRE_ID,
+            DE.NAME AS DEVELOPER
+		FROM 
+			GAME GA, GAME_GENRE GG, GENRE GE, DEVELOPER DE
+		WHERE 
+			GA.ID = GG.ID_GAME AND 
+		    GE.ID = GG.ID_GENRE AND 
+            DE.ID = GA.ID_DEVELOPER AND
+			GA.ID = 1
 	</select>
 	
-	<select id="getGames" resultType="Game">
-		SELECT * FROM GAME;
+	<select id="getGames" resultMap="gameList">
+		SELECT 
+			GA.ID, GA.NAME, GA.DESCRIPTION, GA.RELEASE_DATE,
+		    GROUP_CONCAT(GE.NAME) AS GENRES, DE.NAME AS DEVELOPER
+		FROM 
+			GAME GA, GAME_GENRE GG, GENRE GE, DEVELOPER DE 
+		WHERE 
+			GA.ID = GG.ID_GAME AND 
+		    GE.ID = GG.ID_GENRE AND 
+            DE.ID = GA.ID_DEVELOPER
+		GROUP BY 
+			GA.ID;
 	</select>
 	
 	<insert id="addGame" parameterType="Game">
-		INSERT INTO GAME (NAME) VALUES(#{name})
+		INSERT INTO GAME (NAME,DESCRIPTION,RELEASE_DATE,ID_DEVELOPER) VALUES
+		(#{name},#{description},#{releaseDate},#{idDeveloper})
 	</insert>
 	
 	<update id="updateGame" parameterType="Game">
-		UPDATE GAME SET NAME = #{name}, DESCRIPTION = #{description} WHERE ID = #{id}
+		UPDATE GAME SET NAME = #{name}, DESCRIPTION = #{description}, 
+		RELEASE_DATE = #{releaseDate}, ID_DEVELOPER = #{idDeveloepr} 
+		WHERE ID = #{id}
 	</update>
 	
 	<delete id="deleteGame">
 		DELETE FROM GAME WHERE ID = #{id}
 	</delete>
+	
+	<select id="getDevelopers" resultType="Developer">
+		SELECT * FROM DEVELOPER
+	</select>
+	
+	<select id="getDeveloperById" resultType="Developer">
+		SELECT * FROM DEVELOPER WHERE ID = #{id}
+	</select>
+	
+	<resultMap type="Game" id="gameList">
+		<result property="id" column="ID" />
+		<result property="name" column="NAME" />
+		<result property="description" column="DESCRIPTION" />
+		<result property="releaseDate" column="RELEASE_DATE" />
+		<result property="developer" column="DEVELOPER" />
+		<result property="genres" column="GENRES" />
+	</resultMap>
+	
+	<resultMap type="GameFull" id="gameGenreList">
+		<result property="id" column="ID" />
+		<result property="name" column="NAME" />
+		<result property="description" column="DESCRIPTION" />
+		<result property="releaseDate" column="RELEASE_DATE" />
+		<result property="idDeveloper" column="ID_DEVELOPER" />
+		<result property="genres" column="GENRES" />
+		<result property="idGenres" column="ID_GENRES" />
+	</resultMap>
 </mapper>

@@ -38,6 +38,10 @@ footer {
     margin-top:
 }
 
+main {
+	margin-bottom: 80px !important;
+}
+
 #copyLeft {
     display:inline-block;
     transform: rotate(180deg);

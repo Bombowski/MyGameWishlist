@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import mygamewishlist.model.ejb.ClientSessionEJB;
 import mygamewishlist.model.ejb.CreateQueryEJB;
+import mygamewishlist.model.ejb.FormatCheckingEJB;
 import mygamewishlist.model.pojo.ClassPaths;
 import mygamewishlist.model.pojo.MyLogger;
 import mygamewishlist.model.pojo.db.Game;
@@ -35,6 +36,9 @@ public class UpdateGame extends HttpServlet {
 	
 	@EJB
 	CreateQueryEJB cq_ejb;
+	
+	@EJB
+	FormatCheckingEJB fc_ejb;
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
@@ -76,10 +80,15 @@ public class UpdateGame extends HttpServlet {
 			} else {
 				String name = request.getParameter("name");
 				String description = request.getParameter("description");
-				error = chkStuff(name, description);
+				String[] genres = request.getParameterValues("genre");
+				String rDate = request.getParameter("rDate");
+				String idDeveloper = request.getParameter("idDev");
+				
+				error = fc_ejb.chkGame(name, description, genres, rDate, idDeveloper);
 				
 				if (error.equals("")) {
-					Game g = new Game(name, description, idGame);
+					Game g = new Game(name, description, rDate, idGame, 
+							cq_ejb.getDeveloperById(Integer.parseInt(idDeveloper)).getName());
 					
 					cq_ejb.updateGame(g);
 					
@@ -93,21 +102,5 @@ public class UpdateGame extends HttpServlet {
 			response.sendRedirect(cp.REDIRECT_GAME_LIST);
 			error = "Unexpected error occured";
 		}
-	}
-	
-	private String chkStuff(String name, String description) {
-		if (name == null || description == null) {
-			return "Unvalid value";
-		} else if(name.length() > 32 || name.length() == 0 || description.length() > 256 || description.length() == 0) {
-			return "Unvalid length";
-		}
-		
-		for (Game g : cq_ejb.getGames()) {
-			if (g.getName().equals(name)) {
-				return "A game with this name already exists";
-			}
-		}
-		
-		return "";
 	}
 }

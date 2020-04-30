@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.apache.ibatis.annotations.Param;
 
+import mygamewishlist.model.pojo.db.Developer;
 import mygamewishlist.model.pojo.db.Game;
 
 public interface GameMapper {
@@ -17,4 +18,8 @@ public interface GameMapper {
 	public void updateGame(Game game);
 	
 	public void deleteGame(@Param("id") int idGame);
+
+	public Developer getDeveloperById(@Param("id") int id);
+
+	public ArrayList<Developer> getDevelopers();
 }

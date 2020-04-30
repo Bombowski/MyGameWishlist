@@ -55,12 +55,4 @@ public class GameList extends HttpServlet {
 			LOG.logError(e.getMessage());
 		}
 	}
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		try {
-			
-		} catch(Exception e) {
-			LOG.logError(e.getMessage());
-		}
-	}
 }

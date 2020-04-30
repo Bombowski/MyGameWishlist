@@ -6,6 +6,7 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
 import mygamewishlist.model.dao.GameDAO;
+import mygamewishlist.model.dao.GenreDAO;
 import mygamewishlist.model.dao.ReviewDAO;
 import mygamewishlist.model.dao.SteamDAO;
 import mygamewishlist.model.dao.StoreDAO;
@@ -15,7 +16,9 @@ import mygamewishlist.model.dao.VariablesDAO;
 import mygamewishlist.model.dao.WishListGameDAO;
 import mygamewishlist.model.pojo.ScrapedGame;
 import mygamewishlist.model.pojo.SteamGame;
+import mygamewishlist.model.pojo.db.Developer;
 import mygamewishlist.model.pojo.db.Game;
+import mygamewishlist.model.pojo.db.Genre;
 import mygamewishlist.model.pojo.db.Review;
 import mygamewishlist.model.pojo.db.ReviewList;
 import mygamewishlist.model.pojo.db.Store;
@@ -38,6 +41,7 @@ public class CreateQueryEJB {
 	private static final SteamDAO STEAM_DAO = new SteamDAO();
 	private static final VariablesDAO VAR_DAO = new VariablesDAO();
 	private static final TimelineDAO TIM_DAO = new TimelineDAO();
+	private static final GenreDAO GEN_DAO = new GenreDAO();
 	
 	public CreateQueryEJB() {}
 	
@@ -73,8 +77,9 @@ public class CreateQueryEJB {
 		return GAME_DAO.getGames();
 	}
 	
-	public void addGame(Game game) {
+	public void addGame(Game game, String[] genreIds) {
 		GAME_DAO.addGame(game);
+		
 	}
 	
 	public void updateGame(Game game) {
@@ -125,8 +130,8 @@ public class CreateQueryEJB {
 		LIST_DAO.deleteGameWishlist(url, idUser);
 	}
 	
-	public void updatePrices(ArrayList<ScrapedGame> sg, int idUser) {
-		LIST_DAO.updatePrices(sg, idUser);
+	public void updatePrices(ArrayList<ScrapedGame> sg) {
+		LIST_DAO.updatePrices(sg);
 	}
 	
 	public void updateMinMax(double min, double max, String url, int idUser) {
@@ -159,5 +164,25 @@ public class CreateQueryEJB {
 	
 	public ArrayList<TimelineGameDetailed> getTimelineByUrlDetailed(String url) {
 		return TIM_DAO.getTimelineByUrlDetailed(url);
+	}
+	
+	public ArrayList<Genre> getGenres() {
+		return GEN_DAO.getGenres();
+	}
+	
+	public Genre getGenreById(int id) {
+		return GEN_DAO.getGenreById(id);
+	}
+	
+	public Genre getGenreByName(String name) {
+		return GEN_DAO.getGenreByName(name);
+	}
+	
+	public ArrayList<Developer> getDevelopers() {
+		return GAME_DAO.getDevelopers();
+	}
+	
+	public Developer getDeveloperById(int id) {
+		return GAME_DAO.getDeveloperById(id);
 	}
 }

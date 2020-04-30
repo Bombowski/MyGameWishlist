@@ -87,7 +87,7 @@
 	<update id="updatePrices">
 		UPDATE WISHLIST_GAME SET DEFAULT_PRICE = #{sg.defaultPrice}, 
 		CURRENT_PRICE = #{sg.currentPrice}
-		WHERE ID_URL = #{idUrl} AND ID_USER = #{idUser} 
+		WHERE ID_URL = #{idUrl}
 	</update>
 	
 	<update id="updateMinMax">

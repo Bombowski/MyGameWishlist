@@ -6,39 +6,43 @@
 
 	<select id="getReviewList" resultMap="reviewListMap">
 		SELECT
-			AVG(RE.RATING) AS AVERAGE_RATING, IFNULL(USER_RATING, -1) AS USER_RATING, 
-			GA.ID AS ID_GAME, GA.NAME AS NAME
+			IFNULL(AVG(RE.RATING),-1) AS AVERAGE_RATING, 
+            IFNULL(SUB.USER_RATING, -1),
+			GA.ID AS ID_GAME, GA.NAME AS NAME, RE.REVIEW,
+		    GROUP_CONCAT(GE.NAME SEPARATOR ', ') AS GENRES
 		FROM
-			GAME GA, REVIEW RE, USER US,
-		    (
-				SELECT
-					GA.ID AS IDG, RATING AS USER_RATING
+			REVIEW RE RIGHT JOIN GAME GA ON RE.ID_GAME = GA.ID,
+			(SELECT
+					GA2.ID AS IDG, RE2.RATING AS USER_RATING
 				FROM
-					GAME GA LEFT JOIN REVIEW RE ON GA.ID = RE.ID_GAME AND RE.ID_USER = #{idUser}
-		        ORDER BY
-					GA.ID
-		    ) SUB
+					GAME GA2 LEFT JOIN REVIEW RE2 ON GA2.ID = RE2.ID_GAME AND RE2.ID_USER = 1
+				ORDER BY
+					GA2.ID
+			) SUB, GENRE GE, GAME_GENRE GG
 		WHERE
-			GA.ID = RE.ID_GAME AND
-		    RE.ID_USER = US.ID AND
-		    IDG = RE.ID_GAME
+			IDG = GA.ID AND
+		    GE.ID = GG.ID_GENRE AND
+		    GA.ID = GG.ID_GAME
 		GROUP BY
-			GA.NAME, USER_RATING, GA.ID
-		ORDER BY
+			GA.NAME, GA.ID, IDG, RE.REVIEW
+		ORDER BY 
 			GA.ID
 	</select>
 	
 	<select id="getReviewListNotLogged" resultMap="reviewListMap">
 		SELECT
-			AVG(RE.RATING) AS AVERAGE_RATING, -1 AS USER_RATING, GA.ID AS ID_GAME, GA.NAME AS NAME
+			IFNULL(AVG(RE.RATING), -1) AS AVERAGE_RATING, -1 AS USER_RATING, GA.ID AS ID_GAME, 
+			GA.NAME AS NAME, GROUP_CONCAT(GE.NAME SEPARATOR ', ') AS GENRES
 		FROM
-			GAME GA, REVIEW RE
+			GAME GA LEFT JOIN REVIEW RE ON GA.ID = RE.ID_GAME,
+		    GENRE GE, GAME_GENRE GG
 		WHERE
-			GA.ID = RE.ID_GAME
+			GG.ID_GENRE = GE.ID AND
+		    GG.ID_GAME = GA.ID
 		GROUP BY
 			GA.NAME, USER_RATING, GA.ID
 		ORDER BY
-			GA.ID;
+			GA.ID
 	</select>
 	
 	<update id="addOrUpdateReview" parameterType="Review">
@@ -62,5 +66,6 @@
 		<result property="userRating" column="USER_RATING"/>
 		<result property="name" column="NAME"/>
 		<result property="idGame" column="ID_GAME"/>
+		<result property="genres" column="GENRES" />
 	</resultMap>
 </mapper>

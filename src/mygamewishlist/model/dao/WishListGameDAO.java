@@ -155,11 +155,11 @@ public class WishListGameDAO {
 		}
 	}
 	
-	public void updatePrices(ArrayList<ScrapedGame> games, int idUser) {
+	public void updatePrices(ArrayList<ScrapedGame> games) {
 		try {
 			getWlgMapper();
 			for (ScrapedGame sg : games) {
-				listMapper.updatePrices(sg, idUser, listMapper.getIdUrlByUrl(sg.getUrlGame()));
+				listMapper.updatePrices(sg, listMapper.getIdUrlByUrl(sg.getUrlGame()));
 			}
 			session.commit();
 		} catch(Exception e) {

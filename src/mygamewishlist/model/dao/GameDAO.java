@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 
 import mygamewishlist.model.dao.mapper.GameMapper;
 import mygamewishlist.model.pojo.MyLogger;
+import mygamewishlist.model.pojo.db.Developer;
 import mygamewishlist.model.pojo.db.Game;
 
 public class GameDAO {
@@ -108,5 +109,37 @@ public class GameDAO {
 				LOG.logError(e.getMessage());
 			}
 		}
+	}
+
+	public ArrayList<Developer> getDevelopers() {
+		try {
+			getGaMapper();
+			return gameMapper.getDevelopers();
+		} catch(Exception e) {
+			LOG.logError(e.getMessage());
+		} finally {
+			try {
+				closeAll();
+			} catch (Exception e) {
+				LOG.logError(e.getMessage());
+			}
+		}
+		return new ArrayList<Developer>();
+	}
+
+	public Developer getDeveloperById(int id) {
+		try {
+			getGaMapper();
+			return gameMapper.getDeveloperById(id);
+		} catch(Exception e) {
+			LOG.logError(e.getMessage());
+		} finally {
+			try {
+				closeAll();
+			} catch (Exception e) {
+				LOG.logError(e.getMessage());
+			}
+		}
+		return new Developer();
 	}
 }

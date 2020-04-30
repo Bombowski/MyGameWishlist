@@ -5,6 +5,9 @@
 	<typeAliases>
 		<typeAlias type='mygamewishlist.model.pojo.db.User' alias='User'></typeAlias>
 		<typeAlias type='mygamewishlist.model.pojo.db.Game' alias='Game'></typeAlias>
+		<typeAlias type='mygamewishlist.model.pojo.db.Genre' alias='Genre'></typeAlias>
+		<typeAlias type='mygamewishlist.model.pojo.db.GameFull' alias='GameFull'></typeAlias>
+		<typeAlias type='mygamewishlist.model.pojo.db.Developer' alias='Developer'></typeAlias>
 		<typeAlias type='mygamewishlist.model.pojo.db.Review' alias='Review'></typeAlias>
 		<typeAlias type='mygamewishlist.model.pojo.db.Store' alias='Store'></typeAlias>
 		<typeAlias type='mygamewishlist.model.pojo.db.WishListGame' alias='WishListGame'></typeAlias>
@@ -37,5 +40,6 @@
 		<mapper resource='mygamewishlist/model/dao/mapper/Steam.xml' />
 		<mapper resource='mygamewishlist/model/dao/mapper/Variables.xml' />
 		<mapper resource='mygamewishlist/model/dao/mapper/Timeline.xml' />
+		<mapper resource='mygamewishlist/model/dao/mapper/Genre.xml' />
 	</mappers>
 </configuration>

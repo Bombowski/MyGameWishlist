@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import mygamewishlist.model.ejb.ClientSessionEJB;
 import mygamewishlist.model.ejb.CreateQueryEJB;
+import mygamewishlist.model.ejb.FormatCheckingEJB;
 import mygamewishlist.model.pojo.ClassPaths;
 import mygamewishlist.model.pojo.MyLogger;
 import mygamewishlist.model.pojo.db.Game;
@@ -34,6 +35,9 @@ public class AddGame extends HttpServlet {
 	@EJB
 	CreateQueryEJB cq_ejb;
 	
+	@EJB
+	FormatCheckingEJB fc_ejb;
+	
 	private String error = "";
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -47,6 +51,8 @@ public class AddGame extends HttpServlet {
 				rd = getServletContext().getRequestDispatcher(cp.MYLIST);
 			} else {
 				rd = getServletContext().getRequestDispatcher(cp.JSP_ADD_GAME);
+				request.setAttribute("genres", cq_ejb.getGenres());
+				request.setAttribute("devs", cq_ejb.getDevelopers());
 			}
 			
 			rd.forward(request, response);
@@ -69,10 +75,16 @@ public class AddGame extends HttpServlet {
 			
 			String name = request.getParameter("name");
 			String description = request.getParameter("description");
-			error = chkStuff(name, description);
+			String[] genres = request.getParameterValues("genre");
+			String rDate = request.getParameter("rDate");
+			String idDeveloper = request.getParameter("idDev");
+			
+			error = fc_ejb.chkGame(name, description, genres, rDate, idDeveloper);
 			
 			if (error.equals("")) {
-				cq_ejb.addGame(new Game(name, description));
+				cq_ejb.addGame(new Game(name, description, rDate, 
+						cq_ejb.getDeveloperById(Integer.parseInt(idDeveloper)).getName()), 
+						genres);
 				response.sendRedirect(cp.REDIRECT_GAME_LIST);
 			} else {
 				response.sendRedirect(cp.REDIRECT_ADD_GAME);
@@ -81,21 +93,5 @@ public class AddGame extends HttpServlet {
 		} catch(Exception e) {
 			LOG.logError(e.getMessage());
 		}
-	}
-	
-	private String chkStuff(String name, String description) {
-		if (name == null || description == null) {
-			return "Unvalid value";
-		} else if(name.length() > 32 || name.length() == 0 || description.length() > 256 || description.length() == 0) {
-			return "Unvalid length";
-		}
-		
-		for (Game g : cq_ejb.getGames()) {
-			if (g.getName().equals(name)) {
-				return "A game with this name already exists";
-			}
-		}
-		
-		return "";
 	}
 }
