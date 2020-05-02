@@ -28,7 +28,7 @@
 
 <html>
 <jsp:include page="../../template/Head.jsp">
-	<jsp:param name="" value="" />
+	<jsp:param name="js" value="CheckCheckboxes" />
 </jsp:include>
 <jsp:include page="../../template/BodyContainerFront.jsp">
 	<jsp:param name="" value="" />
@@ -43,41 +43,45 @@
 		<jsp:param name="" value="" />
 	</jsp:include>
 	<%
+		@SuppressWarnings("unchecked")
 		ArrayList<Genre> genres = (ArrayList<Genre>)request.getAttribute("genres");
+		@SuppressWarnings("unchecked")
 		ArrayList<Developer> developers = (ArrayList<Developer>)request.getAttribute("devs");
+		
+		out.append(jspF.getError(request));
 	%>
 		<form action="<% out.print(cp.REDIRECT_ADD_GAME); %>" method="post">
 			<div class="row d-flex flex-column w-50 mx-auto">
 				<div class="form-row my-2">
-	                <div class="col-3 d-flex">
-	                    <label class="ml-auto my-auto" for="name">Name</label>
+	                <div class="col-md-3 col-12 d-flex">
+	                    <label class="ml-md-auto mr-md-0 mx-auto my-auto" for="name">Name</label>
 	                </div>
-	                <div class="col-9">
+	                <div class="col-md-9 col-12 color-black">
 	                    <input type="text" name="name" class="col form-control">
 	                </div>
 	            </div>
 	            <div class="form-row my-2">
-	                <div class="col-3 d-flex">
-	                    <label class="ml-auto my-auto" for="description">Description</label>
+	                <div class="col-md-3 col-12 d-flex">
+	                    <label class="ml-md-auto mr-md-0 mx-auto my-auto" for="description">Description</label>
 	                </div>
-	                <div class="col-9">
+	                <div class="col-md-9 col-12 color-black">
 	                    <input type="text" name="description" class="col form-control">
 	                </div>
 	            </div>
 	            <div class="form-row my-2">
-	                <div class="col-3 d-flex">
-	                    <label class="ml-auto my-auto" for="rDate">Release Year</label>
+	                <div class="col-md-3 col-12 d-flex">
+	                    <label class="ml-md-auto mr-md-0 mx-auto my-auto" for="rDate">Release Year</label>
 	                </div>
-	                <div class="col-9">
-	                    <input type="text" name="rDate" class="col form-control">
+	                <div class="col-md-9 col-12 color-black">
+	                    <input type="date" name="rDate" class="col form-control">
 	                </div>
 	            </div>
-				<div class="form-row my-2">
-	                <div class="col-3 d-flex">
-	                    <label class="ml-auto my-auto" for="idDev">Developer</label>
+				<div class="form-row mb-2">
+	                <div class="col-md-3 col-12 d-flex">
+	                    <label class="ml-md-auto mr-md-0 mx-auto my-auto" for="idDev">Developer</label>
 	                </div>
-	                <div class="col-9 color-black">
-						<select name="idDev">
+	                <div class="col-md-9 col-12 color-black">
+						<select name="idDev" class="form-control">
 							<% 
 								StringBuilder sb = new StringBuilder();
 							
@@ -100,8 +104,8 @@
                     <%
 						for (Genre g : genres) {
 							%>
-							<div class="d-flex flex-row col-2">
-		                        <label class="my-auto"><% out.append(g.getName()); %></label>
+							<div class="d-flex flex-row col-xl-2 col-lg-3 col-md-4 col-sm-5 col-12 my-1 border-right border-white">
+		                        <label class="my-auto ml-auto text-right"><% out.append(g.getName()); %></label>
 		                        <input type="checkbox" name="genre" value="<% out.append(g.getId() + ""); %>" class="ml-2 my-auto">
 		                    </div>
 							<%
@@ -110,9 +114,11 @@
 					%>
                 </div>					
 			</div>
-			<button type="submit" class="btn btn-primary">
-				Add game
-			</button>
+			<div class="d-flex mt-3">
+				<button type="submit" class="mx-auto btn btn-dark">
+					<b>Add game</b>
+				</button>
+			</div>
 		</form>
 	<jsp:include page="../../template/MainBack.jsp">
 		<jsp:param name="" value="" />

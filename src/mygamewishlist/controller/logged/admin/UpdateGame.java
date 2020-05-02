@@ -12,10 +12,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import mygamewishlist.model.ejb.ClientSessionEJB;
 import mygamewishlist.model.ejb.CreateQueryEJB;
-import mygamewishlist.model.ejb.FormatCheckingEJB;
+import mygamewishlist.model.ejb.FormattingEJB;
 import mygamewishlist.model.pojo.ClassPaths;
 import mygamewishlist.model.pojo.MyLogger;
-import mygamewishlist.model.pojo.db.Game;
+import mygamewishlist.model.pojo.db.GameFull;
 import mygamewishlist.model.pojo.db.User;
 
 /**
@@ -38,7 +38,7 @@ public class UpdateGame extends HttpServlet {
 	CreateQueryEJB cq_ejb;
 	
 	@EJB
-	FormatCheckingEJB fc_ejb;
+	FormattingEJB fc_ejb;
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
@@ -52,20 +52,24 @@ public class UpdateGame extends HttpServlet {
 				rd = getServletContext().getRequestDispatcher(cp.MYLIST);
 			} else {
 				rd = getServletContext().getRequestDispatcher(cp.JSP_UPDATE_GAME);
+				
+				int id = Integer.parseInt(request.getParameter("id"));
+				GameFull game = cq_ejb.getGameById(id);
+				
+				if (game == null) {
+					rd = getServletContext().getRequestDispatcher(cp.GAME_LIST);
+				} else {
+					idGame = game.getId();
+					
+					request.setAttribute("game", game);
+					request.setAttribute("error", error);
+					request.setAttribute("genres", cq_ejb.getGenres());
+					request.setAttribute("devs", cq_ejb.getDevelopers());
+				}
 			}
 			
-			int id = Integer.parseInt(request.getParameter("id"));
-			Game game = cq_ejb.getGame(id);
-			
-			if (game == null) {
-				rd = getServletContext().getRequestDispatcher(cp.GAME_LIST);
-			}
-			
-			idGame = game.getId();
-			
-			request.setAttribute("game", game);
-			request.setAttribute("error", error);
 			rd.forward(request, response);
+			error = "";
 		} catch(Exception e) {
 			LOG.logError(e.getMessage());
 			response.sendRedirect(cp.REDIRECT_GAME_LIST);
@@ -87,8 +91,11 @@ public class UpdateGame extends HttpServlet {
 				error = fc_ejb.chkGame(name, description, genres, rDate, idDeveloper);
 				
 				if (error.equals("")) {
-					Game g = new Game(name, description, rDate, idGame, 
-							cq_ejb.getDeveloperById(Integer.parseInt(idDeveloper)).getName());
+					GameFull g = new GameFull(fc_ejb.arrToString(genres),Integer.parseInt(idDeveloper));
+					g.setDescription(description);
+					g.setName(name);
+					g.setReleaseDate(rDate);
+					g.setId(idGame);
 					
 					cq_ejb.updateGame(g);
 					

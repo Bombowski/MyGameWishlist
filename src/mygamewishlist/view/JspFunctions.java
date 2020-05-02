@@ -60,17 +60,16 @@ public class JspFunctions {
 	
 	public String getError(HttpServletRequest request) {
 		String error = (String)request.getAttribute("error");
-		StringBuilder sb = new StringBuilder();
-		sb.append("<p id='error' class='align-self-center'>");
 		
 		if (error == null) {
 			error = "";
 		}
 		
-		sb.append(error)
-			.append("</p>");
-		
-		return sb.toString();
+		return new StringBuilder()
+				.append("<p id='error' class='align-self-center'>")
+				.append(error)
+				.append("</p>")
+				.toString();
 	}
 	
 	public String buildScrapedGameTable(ArrayList<ScrapedGame> games) {

@@ -40,7 +40,7 @@ public class GameInfo extends HttpServlet {
 		try {
 			idGame = Integer.parseInt(request.getParameter("id"));
 			
-			Game g = cq_ejb.getGame(idGame);
+			Game g = cq_ejb.getGameById(idGame);
 			
 			RequestDispatcher rd = getServletContext().getRequestDispatcher(cp.JSP_GAME_INFO);
 			request.setAttribute("game", g);

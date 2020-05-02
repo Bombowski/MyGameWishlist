@@ -29,7 +29,7 @@
 
 <html>
 <jsp:include page="../template/Head.jsp">
-	<jsp:param name="js" value="ResizeImgs,MyList,bootstrap.min" />
+	<jsp:param name="js" value="ResizeImgs,MyList,bootstrap.min,CheckCheckboxes" />
 </jsp:include>
 <jsp:include page="../template/BodyContainerFront.jsp">
 	<jsp:param name="" value="" />

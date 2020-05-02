@@ -90,3 +90,14 @@ main {
 .table > tbody > tr > td {
      vertical-align: middle;
 }
+
+@keyframes errorAnimation {
+    from {
+        background-color: red;
+        color: white;
+    }
+    to {
+        background-color: white;
+        color: red;
+    }
+}

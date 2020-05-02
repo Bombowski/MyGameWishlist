@@ -15,4 +15,8 @@
 	<select id="getGenreByName" resultType="Genre">
 		SELECT * FROM GENRE WHERE NAME = #{name}
 	</select>
+	
+	<delete id="deleteGameGenres">
+		DELETE FROM GAME_GENRE WHERE ID_GAME = #{idGame}
+	</delete>
 </mapper>

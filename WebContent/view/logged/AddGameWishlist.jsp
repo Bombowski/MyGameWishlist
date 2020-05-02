@@ -25,7 +25,7 @@
 
 <html>
 <jsp:include page="../template/Head.jsp">
-	<jsp:param name="" value="" />
+	<jsp:param name="js" value="CheckCheckboxes" />
 </jsp:include>
 <jsp:include page="../template/BodyContainerFront.jsp">
 	<jsp:param name="" value="" />

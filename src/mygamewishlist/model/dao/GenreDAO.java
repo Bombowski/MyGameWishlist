@@ -77,4 +77,20 @@ public class GenreDAO {
 		}
 		return new Genre();
 	}
+	
+	public void deleteGameGenres(int idGame) {
+		try {
+			getGeMapper();
+			genreMapper.deleteGameGenres(idGame);
+			session.commit();
+		} catch(Exception e) {
+			LOG.logError(e.getMessage());
+		} finally {
+			try {
+				closeAll();
+			} catch (Exception e) {
+				LOG.logError(e.getMessage());
+			}
+		}
+	}
 }

@@ -22,7 +22,7 @@ class Tests {
 	
 	@Test
 	void getUser() {
-		Game g = cq_ejb.getGame(1);
+		Game g = cq_ejb.getGameById(1);
 		boolean correct = false;
 		
 		if (g.getId() == 1 && g.getName().equals("The Witcher 3")) {

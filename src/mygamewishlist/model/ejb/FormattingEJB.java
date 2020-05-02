@@ -12,12 +12,12 @@ import mygamewishlist.model.pojo.db.Genre;
 
 @LocalBean
 @Stateless
-public class FormatCheckingEJB {
+public class FormattingEJB {
 
 	@EJB
 	CreateQueryEJB cq_ejb;
 	
-	public FormatCheckingEJB() {}
+	public FormattingEJB() {}
 	
 	public String chkGame(String name, String description, String[] genreIds, String rDate, String idDeveloper) {
 		if (name == null || description == null || genreIds == null || rDate == null || idDeveloper == null) {
@@ -33,7 +33,7 @@ public class FormatCheckingEJB {
 			return "Unvalid genre id";
 		}
 		
-		if (!Pattern.matches("^(\\d{4}-(([1-9][0-2]?))-(([1-9])|(1[0-9]?)|(2[0-9]?)|(3[0-1]?)))$", rDate)) {
+		if (!Pattern.matches("^((\\d{4})-(([1-9][0-2]?)|(0[1-9]))-((0[1-9])|(1[0-9]?)|(2[0-9]?)|(3[0-1]?)))$", rDate)) {
 			return "Unvalid date";
 		}
 		
@@ -45,20 +45,29 @@ public class FormatCheckingEJB {
 		
 		ArrayList<Genre> genres = cq_ejb.getGenres();
 		
-		for (Genre g : genres) {
+		for (int id : gIds) {
 			boolean contains = false;
-			for (int id : gIds) {
+			for (Genre g : genres) {
 				if (g.getId() == id) {
 					contains = true;
 					break;
 				}
 			}
-			
-			if (contains) {
+			if (!contains) {
 				return "Unvalid genre id";
 			}
 		}
 		
 		return "";
+	}
+	
+	public String arrToString(String[] arr) {
+		StringBuilder sb = new StringBuilder();
+		for (String str : arr) {
+			sb.append(str)
+				.append(",");
+		}
+		
+		return sb.toString();
 	}
 }

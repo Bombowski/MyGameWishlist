@@ -1,3 +1,4 @@
+<%@page import="mygamewishlist.model.pojo.db.GameFull"%>
 <%@page import="bomboshtml.body.Input"%>
 <%@page import="mygamewishlist.model.pojo.db.Game"%>
 <%@page import="mygamewishlist.model.pojo.ClassPaths"%>
@@ -51,29 +52,37 @@ pageEncoding="UTF-8"%>
 		<jsp:param name="" value="" />
 	</jsp:include>
 		<%
-			Game g = null;
+			GameFull g = null;
 			try {
-				 g = (Game) request.getAttribute("game");
+				 g = (GameFull) request.getAttribute("game");
 			} catch(Exception e) {
 				 log.logError(e.getMessage());
 				 response.sendRedirect(cp.REDIRECT_GAME_LIST);
 			}
-		
-			StringBuilder sb = new StringBuilder();
-			sb.append("<h2>")
-				.append(g.getName())
-				.append("</h2>")
-				.append("<p>")
-				.append(g.getDescription())
-				.append("</p>");
-			
-			out.append(sb.toString());
 		%>
 		<form method="post" action="<% out.append(cp.REDIRECT_GAME_INFO); %>">
-			<input type="number" name="rating" step="0.1" min="0" max="10" value="0">
-			<button type="submit">
-				Rate
-			</button>
+			<div class="row d-flex flex-row">
+				<div class="row d-flex flex-column col-6 mx-auto bg-danger">
+					<div class="form-row my-2">
+		                <div class="col-md-6 col-12 d-flex">
+		                    <span class="ml-md-auto mr-md-0 mx-auto my-auto" for="name">Name</span>
+		                </div>
+		                <div class="col-md-6 col-12 color-black">
+		                    <span class="form-control"><% out.append(g.getName()); %></span>
+		                </div>
+		            </div>
+	            </div>
+	            <div class="row d-flex flex-column col-6 bg-success">
+	            	<div class="form-row my-2 mx-auto">
+		                <span class="h4">Review</span>
+		            </div>
+		            <div class="form-row my-2 color-black">
+		                <button type="submit" class="btn button-dark mx-auto">
+		                	Send review
+		                </button>
+		            </div>
+	            </div>
+            </div>		
 		</form>
 	<jsp:include page="template/MainBack.jsp">
 		<jsp:param name="" value="" />

@@ -12,10 +12,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import mygamewishlist.model.ejb.ClientSessionEJB;
 import mygamewishlist.model.ejb.CreateQueryEJB;
-import mygamewishlist.model.ejb.FormatCheckingEJB;
+import mygamewishlist.model.ejb.FormattingEJB;
 import mygamewishlist.model.pojo.ClassPaths;
 import mygamewishlist.model.pojo.MyLogger;
-import mygamewishlist.model.pojo.db.Game;
+import mygamewishlist.model.pojo.db.GameFull;
 import mygamewishlist.model.pojo.db.User;
 
 /**
@@ -36,7 +36,7 @@ public class AddGame extends HttpServlet {
 	CreateQueryEJB cq_ejb;
 	
 	@EJB
-	FormatCheckingEJB fc_ejb;
+	FormattingEJB fc_ejb;
 	
 	private String error = "";
 	
@@ -55,7 +55,9 @@ public class AddGame extends HttpServlet {
 				request.setAttribute("devs", cq_ejb.getDevelopers());
 			}
 			
-			rd.forward(request, response);
+			request.setAttribute("error", error);
+			error = "";
+			rd.forward(request, response);			
 		} catch(Exception e) {
 			LOG.logError(e.getMessage());
 		}
@@ -82,9 +84,14 @@ public class AddGame extends HttpServlet {
 			error = fc_ejb.chkGame(name, description, genres, rDate, idDeveloper);
 			
 			if (error.equals("")) {
-				cq_ejb.addGame(new Game(name, description, rDate, 
-						cq_ejb.getDeveloperById(Integer.parseInt(idDeveloper)).getName()), 
-						genres);
+				int idDevInt = Integer.parseInt(idDeveloper); 
+				GameFull g = new GameFull(fc_ejb.arrToString(genres), idDevInt);
+				g.setDescription(description);
+				g.setDeveloper(cq_ejb.getDeveloperById(idDevInt).getName());
+				g.setName(name);
+				g.setReleaseDate(rDate);
+				
+				cq_ejb.addGame(g);
 				response.sendRedirect(cp.REDIRECT_GAME_LIST);
 			} else {
 				response.sendRedirect(cp.REDIRECT_ADD_GAME);

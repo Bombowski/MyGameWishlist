@@ -18,6 +18,7 @@ import mygamewishlist.model.pojo.ScrapedGame;
 import mygamewishlist.model.pojo.SteamGame;
 import mygamewishlist.model.pojo.db.Developer;
 import mygamewishlist.model.pojo.db.Game;
+import mygamewishlist.model.pojo.db.GameFull;
 import mygamewishlist.model.pojo.db.Genre;
 import mygamewishlist.model.pojo.db.Review;
 import mygamewishlist.model.pojo.db.ReviewList;
@@ -69,21 +70,22 @@ public class CreateQueryEJB {
 		REV_DAO.deleteReview(idUser, idGame);
 	}
 	
-	public Game getGame(int idGame) {
-		return GAME_DAO.getGame(idGame);
+	public GameFull getGameById(int idGame) {
+		return GAME_DAO.getGameById(idGame);
 	}
 	
 	public ArrayList<Game> getGames() {
 		return GAME_DAO.getGames();
 	}
 	
-	public void addGame(Game game, String[] genreIds) {
+	public void addGame(GameFull game) {
 		GAME_DAO.addGame(game);
-		
 	}
 	
-	public void updateGame(Game game) {
+	public void updateGame(GameFull game) {
 		GAME_DAO.updateGame(game);
+		GEN_DAO.deleteGameGenres(game.getId());
+		GAME_DAO.addGameGenre(game.getId(), game.getIdGenres().split(","));
 	}
 	
 	public void deleteGame(int idGame) {

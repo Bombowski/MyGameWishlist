@@ -4,10 +4,10 @@
   
 <mapper namespace="mygamewishlist.model.dao.mapper.GameMapper">
 	
-	<select id="getGame" resultMap="gameGenreList">
+	<select id="getGameById" resultMap="gameGenreList">
 		SELECT
 			GA.ID, GA.NAME, GA.DESCRIPTION, GA.RELEASE_DATE,
-    		GROUP_CONCAT(GE.NAME) AS GENRES, GROUP_CONCAT(GE.ID) AS GENRE_ID,
+    		GROUP_CONCAT(GE.NAME) AS GENRES, GROUP_CONCAT(GE.ID SEPARATOR ', ') AS ID_GENRE,
             DE.NAME AS DEVELOPER
 		FROM 
 			GAME GA, GAME_GENRE GG, GENRE GE, DEVELOPER DE
@@ -15,13 +15,24 @@
 			GA.ID = GG.ID_GAME AND 
 		    GE.ID = GG.ID_GENRE AND 
             DE.ID = GA.ID_DEVELOPER AND
-			GA.ID = 1
+			GA.ID = #{id}
+	</select>
+	
+	<select id="getGameIdByTitle" resultType="Integer">
+		SELECT
+			GA.ID
+		FROM 
+			GAME GA
+		WHERE 
+			GA.NAME = #{title}
+		GROUP BY
+			GA.ID;
 	</select>
 	
 	<select id="getGames" resultMap="gameList">
 		SELECT 
 			GA.ID, GA.NAME, GA.DESCRIPTION, GA.RELEASE_DATE,
-		    GROUP_CONCAT(GE.NAME) AS GENRES, DE.NAME AS DEVELOPER
+		    GROUP_CONCAT(GE.NAME SEPARATOR ', ') AS GENRES, DE.NAME AS DEVELOPER
 		FROM 
 			GAME GA, GAME_GENRE GG, GENRE GE, DEVELOPER DE 
 		WHERE 
@@ -32,14 +43,14 @@
 			GA.ID;
 	</select>
 	
-	<insert id="addGame" parameterType="Game">
+	<insert id="addGame" parameterType="GameFull">
 		INSERT INTO GAME (NAME,DESCRIPTION,RELEASE_DATE,ID_DEVELOPER) VALUES
 		(#{name},#{description},#{releaseDate},#{idDeveloper})
 	</insert>
 	
-	<update id="updateGame" parameterType="Game">
+	<update id="updateGame" parameterType="GameFull">
 		UPDATE GAME SET NAME = #{name}, DESCRIPTION = #{description}, 
-		RELEASE_DATE = #{releaseDate}, ID_DEVELOPER = #{idDeveloepr} 
+		RELEASE_DATE = #{releaseDate}, ID_DEVELOPER = #{idDeveloper} 
 		WHERE ID = #{id}
 	</update>
 	
@@ -54,6 +65,11 @@
 	<select id="getDeveloperById" resultType="Developer">
 		SELECT * FROM DEVELOPER WHERE ID = #{id}
 	</select>
+	
+	<insert id="addGameGenre">
+		INSERT INTO GAME_GENRE (ID_GAME, ID_GENRE) VALUES
+		(#{idGame},#{idGenre})
+	</insert>
 	
 	<resultMap type="Game" id="gameList">
 		<result property="id" column="ID" />
@@ -71,6 +87,6 @@
 		<result property="releaseDate" column="RELEASE_DATE" />
 		<result property="idDeveloper" column="ID_DEVELOPER" />
 		<result property="genres" column="GENRES" />
-		<result property="idGenres" column="ID_GENRES" />
+		<result property="idGenres" column="ID_GENRE" />
 	</resultMap>
 </mapper>

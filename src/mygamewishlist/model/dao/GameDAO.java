@@ -8,6 +8,7 @@ import mygamewishlist.model.dao.mapper.GameMapper;
 import mygamewishlist.model.pojo.MyLogger;
 import mygamewishlist.model.pojo.db.Developer;
 import mygamewishlist.model.pojo.db.Game;
+import mygamewishlist.model.pojo.db.GameFull;
 
 public class GameDAO {
 
@@ -31,10 +32,10 @@ public class GameDAO {
 		session.close();
 	}
 	
-	public Game getGame(int idGame) {
+	public GameFull getGameById(int idGame) {
 		try {
 			getGaMapper();
-			return gameMapper.getGame(idGame);
+			return gameMapper.getGameById(idGame);
 		} catch(Exception e) {
 			LOG.logError(e.getMessage());
 		} finally {
@@ -44,7 +45,7 @@ public class GameDAO {
 				LOG.logError(e.getMessage());
 			}
 		}
-		return new Game();
+		return new GameFull();
 	}
 	
 	public ArrayList<Game> getGames() {
@@ -63,10 +64,16 @@ public class GameDAO {
 		return new ArrayList<Game>();
 	}
 	
-	public void addGame(Game game) {
+	public void addGame(GameFull game) {
 		try {
 			getGaMapper();
 			gameMapper.addGame(game);
+			int gameId = gameMapper.getGameIdByTitle(game.getName());
+			
+			for (String str : game.getIdGenres().split(",")) {
+				gameMapper.addGameGenre(gameId, Integer.parseInt(str));
+			}
+			
 			session.commit();
 		} catch(Exception e) {
 			LOG.logError(e.getMessage());
@@ -79,7 +86,7 @@ public class GameDAO {
 		}
 	}
 	
-	public void updateGame(Game game) {
+	public void updateGame(GameFull game) {
 		try {
 			getGaMapper();
 			gameMapper.updateGame(game);
@@ -141,5 +148,23 @@ public class GameDAO {
 			}
 		}
 		return new Developer();
+	}
+	
+	public void addGameGenre(int idGame, String[] idGenres) {
+		try {
+			getGaMapper();
+			for (String str : idGenres) {
+				gameMapper.addGameGenre(idGame, Integer.parseInt(str));
+			}
+			session.commit();
+		} catch(Exception e) {
+			LOG.logError(e.getMessage());
+		} finally {
+			try {
+				closeAll();
+			} catch (Exception e) {
+				LOG.logError(e.getMessage());
+			}
+		}
 	}
 }
