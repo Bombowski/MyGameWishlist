@@ -187,4 +187,12 @@ public class CreateQueryEJB {
 	public Developer getDeveloperById(int id) {
 		return GAME_DAO.getDeveloperById(id);
 	}
+	
+	public int getGameIdByTitle(String title) {
+		return GAME_DAO.getGameIdByTitle(title);
+	}
+	
+	public void deleteSteamGameById(int id) {
+		STEAM_DAO.deleteSteamGameById(id);
+	}
 }

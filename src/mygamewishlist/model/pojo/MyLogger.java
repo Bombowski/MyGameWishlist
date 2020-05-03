@@ -13,9 +13,11 @@ public class MyLogger {
 
 	private static MyLogger ml = new MyLogger();
 	private static Logger err;
+	private static Logger sql;
 	
 	private MyLogger() {
-		err = (Logger) LoggerFactory.getLogger(MyLogger.class);
+		err = (Logger) LoggerFactory.getLogger("FILE_ERROR");
+		sql = (Logger) LoggerFactory.getLogger("secondLogger");
 	}
 	
 	public static MyLogger getLOG() {
@@ -36,5 +38,9 @@ public class MyLogger {
 	 */
 	public void logError(String msg) {
 		err.error(msg);
+	}
+	
+	public void test(String msg) {
+		sql.error(msg);
 	}
 }

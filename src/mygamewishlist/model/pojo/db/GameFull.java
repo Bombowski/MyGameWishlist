@@ -15,6 +15,20 @@ public class GameFull extends Game {
 		this.idDeveloper = idDeveloper;
 	}
 
+	
+	
+	@Override
+	public boolean equals(Object o) {
+		if (o instanceof GameFull) {
+			GameFull gf = (GameFull) o;
+			if (this.idDeveloper == gf.idDeveloper && this.idGenres.equals(gf.idGenres) &&
+					((Game) gf).equals((Game)this)) {
+				return true;
+			}
+		}		
+		return false;
+	}
+
 	public String getIdGenres() {
 		return idGenres;
 	}

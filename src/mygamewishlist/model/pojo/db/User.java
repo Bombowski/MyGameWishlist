@@ -18,6 +18,25 @@ public class User {
 		this.admin = admin;
 	}
 
+	/**
+	 * Doesn't compare user id's
+	 */
+	@Override
+	public boolean equals(Object o) {
+		if (o instanceof User) {
+			try {
+				User usr = (User) o;
+				if (usr.getAdmin() == this.admin && usr.getEmail().equals(this.email) &&
+						usr.getName().equals(this.name)) {
+					return true;
+				}				
+			} catch (NullPointerException e) {
+				return false;
+			}
+		}
+		return false;		
+	}
+	
 	public int getId() {
 		return id;
 	}

@@ -4,7 +4,7 @@ public class ReviewList {
 
 	private double averageRating;
 	private String name;
-	private int userRating;
+	private double userRating;
 	private int idGame;
 	private String genres;
 
@@ -12,7 +12,7 @@ public class ReviewList {
 		super();
 	}
 
-	public ReviewList(double averageRating, String name, int userRating, int idGame, String genres) {
+	public ReviewList(double averageRating, String name, double userRating, int idGame, String genres) {
 		super();
 		this.averageRating = averageRating;
 		this.name = name;
@@ -21,6 +21,19 @@ public class ReviewList {
 		this.genres = genres;
 	}
 
+	@Override
+	public boolean equals(Object o) {
+		if (o instanceof ReviewList) {
+			ReviewList tmp = (ReviewList)o;
+			if (this.averageRating == tmp.getAverageRating() && this.name.equals(tmp.getName()) &&
+					this.userRating == tmp.getUserRating() && this.idGame == tmp.getIdGame() &&
+					this.genres.equals(tmp.genres)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	public double getAverageRating() {
 		return averageRating;
 	}
@@ -37,11 +50,11 @@ public class ReviewList {
 		this.name = name;
 	}
 
-	public int getUserRating() {
+	public double getUserRating() {
 		return userRating;
 	}
 
-	public void setUserRating(int userRating) {
+	public void setUserRating(double userRating) {
 		this.userRating = userRating;
 	}
 

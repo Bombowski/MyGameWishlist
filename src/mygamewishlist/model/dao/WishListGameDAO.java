@@ -91,22 +91,6 @@ public class WishListGameDAO {
 		}
 	}
 	
-	private void addUrlWLPT(String url, int steamAppid) {
-		try {
-			getWlgMapper();
-//			listMapper.addUrlWLPT(url, steamAppid == -1 ? null : steamAppid);
-			session.commit();
-		} catch(Exception e) {
-			LOG.logError(e.getMessage());
-		} finally {
-			try {
-				closeAll();
-			} catch (Exception e) {
-				LOG.logError(e.getMessage());
-			}
-		}
-	}
-	
 	public ArrayList<WishListGame2Scrap> getGamesFromListById(int idUser) {
 		try {
 			getWlgMapper();

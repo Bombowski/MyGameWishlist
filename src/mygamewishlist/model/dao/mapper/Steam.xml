@@ -11,4 +11,8 @@
 	<insert id="addGame" parameterType="Steam">
 		INSERT IGNORE INTO STEAM_GAMES (APPID, NAME) VALUES(#{appid},#{name})	
 	</insert>
+	
+	<delete id="deleteSteamGameById">
+		DELETE FROM STEAM_GAMES WHERE APPID = #{id}
+	</delete>
 </mapper>

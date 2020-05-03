@@ -15,6 +15,17 @@ public class Developer {
 		this.name = name;
 	}
 
+	@Override
+	public boolean equals(Object o) {
+		if (o instanceof Developer) {
+			Developer dev = (Developer) o;
+			if (dev.getId() == this.getId() && dev.getName().equals(this.getName())) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	public int getId() {
 		return id;
 	}

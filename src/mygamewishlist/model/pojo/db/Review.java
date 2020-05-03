@@ -19,6 +19,18 @@ public class Review {
 		this.review = review;
 	}
 
+	@Override
+	public boolean equals(Object o) {
+		if (o instanceof Review) {
+			Review tmp = (Review)o;
+			if (this.idUser == tmp.getIdUser() && this.idGame == tmp.getIdGame() &&
+					this.rating == tmp.getRating() && this.review == tmp.getReview()) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	public int getIdUser() {
 		return idUser;
 	}

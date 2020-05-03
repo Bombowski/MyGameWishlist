@@ -15,6 +15,17 @@ public class Genre {
 		this.name = name;
 	}
 
+	@Override
+	public boolean equals(Object o) {
+		if (o instanceof Genre) {
+			Genre ge = (Genre) o;
+			if (this.id == ge.getId() && this.name.equals(ge.getName())) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	public int getId() {
 		return id;
 	}

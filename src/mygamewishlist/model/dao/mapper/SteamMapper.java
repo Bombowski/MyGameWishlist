@@ -11,4 +11,6 @@ public interface SteamMapper {
 	public ArrayList<Integer> getSteamGameIdsByName(@Param("name") String name);
 	
 	public void addGame(SteamGame sg);
+	
+	public void deleteSteamGameById(@Param("id") int id);
 }

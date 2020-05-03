@@ -1,34 +1,24 @@
 package mygamewishlist.tests;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import javax.ejb.EJB;
 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.BeforeClass;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
 
 import mygamewishlist.model.ejb.CreateQueryEJB;
-import mygamewishlist.model.pojo.db.Game;
 
-class Tests {
+@RunWith(Suite.class)
+@SuiteClasses({GameTests.class, GenreTests.class, ReviewTests.class, SteamTests.class, 
+	StoreTests.class, TimelineTests.class, UserTests.class, VariableTests.class, WishlistGameTests.class})
+public class Tests {
 
 	@EJB
-	private static CreateQueryEJB cq_ejb;
+	protected static CreateQueryEJB cq_ejb;
 	
-	@BeforeAll
+	@BeforeClass
 	public static void init() {
 		cq_ejb = new CreateQueryEJB();
-	}
-	
-	@Test
-	void getUser() {
-		Game g = cq_ejb.getGameById(1);
-		boolean correct = false;
-		
-		if (g.getId() == 1 && g.getName().equals("The Witcher 3")) {
-			correct = true;
-		}		
-		
-		assertEquals(correct, true);		
 	}
 }

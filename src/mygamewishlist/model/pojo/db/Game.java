@@ -49,6 +49,19 @@ public class Game {
 		this.developer = developer;
 	}
 
+	@Override
+	public boolean equals(Object o) {
+		if (o instanceof Game) {
+			Game ga = (Game)o;
+			if (this.description.equals(ga.description) && this.developer.equals(ga.getDeveloper()) &&
+					this.genres.equals(ga.genres) && this.name.equals(ga.getName()) && 
+					this.releaseDate.equals(ga.releaseDate)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	public String getName() {
 		return name;
 	}

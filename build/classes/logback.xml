@@ -5,7 +5,15 @@
 	<appender name="FILE_ERROR"
 		class="ch.qos.logback.core.FileAppender">
 		<file> mygamewishlist.log </file>
-		<append>true</append>
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{35} -
+				%msg%n</pattern>
+		</encoder>
+	</appender>
+	
+	<appender name="logger2"
+		class="ch.qos.logback.core.FileAppender">
+		<file> logger2.log </file>
 		<encoder>
 			<pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{35} -
 				%msg%n</pattern>
@@ -15,4 +23,8 @@
 	<root level="debug">
 		<appender-ref ref="FILE_ERROR" />
 	</root>
+	
+	<logger level="debug" name="secondLogger">
+        <appender-ref ref="logger2" />
+    </logger>
 </configuration>

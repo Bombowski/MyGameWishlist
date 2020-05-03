@@ -65,4 +65,20 @@ public class SteamDAO {
 			}
 		}
 	}
+	
+	public void deleteSteamGameById(int id) {
+		try {
+			getUserMapper();
+			steamMapper.deleteSteamGameById(id);
+			session.commit();
+		} catch(Exception e) {
+			LOG.logError(e.getMessage());
+		} finally {
+			try {
+				closeAll();
+			} catch (Exception e) {
+				LOG.logError(e.getMessage());
+			}
+		}
+	}
 }

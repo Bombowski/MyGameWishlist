@@ -86,6 +86,22 @@ public class GameDAO {
 		}
 	}
 	
+	public int getGameIdByTitle(String title) {
+		try {
+			getGaMapper();
+			return gameMapper.getGameIdByTitle(title);
+		} catch(Exception e) {
+			LOG.logError(e.getMessage());
+		} finally {
+			try {
+				closeAll();
+			} catch (Exception e) {
+				LOG.logError(e.getMessage());
+			}
+		}
+		return 0;
+	}
+	
 	public void updateGame(GameFull game) {
 		try {
 			getGaMapper();
