@@ -71,13 +71,13 @@ public class WishListGameDAO {
 			getWlgMapper();
 			for (WishListGame wlg : games) {
 				if (wlg instanceof WishListGameSteam) {
-					listMapper.addUrlWLPT(wlg.getUrlGame(), ((WishListGameSteam) wlg).getAppid() + "");
+					listMapper.addUrlWLPT(wlg, ((WishListGameSteam) wlg).getAppid() + "");
 				} else {
-					listMapper.addUrlWLPT(wlg.getUrlGame(), null);
+					listMapper.addUrlWLPT(wlg, null);
 				}	
 				
-				listMapper.addGame2Wishlist(wlg, idUser, 
-						listMapper.getIdUrlByUrl(wlg.getUrlGame()));
+				listMapper.addGame2Wishlist(idUser, listMapper.getIdUrlByUrl(wlg.getUrlGame()),
+						wlg.getMinPrice(), wlg.getMaxPrice());
 			}
 			session.commit();
 		} catch(Exception e) {
@@ -143,7 +143,7 @@ public class WishListGameDAO {
 		try {
 			getWlgMapper();
 			for (ScrapedGame sg : games) {
-				listMapper.updatePrices(sg, listMapper.getIdUrlByUrl(sg.getUrlGame()));
+				listMapper.updatePrices(sg);
 			}
 			session.commit();
 		} catch(Exception e) {

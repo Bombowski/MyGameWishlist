@@ -4,11 +4,15 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
 import mygamewishlist.model.pojo.SteamGame;
 
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class SteamTests {
 
 	private static SteamGame sg;
@@ -18,6 +22,11 @@ public class SteamTests {
 		sg = new SteamGame();
 		sg.setAppid(-1);
 		sg.setName("testGame");
+	}
+	
+	@AfterClass
+	public static void destroy() {
+		Tests.cq_ejb.deleteSteamGameById(sg.getAppid());
 	}
 	
 	@Test
@@ -30,7 +39,7 @@ public class SteamTests {
 	}
 	
 	@Test
-	public void getSteamGameIdsByName() {
+	public void bGetSteamGameIdsByName() {
 		assertEquals(true, Tests.cq_ejb.getSteamGameIdsByName(sg.getName()).size() > 0);
 	}
 	

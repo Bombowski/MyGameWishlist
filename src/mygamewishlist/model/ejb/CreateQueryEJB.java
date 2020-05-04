@@ -195,4 +195,8 @@ public class CreateQueryEJB {
 	public void deleteSteamGameById(int id) {
 		STEAM_DAO.deleteSteamGameById(id);
 	}
+	
+	public void deleteUser(String email) {
+		USR_DAO.deleteUser(email);
+	}
 }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 
 import javax.ejb.EJB;
+import javax.ws.rs.InternalServerErrorException;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
@@ -63,7 +64,7 @@ public class ScrapingSteam {
 						i++;
 					}
 				}
-			} catch (JSONException e) {
+			} catch (JSONException | InternalServerErrorException e) {
 				LOG.logError(e.getMessage());
 			}
 		}

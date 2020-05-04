@@ -58,9 +58,7 @@ public class GraphDatesEJB {
 
 	private LocalDate str2Date(String str) {
 		String[] split = str.split("-");
-		LocalDate ld = LocalDate.of(Integer.parseInt(split[0]), Integer.parseInt(split[1]), Integer.parseInt(split[2]));
-
-		return ld;
+		return LocalDate.of(Integer.parseInt(split[0]), Integer.parseInt(split[1]), Integer.parseInt(split[2]));
 	}
 
 	private List<LocalDate> getDatesBetween(LocalDate start, LocalDate finish) {

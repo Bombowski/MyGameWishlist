@@ -14,15 +14,27 @@ public class GameFull extends Game {
 		this.idGenres = idGenres;
 		this.idDeveloper = idDeveloper;
 	}
+	
+	public GameFull(GameFull gf) {
+		this.idDeveloper = gf.getIdDeveloper();
+		this.idGenres = gf.getIdGenres();
+		this.setDescription(gf.getDescription());
+		this.setDeveloper(gf.getDeveloper());
+		this.setGenres(gf.getGenres());
+		this.setId(gf.getId());
+		this.setName(gf.getName());
+		this.setReleaseDate(gf.getReleaseDate());
+	}
 
-	
-	
 	@Override
 	public boolean equals(Object o) {
 		if (o instanceof GameFull) {
 			GameFull gf = (GameFull) o;
 			if (this.idDeveloper == gf.idDeveloper && this.idGenres.equals(gf.idGenres) &&
-					((Game) gf).equals((Game)this)) {
+					gf.getDescription().equals(gf.getDescription()) && 
+					this.getDeveloper().equals(gf.getDeveloper()) &&
+					this.getGenres().equals(gf.getGenres()) && this.getName().equals(gf.getName()) && 
+					this.getReleaseDate().equals(gf.getReleaseDate())) {
 				return true;
 			}
 		}		

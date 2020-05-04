@@ -13,4 +13,6 @@ public interface UserMapper {
 	public void addUser(User usr);
 	
 	public ArrayList<User> getUsersWithList();
+	
+	public void deleteUser(@Param("email") String email);
 }

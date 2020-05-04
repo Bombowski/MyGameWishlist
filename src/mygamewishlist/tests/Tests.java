@@ -11,7 +11,10 @@ import mygamewishlist.model.ejb.CreateQueryEJB;
 
 @RunWith(Suite.class)
 @SuiteClasses({GameTests.class, GenreTests.class, ReviewTests.class, SteamTests.class, 
-	StoreTests.class, TimelineTests.class, UserTests.class, VariableTests.class, WishlistGameTests.class})
+	StoreTests.class, TimelineTests.class, UserTests.class, VariableTests.class, WishlistGameTests.class
+	})
+//GameTests.class, GenreTests.class, ReviewTests.class, SteamTests.class, 
+//StoreTests.class, TimelineTests.class, UserTests.class, VariableTests.class, WishlistGameTests.class
 public class Tests {
 
 	@EJB

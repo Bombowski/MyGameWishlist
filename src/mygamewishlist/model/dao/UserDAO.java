@@ -77,4 +77,20 @@ public class UserDAO {
 		}
 		return new ArrayList<User>();
 	}
+	
+	public void deleteUser(String email) {
+		try {
+			getUserMapper();
+			userMapper.deleteUser(email);
+			session.commit();
+		} catch(Exception e) {
+			LOG.logError(e.getMessage());
+		} finally {
+			try {
+				closeAll();
+			} catch (Exception e) {
+				LOG.logError(e.getMessage());
+			}
+		}
+	}
 }

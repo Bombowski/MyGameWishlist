@@ -31,6 +31,35 @@ public class WishListGame {
 		this.minPrice = minPrice;
 		this.maxPrice = maxPrice;
 	}
+	
+	public WishListGame(WishListGame wlg) {
+		super();
+		this.urlGame = wlg.getUrlGame();
+		this.urlStore = wlg.getUrlStore();
+		this.idStore = wlg.getIdStore();
+		this.gameName = wlg.getGameName();
+		this.img = wlg.getImg();
+		this.defaultPrice = wlg.getDefaultPrice();
+		this.currentPrice = wlg.getCurrentPrice();
+		this.discount = wlg.getDiscount();
+		this.minPrice = wlg.getMinPrice();
+		this.maxPrice = wlg.getMaxPrice();
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (o instanceof WishListGame) {
+			WishListGame wlg = (WishListGame) o;
+			if (this.urlGame.equals(wlg.getUrlGame()) && this.urlStore.equals(wlg.getUrlStore()) &&
+					this.idStore == wlg.getIdStore() && this.gameName.equals(wlg.getGameName()) &&
+					this.img.equals(wlg.getImg()) && this.defaultPrice == wlg.getDefaultPrice() &&
+					this.currentPrice == wlg.getCurrentPrice() && this.discount == wlg.getDiscount() &&
+					this.minPrice == wlg.getMinPrice() && this.maxPrice == wlg.getMaxPrice()) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 	public String getUrlGame() {
 		return urlGame;

@@ -20,4 +20,8 @@
 		WHERE
 			US.ID = WG.ID_USER
 	</select>
+	
+	<delete id="deleteUser">
+		DELETE FROM USER WHERE EMAIL = #{email};
+	</delete>
 </mapper>
