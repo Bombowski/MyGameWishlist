@@ -16,7 +16,7 @@ import mygamewishlist.model.ejb.CreateQueryEJB;
 //GameTests.class, GenreTests.class, ReviewTests.class, SteamTests.class, 
 //StoreTests.class, TimelineTests.class, UserTests.class, VariableTests.class, WishlistGameTests.class
 public class Tests {
-
+	
 	@EJB
 	protected static CreateQueryEJB cq_ejb;
 	

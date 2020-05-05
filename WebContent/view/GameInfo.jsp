@@ -1,3 +1,4 @@
+<%@page import="mygamewishlist.model.pojo.db.ReviewOfGame"%>
 <%@page import="mygamewishlist.model.pojo.db.GameFull"%>
 <%@page import="bomboshtml.body.Input"%>
 <%@page import="mygamewishlist.model.pojo.db.Game"%>
@@ -53,37 +54,134 @@ pageEncoding="UTF-8"%>
 	</jsp:include>
 		<%
 			GameFull g = null;
+			ArrayList<ReviewOfGame> reviews = null;
+			ReviewOfGame rog = null;
 			try {
 				 g = (GameFull) request.getAttribute("game");
+				 reviews = (ArrayList<ReviewOfGame>) request.getAttribute("reviews");
+				 rog = (ReviewOfGame) request.getAttribute("myReview"); 
 			} catch(Exception e) {
 				 log.logError(e.getMessage());
 				 response.sendRedirect(cp.REDIRECT_GAME_LIST);
 			}
 		%>
-		<form method="post" action="<% out.append(cp.REDIRECT_GAME_INFO); %>">
-			<div class="row d-flex flex-row">
-				<div class="row d-flex flex-column col-6 mx-auto bg-danger">
-					<div class="form-row my-2">
-		                <div class="col-md-6 col-12 d-flex">
-		                    <span class="ml-md-auto mr-md-0 mx-auto my-auto" for="name">Name</span>
-		                </div>
-		                <div class="col-md-6 col-12 color-black">
-		                    <span class="form-control"><% out.append(g.getName()); %></span>
-		                </div>
-		            </div>
+		<div class="row d-flex flex-row mb-5">
+			<div class="row d-flex flex-column col-6 mx-auto">
+                <div class="form-row my-2">
+                	<div class="col-12 d-flex">
+	                    <div class="col-3 d-flex">
+	                        <span class="ml-auto my-auto" >Game Title</span>
+	                    </div>
+	                    <div class="col-6 d-flex color-black">
+	                        <span class="form-control my-auto"><% out.append(g.getName()); %></span>
+	                    </div>
+                    </div>
+                </div>
+                <div class="form-row my-2">
+                	<div class="col-12 d-flex">
+	                    <div class="col-3 d-flex">
+	                        <span class="ml-auto my-auto" >Developer</span>
+	                    </div>
+	                    <div class="col-6 d-flex color-black">
+	                        <span class="form-control my-auto"><% out.append(g.getDeveloper()); %></span>
+	                    </div>
+                    </div>
+                </div>
+                <div class="form-row my-2">
+                	<div class="col-12 d-flex">
+	                    <div class="col-3 d-flex">
+	                        <span class="ml-auto my-auto" >Realese Date</span>
+	                    </div>
+	                    <div class="col-6 d-flex color-black">
+	                        <span class="form-control my-auto"><% out.append(g.getReleaseDate()); %></span>
+	                    </div>
+                    </div>
+                </div>
+                <div class="form-row my-2">
+                	<div class="col-12 d-flex">
+	                    <div class="col-3 d-flex">
+	                        <span class="ml-auto my-auto" >Description</span>
+	                    </div>
+	                    <div class="col-6 d-flex color-black">
+	                        <span class="form-control my-auto"><% out.append(g.getDescription()); %></span>
+	                    </div>
+                    </div>
+                </div>
+                <div class="form-row my-2">
+                	<div class="col-12 d-flex">
+	                    <div class="col-3 d-flex">
+	                        <span class="ml-auto my-auto" >Genres</span>
+	                    </div>
+	                    <div class="col-6 d-flex color-black">
+	                        <span class="form-control my-auto"><% out.append(g.getGenres()); %></span>
+	                    </div>
+                    </div>
+                </div>
+            </div>
+            <%
+            	if (jspF.isSome1Logged(request.getSession(false))) {
+            %>
+            <form method="post" action="<% out.append(cp.REDIRECT_GAME_INFO); %>" class="row d-flex flex-column col-6">
+            	<div class="form-row my-2 mx-auto">
+	                <span class="h4">Review</span>
 	            </div>
-	            <div class="row d-flex flex-column col-6 bg-success">
-	            	<div class="form-row my-2 mx-auto">
-		                <span class="h4">Review</span>
-		            </div>
-		            <div class="form-row my-2 color-black">
-		                <button type="submit" class="btn button-dark mx-auto">
-		                	Send review
-		                </button>
-		            </div>
+	            <div class="form-row my-2">
+                	<div class="col-12 d-flex">
+	                    <div class="col-6 d-flex">
+	                        <span class="ml-auto my-auto">Review</span>
+	                    </div>
+	                    <div class="col-6 d-flex color-black">
+	                        <textarea name="review" class="form-control my-auto"><% out.append(jspF.ifNullEmpty(rog.getReview())); %></textarea>
+	                    </div>
+                    </div>
+                </div>
+                <div class="form-row my-2">
+                	<div class="col-12 d-flex">
+	                    <div class="col-6 d-flex">
+	                        <span class="ml-auto my-auto">Rating</span>
+	                    </div>
+	                    <div class="col-6 d-flex color-black">
+	                        <input class="form-control my-auto" name="rating" type="number" step='0.01' min='0' required 
+	                        	value="<% out.append(rog.getRating() + ""); %>">
+	                    </div>
+                    </div>
+                </div>
+	            <div class="form-row my-2 color-black">
+	                <button type="submit" class="btn button-dark mx-auto">
+	                	Send review
+	                </button>
 	            </div>
-            </div>		
-		</form>
+			</form>
+			<%
+				} 
+			%>
+        </div>
+        <div class="mt-5 d-flex">
+        	<u class="h3 mx-auto">User reviews</u>
+        </div>
+        <div class="row justify-content-center">
+        	<%
+        		for (ReviewOfGame rev : reviews) {
+        	%>
+            <div class="col-xl-3 col-lg-4 col-md-5 col-sm-6 col-12 card bg-gray m-2">
+            	<div class="card-body">
+            		<div class="row card-header d-flex">
+            			<div class="col-6 text-center my-auto">
+            				<% out.append(rev.getUsrName()); %>
+            			</div>
+            			<div class="col-6 d-flex">
+            				<span class="ml-auto bg-success h4 px-3 py-2">
+            					<% out.append(rev.getRating() + ""); %>
+            				</span>
+            			</div>
+            		</div>
+           			<% out.append(jspF.ifNullEmpty(rev.getReview())); %>
+           		</div>
+            </div>
+            <%
+        		}
+            %>
+        </div>
 	<jsp:include page="template/MainBack.jsp">
 		<jsp:param name="" value="" />
 	</jsp:include>

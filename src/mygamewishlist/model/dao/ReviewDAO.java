@@ -8,6 +8,7 @@ import mygamewishlist.model.dao.mapper.ReviewMapper;
 import mygamewishlist.model.pojo.MyLogger;
 import mygamewishlist.model.pojo.db.Review;
 import mygamewishlist.model.pojo.db.ReviewList;
+import mygamewishlist.model.pojo.db.ReviewOfGame;
 
 public class ReviewDAO {
 
@@ -82,7 +83,7 @@ public class ReviewDAO {
 	public void deleteReview(int idUser, int idGame) {
 		try {
 			getRevMapper();
-			reviewMapper.deleteReview(idUser, idGame);;
+			reviewMapper.deleteReview(idUser, idGame);
 			session.commit();
 		} catch(Exception e) {
 			LOG.logError(e.getMessage());
@@ -94,4 +95,36 @@ public class ReviewDAO {
 			}
 		}
 	}
+	
+	public ArrayList<ReviewOfGame> getGameReviews(int idUser, int idGame) {
+		try {
+			getRevMapper();
+			return reviewMapper.getGameReviews(idUser, idGame);
+		} catch(Exception e) {
+			LOG.logError(e.getMessage());
+		} finally {
+			try {
+				closeAll();
+			} catch (Exception e) {
+				LOG.logError(e.getMessage());
+			}
+		}
+		return new ArrayList<ReviewOfGame>();
+	} 
+	
+	public ReviewOfGame getGameReview(int idUser, int idGame) {
+		try {
+			getRevMapper();
+			return reviewMapper.getGameReview(idUser, idGame);
+		} catch(Exception e) {
+			LOG.logError(e.getMessage());
+		} finally {
+			try {
+				closeAll();
+			} catch (Exception e) {
+				LOG.logError(e.getMessage());
+			}
+		}
+		return new ReviewOfGame();
+	} 
 }

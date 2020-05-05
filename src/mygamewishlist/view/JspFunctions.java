@@ -103,4 +103,8 @@ public class JspFunctions {
 		
 		return toReturn.toString();
 	}
+	
+	public String ifNullEmpty(String chk) {
+		return chk == null ? "" : chk;
+	}
 }

@@ -65,7 +65,7 @@
 							Generate price timelines for...
 						</h5>
 					</div>
-					<form method="get" action="<% out.append(cp.REDIRECT_PRICE_TIMELINE); %>">
+					<form method="post" action="<% out.append(cp.REDIRECT_PRICE_TIMELINE); %>">
 						<div class="modal-body">
 							<%
 								Table tbl = new Table();

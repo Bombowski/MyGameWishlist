@@ -74,7 +74,7 @@ public class AddGameOptions extends HttpServlet {
 				response.sendRedirect(cp.REDIRECT_LOGIN);
 				return;
 			}
-			
+
 			String[] id = request.getParameterValues("games");
 			
 			if (id != null) {
@@ -82,6 +82,7 @@ public class AddGameOptions extends HttpServlet {
 				games.clear();
 				response.sendRedirect(cp.REDIRECT_MYLIST);
 			} else {
+				games.clear();
 				ArrayList<String> stNames = cq_ejb.getStoreNames();
 				
 				for (String str : stNames) {

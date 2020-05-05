@@ -22,6 +22,7 @@ import mygamewishlist.model.pojo.db.GameFull;
 import mygamewishlist.model.pojo.db.Genre;
 import mygamewishlist.model.pojo.db.Review;
 import mygamewishlist.model.pojo.db.ReviewList;
+import mygamewishlist.model.pojo.db.ReviewOfGame;
 import mygamewishlist.model.pojo.db.Store;
 import mygamewishlist.model.pojo.db.TimelineGame;
 import mygamewishlist.model.pojo.db.TimelineGameDetailed;
@@ -198,5 +199,19 @@ public class CreateQueryEJB {
 	
 	public void deleteUser(String email) {
 		USR_DAO.deleteUser(email);
+	}
+	
+	/**
+	 * 
+	 * 
+	 * @param idUser -1 if not logged
+	 * @return 
+	 */
+	public ArrayList<ReviewOfGame> getGameReviews(int idUser, int idGame) {
+		return REV_DAO.getGameReviews(idUser, idGame);
+	}
+	
+	public ReviewOfGame getGameReview(int idUser, int idGame) {
+		return REV_DAO.getGameReview(idUser, idGame);
 	}
 }

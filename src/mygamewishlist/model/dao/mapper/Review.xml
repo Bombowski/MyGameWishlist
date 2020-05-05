@@ -48,12 +48,40 @@
 	<update id="addOrUpdateReview" parameterType="Review">
 		INSERT INTO REVIEW (ID_USER, ID_GAME, RATING) VALUES
 			(#{idUser},#{idGame},#{rating}) ON DUPLICATE KEY UPDATE
-			RATING = #{rating}
+			RATING = #{review}
 	</update>
 	
 	<delete id="deleteReview" parameterType="Review">
 		DELETE REVIEW WHERE ID_USER = #{idUser} AND ID_GAME = #{idGame}
 	</delete>
+	
+	<select id="getGameReviews" resultMap="reviewOfGameMap">
+		SELECT
+			US.NAME AS USER_NAME, RE.RATING, RE.REVIEW
+		FROM
+			REVIEW RE, USER US
+		WHERE
+			RE.ID_USER = US.ID AND
+			ID_USER != #{idUser} AND
+			ID_GAME = #{idGame}
+	</select>
+	
+	<select id="getGameReview" resultMap="reviewOfGameMap">
+		SELECT
+			US.NAME AS USER_NAME, RE.RATING, RE.REVIEW
+		FROM
+			REVIEW RE, USER US
+		WHERE
+			RE.ID_USER = US.ID AND
+			ID_USER = #{idUser} AND
+			ID_GAME = #{idGame}
+	</select>
+	
+	<resultMap type="ReviewOfGame" id="reviewOfGameMap">
+		<result property="usrName" column="USER_NAME" />
+		<result property="rating" column="RATING" />
+		<result property="review" column="REVIEW" />
+	</resultMap>
 	
 	<resultMap type="Review" id="reviewMap">
 		<id property="idUser" column="ID_USER"/>

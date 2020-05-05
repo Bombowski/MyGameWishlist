@@ -17,6 +17,7 @@ function initCheck(e) {
     for (var i = 0; i < inputs.length; i++) {
         if (inputs[i].checked) {
             this.submit();
+            return;
         }
     }
 }

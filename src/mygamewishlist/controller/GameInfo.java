@@ -41,9 +41,15 @@ public class GameInfo extends HttpServlet {
 			idGame = Integer.parseInt(request.getParameter("id"));
 			
 			Game g = cq_ejb.getGameById(idGame);
+			User usr = sc_ejb.getLoggedUser(request);
+			
+			int idUser = usr == null ? -1 : usr.getId();
 			
 			RequestDispatcher rd = getServletContext().getRequestDispatcher(cp.JSP_GAME_INFO);
 			request.setAttribute("game", g);
+			request.setAttribute("reviews", cq_ejb.getGameReviews(idUser, g.getId()));
+			request.setAttribute("myReview", cq_ejb.getGameReview(idUser, g.getId()));
+			
 			rd.forward(request, response);
 		} catch(Exception e) {
 			LOG.logError(e.getMessage());
