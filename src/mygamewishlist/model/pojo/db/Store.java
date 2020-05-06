@@ -6,17 +6,19 @@ public class Store {
 	private String name;
 	private String url;
 	private String queryPart;
+	private String img;
 
 	public Store() {
 		super();
 	}
 
-	public Store(int id, String name, String url, String queryPart) {
+	public Store(int id, String name, String url, String queryPart, String img) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.url = url;
 		this.queryPart = queryPart;
+		this.img = img;
 	}
 
 	public int getId() {
@@ -49,6 +51,14 @@ public class Store {
 
 	public void setQueryPart(String queryPart) {
 		this.queryPart = queryPart;
+	}
+
+	public String getImg() {
+		return img;
+	}
+
+	public void setImg(String img) {
+		this.img = img;
 	}
 
 }

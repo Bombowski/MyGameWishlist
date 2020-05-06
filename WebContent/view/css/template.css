@@ -13,8 +13,8 @@ body {
 
 body {
     background-image: url("../imgs/background.jpg");
-    background-repeat: no-repeat;
     background-attachment: fixed;
+    background-position: center; 
 }
 
 * {
@@ -23,6 +23,15 @@ body {
 
 .table-icon {
     width: 20px;
+}
+
+.checkbox-block {
+	cursor: pointer;
+	z-index: 500;
+}
+
+.checkbox-block input {
+	cursor: pointer;
 }
 
 header {
@@ -89,6 +98,11 @@ main {
 
 .table > tbody > tr > td {
      vertical-align: middle;
+}
+
+.chkBox {
+    width: 20px;
+    height: 20px;
 }
 
 @keyframes errorAnimation {

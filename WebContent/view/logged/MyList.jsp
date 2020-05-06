@@ -29,7 +29,7 @@
 
 <html>
 <jsp:include page="../template/Head.jsp">
-	<jsp:param name="js" value="ResizeImgs,MyList,bootstrap.min,CheckCheckboxes" />
+	<jsp:param name="js" value="ResizeImgs,MyList,bootstrap.min,Checkboxes" />
 </jsp:include>
 <jsp:include page="../template/BodyContainerFront.jsp">
 	<jsp:param name="" value="" />
@@ -87,6 +87,8 @@
 								try {
 									for (WishListGame wlg : list) {
 										Tr tr = new Tr();
+										tr.addClass("checkbox-block");
+										
 										tr.addTd(new A(wlg.getGameName(), wlg.getUrlStore() + wlg.getUrlGame()));
 										for (Store st : stores) {
 											if (st.getId() == wlg.getIdStore()) {
@@ -94,6 +96,7 @@
 												break;	
 											}
 										}
+
 										tr.addTd(new Input("checkbox", "games", new StringBuilder()
 												.append(wlg.getUrlGame())
 												.append("&")
@@ -167,7 +170,19 @@
 
 					Tr tr = new Tr();
 					tr.addTd(new Img(g.getImg(), g.getGameName()));
-					tr.addTd(new A(g.getGameName(), g.getUrlStore() + g.getUrlGame()));
+					
+					for (Store st : stores) {
+						if (st.getUrl().equals(g.getUrlStore())) {
+							tr.addTd(new A(new StringBuilder()
+									.append(g.getGameName())
+									.append(" (")
+									.append(st.getName())
+									.append(")").toString(), 
+									g.getUrlStore() + g.getUrlGame()));
+							break;
+						}
+					}
+					
 					tr.addTd(prices);
 					tr.addTd(discount + "%");
 					tr.addTd(g.getMaxPrice() == -1 ? "-"

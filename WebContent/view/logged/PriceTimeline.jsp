@@ -1,3 +1,4 @@
+<%@page import="java.awt.Color"%>
 <%@page import="bomboshtml.body.A"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.Calendar"%>
@@ -79,9 +80,20 @@
                             datasets: [
                             <%
                             int i = 0;
+                            ArrayList<Color> colors = jspF.generateColors(list.size()); 
                             for (String key : list.keySet()) {
                             	ArrayList<TimelineGameDetailed> tmp = list.get(key);
                             	JSONArray jsArr = new JSONArray();
+                            	Color c = colors.get(i);
+                            	String color = new StringBuilder()
+                            			.append("rgb(")
+                       					.append(c.getRed())
+                       					.append(",")
+                       					.append(c.getBlue())
+                       					.append(",")
+                       					.append(c.getGreen())
+                       					.append(")")
+                       					.toString();
                             	
                             	for (TimelineGameDetailed tlgd : tmp) {
                             		jsArr.put(tlgd.getPrice() == 0 ? null : tlgd.getPrice());
@@ -92,9 +104,9 @@
 	                            	fill: false,
 	                                lineTension: 0,
 	                                backgroundColor: "rgba(75, 192, 192, 0.4)",
-	                                borderColor: "rgba(75, 192, 192, 1)",
-	                                pointBorderColor: "rgba(75,192,192,1)",
-	                                pointBackgroundColor: "#fff",
+	                                borderColor: "<% out.append(color.toString()); %>",
+	                                pointBorderColor: "<% out.append(color.toString()); %>",
+	                                pointBackgroundColor: "<% out.append(color.toString()); %>",
 	                                pointHoverRadius: 5,
 	                                pointHitRadius: 10,		                          
 	                        		data: <% out.append(jsArr.toString()); %>,

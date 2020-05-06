@@ -52,26 +52,26 @@
 				return;
 			}
 		%>
-		<form action="<% out.append(cp.REDIRECT_UPDATE_GAME_WISHLIST); %>" method="post">
-			<div class="form-row">
-				<div class="col">
+		<form action="<% out.append(cp.REDIRECT_UPDATE_GAME_WISHLIST); %>" method="post" class="d-flex flex-column">
+			<div class="row justify-content-center mb-3">
+				<div class="col-4 h6">
 					Notify me when this game goes below or equal:
 				</div>
-				<div class="col">
+				<div class="col-2 color-black">
 					<input name="min" type="number" value="<% out.append(wlg.getMinPrice() + ""); %>"
 						step="0.01" min="-1" class="form-control">
 				</div>
 			</div>
-			<div class="form-row">
-				<div class="col">
+			<div class="row justify-content-center mb-3">
+				<div class="col-4 h6">
 					Notify me when this game goes above or equal:
 				</div>
-				<div class="col">
+				<div class="col-2 color-black">
 					<input name="max" type="number" value="<% out.append(wlg.getMaxPrice() + ""); %>"
 						step="0.01" min="-1" class="form-control">
 				</div>
 			</div>
-			<button type="submit" class="btn btn-primary">
+			<button type="submit" class="btn btn-dark mx-auto">
 				Change
 			</button>
 		</form>

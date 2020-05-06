@@ -1,6 +1,8 @@
 package mygamewishlist.view;
 
+import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -106,5 +108,30 @@ public class JspFunctions {
 	
 	public String ifNullEmpty(String chk) {
 		return chk == null ? "" : chk;
+	}
+	
+	public ArrayList<Color> generateColors(int noColors) {
+		ArrayList<Color> colors = new ArrayList<Color>();
+		Random r = new Random();
+		for (int i = 0; i < noColors; i++) {
+			Color c = new Color(r.nextInt(255), r.nextInt(255), r.nextInt(255));
+			colors.add(c);
+		}
+		return colors;
+	}
+	
+	public String getPriceBgColor(double num) {
+		String color = "";
+		if (num == -1) {
+			color = "bg-dark";
+		} else if (num < 4) {
+			color = "bg-danger";
+		} else if (num < 7) {
+			color = "bg-warning";
+		} else {
+			color = "bg-success";
+		}
+		
+		return color;
 	}
 }

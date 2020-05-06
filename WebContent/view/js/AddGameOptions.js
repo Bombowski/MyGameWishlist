@@ -1,14 +1,6 @@
 var buttons; 
 var tables;
 
-window.onbeforeunload = function() {
-	$.ajax({
-	    url: '/MyGameWishlist/AddGameOptions',
-	    type: 'DELETE',
-	    success: function(result) {}
-	});
-}
-
 $(window).ready(function() {    
     tables = document.getElementById("tables").children;
     buttons = document.getElementsByClassName("buttons")[0].children;
@@ -20,8 +12,13 @@ $(window).ready(function() {
     		for (var j = 0; j < tables.length; j++) {
 				if (tables[j].id == idTbl) {
 					$(tables[j]).show();
+					$(this).addClass("btn-primary");
+					$(this).removeClass("btn-dark");
 				} else {
 					$(tables[j]).hide();
+					var button = document.getElementById($(tables[j]).attr("id").replace("tbl",""));
+					$(button).addClass("btn-dark");
+					$(button).removeClass("btn-primary");
 				}
 			}
         });
@@ -36,6 +33,10 @@ $(window).ready(function() {
     	}
 	}
     
+    var tmp = buttons[0];
+    $(tmp).removeClass("btn-dark");
+	$(tmp).addClass("btn-primary");
+	
     for (var i = tables.length - 2; i >= 0; i--) {
 		$(tables[i]).hide();
 	}
@@ -46,7 +47,6 @@ function removeButton(tables, button) {
 		var table = tables[i];
 		if ($(table).attr("id").replace("tbl","") == $(button).attr("id")) {
 			if ($(table).is(":empty")) {
-	        	$(table).hide();
 	        	$(table).hide();
 	        } 
 			return true;
