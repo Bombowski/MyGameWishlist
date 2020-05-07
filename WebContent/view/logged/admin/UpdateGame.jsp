@@ -28,7 +28,7 @@
 
 <html>
 <jsp:include page="../../template/Head.jsp">
-	<jsp:param name="js" value="CheckCheckboxes" />
+	<jsp:param name="js" value="Checkboxes" />
 </jsp:include>
 <jsp:include page="../../template/BodyContainerFront.jsp">
 	<jsp:param name="" value="" />
@@ -128,7 +128,7 @@
 								checked = "checked";
 							}
 							%>
-							<div class="d-flex flex-row col-xl-2 col-lg-3 col-md-4 col-sm-5 col-12 my-1 border-right border-white">
+							<div class="d-flex flex-row col-xl-2 col-lg-3 col-md-4 col-sm-5 col-12 my-1 border-right border-white checkbox-block">
 		                        <label class="my-auto ml-auto text-right"><% out.append(ge.getName()); %></label>
 		                        <input type="checkbox" name="genre" value=
 		                        	<% out.append("'")

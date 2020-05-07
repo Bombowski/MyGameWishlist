@@ -65,31 +65,31 @@ pageEncoding="UTF-8"%>
 						.append(rl.getIdGame());
 				String color = jspF.getPriceBgColor(avgRating);
 		%>
-             <div class="bg-gray col-xl-2 col-lg-3 col-md-4 col-sm-5 col-12 text-center ml-4 mt-3 px-2 row">
-             	<div class="row flex-row mx-auto">
-	             	<div class="col-12 m-1 mt-2">
-	                     <u><span class="h4"><% out.append(rl.getName()); %></span></u>
-	                </div>
-	                <div class="col-12 d-flex mt-3 flex-row justify-content-center">
-	                    <div class="mr-3 my-auto">
-	                        Average score
-	                    </div>
-	                    <div class="ml-3 align-self-end">
-	                        <div class="<% out.append(color); %> p-2 h5 my-auto">
-	                            <% out.append(rating); %>
-	                        </div>
-	                    </div>
-	                </div>
-	                <div class="col-12 m-1 p-1">
-	                    <% out.append(rl.getGenres()); %>
-	                </div>
-	                <div class="col-12 d-flex mb-3">
-	                    <a class="btn btn-dark mx-auto mt-auto" href="<% out.append(sb.toString()); %>">
-	                        See more info
-	                    </a>
-                	</div>
-                </div>
-            </div>
+			<div class="bg-gray col-xl-2 col-lg-3 col-md-4 col-sm-5 col-12 text-center ml-sm-4 ml-0 mt-3 px-2 row">
+			 	<div class="row flex-row mx-auto">
+				  	<div class="col-12 m-1 mt-2">
+				    	<u><span class="h4"><% out.append(rl.getName()); %></span></u>
+					</div>
+			    <div class="col-12 d-flex mt-3 flex-row justify-content-center">
+			        <div class="mr-3 my-auto">
+			             Average score
+			        </div>
+			        <div class="ml-3 align-self-end">
+			            <div class="<% out.append(color); %> p-2 h5 my-auto">
+			                <% out.append(rating); %>
+			            </div>
+			        </div>
+			    </div>
+			    <div class="col-12 m-1 p-1">
+			        <% out.append(rl.getGenres()); %>
+			    </div>
+			    <div class="col-12 d-flex mb-3">
+			         <a class="btn btn-dark mx-auto mt-auto" href="<% out.append(sb.toString()); %>">
+			             See more info
+			         </a>
+			    	</div>
+				</div>
+			</div>
 		<% 
 			}				
 			} catch(Exception e) {

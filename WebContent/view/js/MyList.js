@@ -16,4 +16,9 @@ $(window).ready(function() {
             }
         }
     });
+    
+    var boxes = $(".boxes");
+    for (var i = 0; i < boxes.length; i++) {
+		boxes[i].getElementsByTagName("img")[0].setAttribute("width","100px");
+	}
 });

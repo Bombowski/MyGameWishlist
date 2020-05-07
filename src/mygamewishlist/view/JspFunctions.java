@@ -12,7 +12,9 @@ import bomboshtml.body.Img;
 import bomboshtml.body.Input;
 import bomboshtml.body.table.Tr;
 import mygamewishlist.model.pojo.ScrapedGame;
+import mygamewishlist.model.pojo.db.Store;
 import mygamewishlist.model.pojo.db.User;
+import mygamewishlist.model.pojo.db.WishListGame;
 
 /**
  * @author Patryk
@@ -37,10 +39,7 @@ public class JspFunctions {
 	}
 	
 	public boolean isSome1Logged(HttpSession session) {
-		if (session != null && session.getAttribute("user") != null) {
-			return true;
-		}
-		return false;
+		return session != null && session.getAttribute("user") != null;
 	}
 	
 	public User getLoggedUser(HttpSession session) {
@@ -121,17 +120,82 @@ public class JspFunctions {
 	}
 	
 	public String getPriceBgColor(double num) {
-		String color = "";
 		if (num == -1) {
-			color = "bg-dark";
+			return "bg-dark";
 		} else if (num < 4) {
-			color = "bg-danger";
+			return "bg-danger";
 		} else if (num < 7) {
-			color = "bg-warning";
+			return "bg-warning";
 		} else {
-			color = "bg-success";
+			return "bg-success";
 		}
-		
-		return color;
+	}
+	
+	public String buildImg(WishListGame g) {
+		return new Img(g.getImg(), g.getGameName()).print();
+	}
+	
+	public String buildTitle(WishListGame g, Store st) {
+		return new StringBuilder()
+				.append("<a target='_blank' href='")
+				.append(g.getUrlStore())
+				.append(g.getUrlGame())
+				.append("'>")
+				.append(g.getGameName())
+				.append(" (")
+				.append(st.getName())
+				.append(")")
+				.append("</a>")
+				.toString();
+	}
+	
+	public String buildDiscount(WishListGame g) {
+		return (Math.round(g.getDiscount() * 100f) / 100f) + "%";
+	}
+	
+	public String buildPrices(String discount, WishListGame g) {
+		return discount.equals("0.0%") ? g.getCurrentPrice() + "€"
+				: new StringBuilder()
+					.append("<s>")
+					.append(g.getDefaultPrice())
+					.append("€</s><span class='h5'> ")
+					.append(g.getCurrentPrice())
+					.append("€</span>").toString();
+	}
+	
+	public String buildMinPrice(WishListGame g) {
+		return g.getMinPrice() == -1 ? "-"
+				: new StringBuilder()
+				.append("<=")
+				.append(g.getMinPrice() + "€")
+				.toString();
+	}
+
+	public String buildMaxPrice(WishListGame g) {
+		return g.getMaxPrice() == -1 ? "-"
+				: new StringBuilder()
+				.append(">=")
+				.append(g.getMaxPrice() + "€")
+				.toString();
+	}
+	
+	public String buildEdit(WishListGame g, Img edit, String targetClass) {
+		return new A(edit.print(), 
+				new StringBuilder()
+				.append(targetClass)
+				.append("?url=")
+				.append(g.getUrlGame()
+						.replace("?", "%3f"))
+				.toString()).print();
+	}
+	
+	public String buildDelete(WishListGame g, Img del, String targetClass) {
+		return new A(del.print(), 
+				new StringBuilder()
+				.append(targetClass)
+				.append("?url=")
+				.append(g.getUrlGame()
+						.replace("?", "%3f"))
+				.toString()).print();
 	}
 }

@@ -49,13 +49,14 @@
 				Add game
 			</a>
 		</div>
+		<div class="col-12 row justify-content-center d-flex d-md-none">
 			<%
 				try {
 					@SuppressWarnings("unchecked")
 					ArrayList<Game> games = (ArrayList<Game>) request.getAttribute("games");
 					
 					Table tbl = new Table();
-					tbl.addClass("table");
+					tbl.addClass("table md-table text-center d-md-block d-none");
 					Tr th = new Tr();
 					th.addClass("h4");
 					th.addTd("Name");
@@ -74,18 +75,71 @@
 					del.addClass("table-icon");
 					
 					for (Game g : games) {
+						String name = g.getName();
+						String desc = g.getDescription() == null ? "No description" : g.getDescription();
+						String genres = g.getGenres();
+						String dev = g.getDeveloper();
+						String relD = g.getReleaseDate();
+						String update = new A(edit.print(),"/MyGameWishlist/UpdateGame?id=" + g.getId()).print();
+						String delete = new A(del.print(),"/MyGameWishlist/DeleteGame?id=" + g.getId()).print();
+
 						Tr tr = new Tr();
-						tr.addTd(g.getName());
-						tr.addTd(g.getDescription() == null ? "No description" : g.getDescription());
-						tr.addTd(g.getGenres());
-						tr.addTd(g.getDeveloper());
-						tr.addTd(g.getReleaseDate());
-						tr.addTd(new A(edit.print(),"/MyGameWishlist/UpdateGame?id=" + g.getId()));
-						tr.addTd(new A(del.print(),"/MyGameWishlist/DeleteGame?id=" + g.getId()));
+						tr.addTd(name);
+						tr.addTd(desc);
+						tr.addTd(genres);
+						tr.addTd(dev);
+						tr.addTd(relD);
+						tr.addTd(update);
+						tr.addTd(delete);
 						
 						tbl.addRow(tr);
-					}
-					
+					%>
+					<div class="boxes bg-gray col-sm-5 col-12 text-center ml-sm-4 ml-0 mt-3 px-2 row">
+		             	<div class="row flex-row mx-auto">
+			             	<div class="col-12 m-1 mt-2">
+			                     <u><span class="h4"><% out.append(name); %></span></u>
+			                </div>
+			                <div class="col-12 d-flex mt-3 flex-row justify-content-center">
+			                    <div class="mr-3 my-auto">
+			                        <% out.append(desc); %>
+			                    </div>
+			                </div>
+			                <div class="col-12 m-1 p-1 d-flex justify-content-center">
+			                	<div class="mr-3 my-auto">
+			                        <% out.append(genres); %>
+			                    </div>
+			                </div>
+			                <div class="col-12 d-flex mb-3">
+			                	<div class="my-auto">
+		                            <p class="m-0 p-0">Developer: </p>
+			                    </div>
+			                    <div class="my-auto">
+		                            <% out.append(dev); %>
+			                    </div>
+		                	</div>
+		                	<div class="col-12 d-flex mb-3">
+		                		<div class="my-auto">
+		                            <p class="m-0 p-0">Release date: </p>
+			                    </div>    
+			                    <div class="my-auto">
+		                            <% out.append(relD); %>
+			                    </div>
+		                	</div>
+		                	<div class="col-12 d-flex mb-3">    
+			                    <div class="mr-auto my-auto">
+		                            <% out.append(update); %>
+			                    </div>
+			                    <div class="ml-auto my-auto">
+		                            <% out.append(delete); %>
+			                    </div>
+		                	</div>
+		                </div>
+		            </div>
+					<%
+						}
+					%>
+					</div>
+					<%
 					out.print(tbl.print());
 				} catch(Exception e) {
 					log.logError(e.getMessage());

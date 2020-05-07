@@ -120,7 +120,7 @@
 								                     <img src="<% out.append(sg.getImg()); %>" width="100">
 								                </div>
 								                <div class="col-12 m-1 mt-2">
-								                     <u><a href="<% out.append(sg.getUrlStore() + sg.getUrlGame()); %>" class="h5">
+								                     <u><a href="<% out.append(sg.getUrlStore() + sg.getUrlGame()); %>" class="h5" target="_blank">
 								                     	<% out.append(sg.getFullName()); %>
 								                     </a></u>
 								                </div>
@@ -139,16 +139,16 @@
 								                		<span>Alert settings</span>
 								                	</div>
 								                    <div class="mr-auto">
-								                        <% out.append("<=<input type='number' name='")
+								                        <% out.append("Lower or equal<input type='number' name='")
 								        						.append(sg.getStoreName())
 								        						.append("&min")
-								        						.append(i + "' step='0.01' min='-1' class='bg-dark border-dark rounded'>"); %>
+								        						.append(i + "' step='0.01' min='-1' class='form-control bg-dark border-dark rounded'>"); %>
 								                    </div>
 								                    <div class="mr-auto">
-							                            <% out.append(">=<input type='number' name='")
+							                            <% out.append("Higher or equal<input type='number' name='")
 															.append(sg.getStoreName())
 															.append("&max")
-															.append(i + "' step='0.01' min='-1' class='bg-dark border-dark rounded'>"); %>
+															.append(i + "' step='0.01' min='-1' class='form-control bg-dark border-dark rounded'>"); %>
 								                    </div>
 								                </div>
 							                </div>

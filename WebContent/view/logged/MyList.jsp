@@ -131,13 +131,12 @@
                        data-target="#priceTimeline">Price timelines
                </button>
            </div>
-           <div class="d-flex justify-content-center mt-4">
+           <div class="d-flex justify-content-center mt-4 row">
+           	   <div class="col-12 row justify-content-center d-flex d-md-none">
 		<%
 			try {
 				tbl = new Table();
-				tbl.addClass("table");
-				tbl.addClass("md-table");
-				tbl.addClass("text-center");
+				tbl.addClass("table md-table text-center d-md-block d-none");
 				
 				th = new Tr();
 				th.addClass("h5");
@@ -159,60 +158,82 @@
 				edit.addClass("table-icon");
 				
 				for (WishListGame g : list) {
-					String discount = (Math.round(g.getDiscount() * 100f) / 100f) + "";
-					String prices = discount.equals("0.0") ? g.getCurrentPrice() + "€"
-							: new StringBuilder()
-								.append("<s>")
-								.append(g.getDefaultPrice())
-								.append("€</s> ")
-								.append(g.getCurrentPrice())
-								.append("€").toString();
-
-					Tr tr = new Tr();
-					tr.addTd(new Img(g.getImg(), g.getGameName()));
+					String img = jspF.buildImg(g);
+					String title = "";
+					String discount = jspF.buildDiscount(g);
+					String prices = jspF.buildPrices(discount, g);
+					String maxPrice = jspF.buildMaxPrice(g);
+					String minPrice = jspF.buildMinPrice(g);
+					String editt = jspF.buildEdit(g, edit, cp.REDIRECT_UPDATE_GAME_WISHLIST);
+					String delete = jspF.buildDelete(g, del, cp.REDIRECT_DELETE_GAME_WISHLIST);
 					
 					for (Store st : stores) {
 						if (st.getUrl().equals(g.getUrlStore())) {
-							tr.addTd(new A(new StringBuilder()
-									.append(g.getGameName())
-									.append(" (")
-									.append(st.getName())
-									.append(")").toString(), 
-									g.getUrlStore() + g.getUrlGame()));
+							title = jspF.buildTitle(g,st);
 							break;
 						}
 					}
 					
+					Tr tr = new Tr();
+					tr.addTd(img);					
+					tr.addTd(title);
 					tr.addTd(prices);
-					tr.addTd(discount + "%");
-					tr.addTd(g.getMaxPrice() == -1 ? "-"
-							: new StringBuilder()
-								.append(">=")
-								.append(g.getMaxPrice() + "€")
-								.toString());
-					tr.addTd(g.getMinPrice() == -1 ? "-"
-							: new StringBuilder()
-								.append("<=")
-								.append(g.getMinPrice() + "€")
-								.toString());
-					tr.addTd(new A(edit.print(), 
-							new StringBuilder()
-								.append(cp.REDIRECT_UPDATE_GAME_WISHLIST)
-								.append("?url=")
-								.append(g.getUrlGame()
-										.replace("?", "%3f"))
-								.toString()));
-					tr.addTd(new A(del.print(), 
-							new StringBuilder()
-								.append(cp.REDIRECT_DELETE_GAME_WISHLIST)
-								.append("?url=")
-								.append(g.getUrlGame()
-										.replace("?", "%3f"))
-								.toString()));
+					tr.addTd(discount);
+					tr.addTd(maxPrice);
+					tr.addTd(minPrice);
+					tr.addTd(editt);
+					tr.addTd(delete);
 					
 					tbl.addRow(tr);
+					
+					%>
+							<div class="boxes bg-gray col-sm-5 col-12 text-center ml-sm-4 ml-0 mt-3 px-2 row">
+				             	<div class="row flex-row mx-auto">
+				             		<div class="col-12 m-1 mt-2">
+					                     <% out.append(img); %>
+					                </div>
+					             	<div class="col-12 m-1 mt-2">
+					                     <u><span class="h4"><% out.append(title); %></span></u>
+					                </div>
+					                <div class="col-12 d-flex mt-3 flex-row justify-content-center">
+					                    <div class="mr-3 my-auto">
+					                        <% out.append(prices); %>
+					                    </div>
+					                    <div class="ml-3 my-auto align-self-end">
+					                        <div class="ml-3 my-auto align-self-end">
+					                            <% out.append(discount); %>
+					                        </div>
+					                    </div>
+					                </div>
+					                <div class="col-12 m-1 p-1 text-center">
+					                	Alert settings
+					                </div>
+					                <div class="col-12 m-1 p-1 d-flex justify-content-center">
+					                	<div class="mr-3 my-auto">
+					                        <% out.append(minPrice); %>
+					                    </div>
+					                    <div class="ml-3 my-auto">
+				                            <% out.append(maxPrice); %>
+					                    </div>
+					                </div>
+					                <div class="col-12 d-flex mb-3">
+					                    <div class="mr-auto my-auto">
+					                        <% out.append(editt); %>
+					                    </div>
+					                    <div class="ml-auto my-auto">
+				                            <% out.append(delete); %>
+					                    </div>
+				                	</div>
+				                </div>
+				            </div>
+					<%
 				}
-
+				
+				%>
+					
+			            </div>
+				<%
+				
 				out.append(tbl.print());
 			} catch (Exception e) {
 				log.logError(e.getMessage());

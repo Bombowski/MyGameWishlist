@@ -4,7 +4,7 @@
 
 <%!JspFunctions jspF = JspFunctions.getJspF();%>
 
-<nav class="container-fluid">
+<nav class="col-12">
 	<div class="w-75 row mx-auto">
 		<div class="col-md-6 col-sm-12 navbar navbar-expand ">
 			<ul class="navbar-nav mx-auto mx-lg-0 mr-lg-auto">

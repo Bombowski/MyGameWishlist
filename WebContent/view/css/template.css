@@ -5,12 +5,6 @@ body {
   padding: 0;
 }
 
-#container {
-  display: flex;
-  flex-direction: column;
-  min-height: 100%;
-}
-
 body {
     background-image: url("../imgs/background.jpg");
     background-attachment: fixed;
@@ -105,6 +99,10 @@ main {
     height: 20px;
 }
 
+#container {
+	width: 75%;
+}
+
 @keyframes errorAnimation {
     from {
         background-color: red;
@@ -116,8 +114,12 @@ main {
     }
 }
 
-@media only screen and (max-width: 600px) {
-    footer {
-    	position: relative !important;
+@media only screen and (max-width: 1000px) {
+    .md-table {
+    	width: 100% !important;
+    }
+    
+    #container {
+    	width: 100%;
     }
 }
