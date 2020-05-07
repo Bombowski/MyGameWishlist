@@ -120,7 +120,9 @@
 								                     <img src="<% out.append(sg.getImg()); %>" width="100">
 								                </div>
 								                <div class="col-12 m-1 mt-2">
-								                     <u><span class="h5"><% out.append(sg.getFullName()); %></span></u>
+								                     <u><a href="<% out.append(sg.getUrlStore() + sg.getUrlGame()); %>" class="h5">
+								                     	<% out.append(sg.getFullName()); %>
+								                     </a></u>
 								                </div>
 								                <div class="col-12 d-flex mt-3 flex-row justify-content-center">
 								                    <div class="mr-3 my-auto">
