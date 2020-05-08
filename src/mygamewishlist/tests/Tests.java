@@ -10,8 +10,7 @@ import org.junit.runners.Suite.SuiteClasses;
 import mygamewishlist.model.ejb.CreateQueryEJB;
 
 @RunWith(Suite.class)
-@SuiteClasses({GameTests.class, GenreTests.class, ReviewTests.class, SteamTests.class, 
-	StoreTests.class, TimelineTests.class, UserTests.class, VariableTests.class, WishlistGameTests.class
+@SuiteClasses({ReviewTests.class
 	})
 //GameTests.class, GenreTests.class, ReviewTests.class, SteamTests.class, 
 //StoreTests.class, TimelineTests.class, UserTests.class, VariableTests.class, WishlistGameTests.class

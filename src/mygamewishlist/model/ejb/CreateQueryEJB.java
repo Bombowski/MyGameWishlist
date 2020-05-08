@@ -137,6 +137,10 @@ public class CreateQueryEJB {
 		LIST_DAO.updatePrices(sg);
 	}
 	
+	public void updatePrices(ScrapedGame sg) {
+		LIST_DAO.updatePrices(sg);
+	}
+	
 	public void updateMinMax(double min, double max, String url, int idUser) {
 		LIST_DAO.updateMinMax(min, max, url, idUser);
 	}

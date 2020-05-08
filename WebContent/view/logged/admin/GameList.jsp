@@ -44,8 +44,8 @@
 	<jsp:include page="../../template/MainFront.jsp">
 		<jsp:param name="" value="" />
 	</jsp:include>
-		<div class="row m-2">
-			<a class="btn btn-primary" href="/MyGameWishlist/AddGame">
+		<div class="w-75 mx-auto">
+			<a class="btn btn-primary mb-4" href="/MyGameWishlist/AddGame">
 				Add game
 			</a>
 		</div>
@@ -56,7 +56,7 @@
 					ArrayList<Game> games = (ArrayList<Game>) request.getAttribute("games");
 					
 					Table tbl = new Table();
-					tbl.addClass("table md-table text-center d-md-block d-none");
+					tbl.addClass("table md-table text-center d-md-block d-none mx-auto");
 					Tr th = new Tr();
 					th.addClass("h4");
 					th.addTd("Name");

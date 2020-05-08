@@ -44,7 +44,7 @@ public class TimersEJB {
 	public void loadGames() {
 		initAll();
 		try {
-			scr_ejb.loadGames();
+			cq_ejb.addSteamGames(scr_ejb.loadGames());
 		} catch (JSONException e) {
 			LOG.logError(e.getMessage());
 		}
@@ -94,18 +94,19 @@ public class TimersEJB {
 	}
 
 	private boolean lowerPrice(WishListGame2Scrap wlg, ScrapedGame sg) {
-		double current = sg.getCurrentPrice();
+		double newCurrent = sg.getCurrentPrice();
+		double oldCurrent = wlg.getCurrentPrice();
 		double min = wlg.getMinPrice();
 		double max = wlg.getMaxPrice();
-
-		wlg.setDefaultPrice(sg.getDefaultPrice());
 		
-		if (min != -1 && min <= current) {
+		if (min != -1 && min >= newCurrent) {
 			return true;
-		} else if (max != -1 && max >= current) {
+		} else if (max != -1 && max <= newCurrent) {
 			return true;
-		} else if (wlg.getCurrentPrice() > current) {
+		} else if (oldCurrent != newCurrent) {
 			return true;
+		} else if (wlg.getDefaultPrice() != sg.getDefaultPrice()) {
+			cq_ejb.updatePrices(sg);
 		}
 
 		return false;

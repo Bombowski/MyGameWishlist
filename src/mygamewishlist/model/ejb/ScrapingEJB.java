@@ -71,10 +71,7 @@ public class ScrapingEJB {
 		return new ScrapedGame();
 	}
 	
-	public void loadGames() throws JSONException {
-		ArrayList<SteamGame> sg = ss.getSteamGameList();
-		
-		cq_ejb = new CreateQueryEJB();
-		cq_ejb.addSteamGames(sg);
+	public ArrayList<SteamGame> loadGames() throws JSONException {
+		return ss.getSteamGameList();
 	}
 }

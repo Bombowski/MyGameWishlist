@@ -157,6 +157,22 @@ public class WishListGameDAO {
 		}
 	}
 	
+	public void updatePrices(ScrapedGame sg) {
+		try {
+			getWlgMapper();
+			listMapper.updatePrices(sg);
+			session.commit();
+		} catch(Exception e) {
+			LOG.logError(e.getMessage());
+		} finally {
+			try {
+				closeAll();
+			} catch (Exception e) {
+				LOG.logError(e.getMessage());
+			}
+		}
+	}
+	
 	public void updateMinMax(double min, double max, String url, int idUser) {
 		try {
 			getWlgMapper();

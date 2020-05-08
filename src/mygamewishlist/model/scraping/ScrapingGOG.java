@@ -38,7 +38,9 @@ public class ScrapingGOG {
 			for (int i = 0; i < arr.length(); i++) {
 				ScrapedGame sg = getRow(arr.getJSONObject(i), g2s);
 				
-				games.add(sg);				
+				if (sg != null) {
+					games.add(sg);					
+				}				
 			}
 		} catch (JSONException e) {
 			LOG.logError(e.getMessage());
@@ -50,6 +52,12 @@ public class ScrapingGOG {
 	}
 	
 	private ScrapedGame getRow(JSONObject json, Game2Scrap g2s) throws JSONException {
+		JSONObject price = json.getJSONObject("price");
+		
+		if ((Boolean)price.get("isFree")) {
+			return null;
+		}
+		
 		ScrapedGame sg = new ScrapedGame();
 		
 		sg.setStoreName(g2s.getStoreName());
@@ -58,7 +66,7 @@ public class ScrapingGOG {
 		sg.setUrlGame(json.getString("url"));
 		sg.setImg("https:" + json.getString("image") + ".jpg");
 		
-		JSONObject price = json.getJSONObject("price");
+		
 		sg.setCurrentDiscount(price.getDouble("discountPercentage"));
 		sg.setCurrentPrice(Double.parseDouble(price.getString("amount")));
 		sg.setDefaultPrice(Double.parseDouble(price.getString("baseAmount")));

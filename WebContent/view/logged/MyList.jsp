@@ -15,13 +15,25 @@
 	pageEncoding="UTF-8"%>
 <!DOCTYPE>
 
-<%!JspFunctions jspF = JspFunctions.getJspF();
+<%!
+	JspFunctions jspF = JspFunctions.getJspF();
 	MyLogger log = MyLogger.getLOG();
-	ClassPaths cp = ClassPaths.getCP();%>
-
+	ClassPaths cp = ClassPaths.getCP();
+	
+%>
 <%
 	User usr = jspF.getLoggedUser(request.getSession(false));
+	String noGamesText = "<p class='text-center h4'>No games on your wishlist... yet.</p>";
 
+	int noPags = (Integer)request.getAttribute("numPags");
+	
+	int pag = 0;
+	try {
+		pag = Integer.parseInt(request.getParameter("pag"));	
+	} catch (NumberFormatException e) {
+		log.logError(e.getMessage());
+	}
+		
 	if (usr == null) {
 		response.sendRedirect(cp.REDIRECT_LOGIN);
 	}
@@ -85,30 +97,34 @@
 								@SuppressWarnings("unchecked")
 								ArrayList<Store> stores = (ArrayList<Store>) request.getAttribute("stores"); 
 								try {
-									for (WishListGame wlg : list) {
-										Tr tr = new Tr();
-										tr.addClass("checkbox-block");
-										
-										tr.addTd(new A(wlg.getGameName(), wlg.getUrlStore() + wlg.getUrlGame()));
-										for (Store st : stores) {
-											if (st.getId() == wlg.getIdStore()) {
-												tr.addTd(st.getName());
-												break;	
+									if (list.size() == 0) {
+										out.append("No games on your wishlist... yet.");
+									} else {
+										for (WishListGame wlg : list) {
+											Tr tr = new Tr();
+											tr.addClass("checkbox-block");
+											
+											tr.addTd(new A(wlg.getGameName(), wlg.getUrlStore() + wlg.getUrlGame()));
+											for (Store st : stores) {
+												if (st.getId() == wlg.getIdStore()) {
+													tr.addTd(st.getName());
+													break;	
+												}
 											}
-										}
 
-										tr.addTd(new Input("checkbox", "games", new StringBuilder()
-												.append(wlg.getUrlGame())
-												.append("&")
-												.append(wlg.getIdStore())
-												.append("&")
-												.append(wlg.getGameName())
-												.toString()));
+											tr.addTd(new Input("checkbox", "games", new StringBuilder()
+													.append(wlg.getUrlGame())
+													.append("&")
+													.append(wlg.getIdStore())
+													.append("&")
+													.append(wlg.getGameName())
+													.toString()));
+											
+											tbl.addRow(tr);
+										}
 										
-										tbl.addRow(tr);
+										out.append(tbl.print());										
 									}
-									
-									out.append(tbl.print());
 								} catch(Exception e) {
 									log.logError(e.getMessage());
 								}
@@ -123,7 +139,11 @@
 				</div>
 			</div>
 		</div>
-		<div class="mt-2 m-auto w-75">
+		<% if (list.size() == 0) { %>
+		<div class="mt-2 mx-auto w-75 d-flex justify-content-center">
+		<% } else { %>
+		<div class="mt-2 mx-auto w-75">
+		<% } %>
                <a href="/MyGameWishlist/AddGameWishlist" class="btn btn-dark mx-2 bg-black">
                    Add game
                </a>
@@ -131,12 +151,19 @@
                        data-target="#priceTimeline">Price timelines
                </button>
            </div>
-           <div class="d-flex justify-content-center mt-4 row">
+           <div class="d-flex flex-column justify-content-center mt-4 row">
+               <%
+                   if (list.size() == 0) {
+                	   out.append(noGamesText);
+                   } else {
+               %>
+               
+               
            	   <div class="col-12 row justify-content-center d-flex d-md-none">
 		<%
 			try {
 				tbl = new Table();
-				tbl.addClass("table md-table text-center d-md-block d-none");
+				tbl.addClass("table md-table text-center d-md-block d-none mx-auto");
 				
 				th = new Tr();
 				th.addClass("h5");
@@ -184,61 +211,71 @@
 					tr.addTd(editt);
 					tr.addTd(delete);
 					
-					tbl.addRow(tr);
-					
-					%>
-							<div class="boxes bg-gray col-sm-5 col-12 text-center ml-sm-4 ml-0 mt-3 px-2 row">
-				             	<div class="row flex-row mx-auto">
-				             		<div class="col-12 m-1 mt-2">
-					                     <% out.append(img); %>
-					                </div>
-					             	<div class="col-12 m-1 mt-2">
-					                     <u><span class="h4"><% out.append(title); %></span></u>
-					                </div>
-					                <div class="col-12 d-flex mt-3 flex-row justify-content-center">
-					                    <div class="mr-3 my-auto">
-					                        <% out.append(prices); %>
-					                    </div>
-					                    <div class="ml-3 my-auto align-self-end">
-					                        <div class="ml-3 my-auto align-self-end">
-					                            <% out.append(discount); %>
-					                        </div>
-					                    </div>
-					                </div>
-					                <div class="col-12 m-1 p-1 text-center">
-					                	Alert settings
-					                </div>
-					                <div class="col-12 m-1 p-1 d-flex justify-content-center">
-					                	<div class="mr-3 my-auto">
-					                        <% out.append(minPrice); %>
-					                    </div>
-					                    <div class="ml-3 my-auto">
-				                            <% out.append(maxPrice); %>
-					                    </div>
-					                </div>
-					                <div class="col-12 d-flex mb-3">
-					                    <div class="mr-auto my-auto">
-					                        <% out.append(editt); %>
-					                    </div>
-					                    <div class="ml-auto my-auto">
-				                            <% out.append(delete); %>
-					                    </div>
-				                	</div>
-				                </div>
-				            </div>
+					tbl.addRow(tr);	
+				%>
+					<div class="boxes bg-gray col-sm-5 col-12 text-center ml-sm-4 ml-0 mt-3 px-2 row">
+		             	<div class="row flex-row mx-auto">
+		             		<div class="col-12 m-1 mt-2">
+			                     <% out.append(img); %>
+			                </div>
+			             	<div class="col-12 m-1 mt-2">
+			                     <u><span class="h4"><% out.append(title); %></span></u>
+			                </div>
+			                <div class="col-12 d-flex mt-3 flex-row justify-content-center">
+			                    <div class="mr-3 my-auto">
+			                        <% out.append(prices); %>
+			                    </div>
+			                    <div class="ml-3 my-auto align-self-end">
+			                        <div class="ml-3 my-auto align-self-end">
+			                            <% out.append(discount); %>
+			                        </div>
+			                    </div>
+			                </div>
+			                <div class="col-12 m-1 p-1 text-center">
+			                	Alert settings
+			                </div>
+			                <div class="col-12 m-1 p-1 d-flex justify-content-center">
+			                	<div class="mr-3 my-auto">
+			                        <% out.append(minPrice); %>
+			                    </div>
+			                    <div class="ml-3 my-auto">
+		                            <% out.append(maxPrice); %>
+			                    </div>
+			                </div>
+			                <div class="col-12 d-flex mb-3">
+			                    <div class="mr-auto my-auto">
+			                        <% out.append(editt); %>
+			                    </div>
+			                    <div class="ml-auto my-auto">
+		                            <% out.append(delete); %>
+			                    </div>
+		                	</div>
+		                </div>
+		            </div>
 					<%
+					}
+				%>
+				</div>
+				<%
+					out.append(tbl.print());
+				} catch (Exception e) {
+					log.logError(e.getMessage());
+					response.sendRedirect(cp.REDIRECT_MYLIST);
 				}
 				
-				%>
+				StringBuilder sb = new StringBuilder().append("<div class='mt-3 justify-content-center d-flex col-12'>");
+				for (int i = 0; i < noPags; i++) {
+					A a = new A((i + 1) + "", cp.REDIRECT_MYLIST + "?pag=" + i);					
+					String color = i == pag ? "btn-primary" : "btn-dark";					
+					a.addClass("btn " + color);
 					
-			            </div>
-				<%
+					sb.append("<div class='mx-1'>")
+						.append(a.print())
+						.append("</div>");
+				}
 				
-				out.append(tbl.print());
-			} catch (Exception e) {
-				log.logError(e.getMessage());
-				response.sendRedirect(cp.REDIRECT_MYLIST);
-			}
+				out.append(sb.append("<div>").toString());
+            }
 		%>
 		</div>
 	<jsp:include page="../template/MainBack.jsp">

@@ -161,7 +161,8 @@ pageEncoding="UTF-8"%>
         </div>
         <div class="row justify-content-center">
         	<%
-        		for (ReviewOfGame rev : reviews) {
+        		if (reviews != null) {
+        			for (ReviewOfGame rev : reviews) {
         	%>
             <div class="col-xl-3 col-lg-4 col-md-5 col-sm-6 col-12 card bg-gray m-2">
             	<div class="card-body">
@@ -179,6 +180,7 @@ pageEncoding="UTF-8"%>
            		</div>
             </div>
             <%
+        			}
         		}
             %>
         </div>
