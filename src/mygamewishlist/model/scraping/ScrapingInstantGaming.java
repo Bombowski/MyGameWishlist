@@ -96,7 +96,7 @@ public class ScrapingInstantGaming {
 		try {
 			doc = ScrapingFunctions.getDoc(wlg.getUrlStore() + wlg.getUrlGame(), "");
 		} catch (IOException e1) {
-			LOG.logError(e1.getMessage());
+			LOG.logError(e1.getMessage().concat(" - IOException ScrapingInstantGaming"));
 		}
 		
 		if (doc == null) {
@@ -125,6 +125,8 @@ public class ScrapingInstantGaming {
 		sc.setCurrentDiscount(discountD);
 		sc.setCurrentPrice(priceD);
 		sc.setDefaultPrice(defaultD);
+		
+		LOG.logDebug(sc.toString());
 		
 		return sc;
 	}

@@ -98,20 +98,14 @@ public class TimersEJB {
 		double min = wlg.getMinPrice();
 		double max = wlg.getMaxPrice();
 
-		if (min != -1 || max != -1 ) {
-			if (min != -1) {
-				if (min >= current) {
-					return true;
-				}
-			} else {
-				if (max >= current) {
-					return true;
-				}
-			}
-		} else {
-			if (wlg.getCurrentPrice() > current) {
-				return true;
-			}
+		wlg.setDefaultPrice(sg.getDefaultPrice());
+		
+		if (min != -1 && min <= current) {
+			return true;
+		} else if (max != -1 && max >= current) {
+			return true;
+		} else if (wlg.getCurrentPrice() > current) {
+			return true;
 		}
 
 		return false;
