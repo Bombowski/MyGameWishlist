@@ -46,16 +46,21 @@
 		<jsp:param name="" value="" />
 	</jsp:include>
 		<form action="<% out.append(cp.REDIRECT_ADD_GAME_OPTIONS); %>" method="post" class="row flex-column">
-			<div class="col-12 mb-3">
-			<% 
-				String searchParam = (String)request.getAttribute("search");
-				
-				searchParam = searchParam == null ? "" : searchParam;
-				
-				out.append("<span class='h3'>Results for: ")
-					.append(searchParam)
-					.append("</span>");
-			%>
+			<div class="d-flex row col-12 mb-3">
+				<div class="col-6 d-flex justify-content-start">
+				<% 
+					String searchParam = (String)request.getAttribute("search");
+					
+					searchParam = searchParam == null ? "" : searchParam;
+					
+					out.append("<span class='h3'>Results for: ")
+						.append(searchParam)
+						.append("</span>");
+				%>
+				</div>
+				<div class="col-6 d-flex justify-content-end">
+					<p class="error my-auto text-center p-1 h4"></p>
+				</div>
 			</div>
 			<div class="mb-3 col-12 row">
 				<div class="buttons col-6">
@@ -166,9 +171,12 @@
 					}
 				%>
 			</div>
-			<button class="btn btn-dark mx-auto mt-5" type="submit">
+			<div class="col-12 row flex-column justify-content-center">
+				<button class="btn btn-dark mx-auto mt-5 mb-3" type="submit">
 				Add games
-			</button>
+				</button>
+				<p class="error my-auto mx-auto text-center p-1 h4"></p>
+			</div>
 		</form>
 	<jsp:include page="../template/MainBack.jsp">
 		<jsp:param name="" value="" />

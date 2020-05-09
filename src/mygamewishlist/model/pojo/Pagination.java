@@ -1,19 +1,18 @@
 package mygamewishlist.model.pojo;
 import java.util.ArrayList;
+import java.util.Iterator;
 
-import mygamewishlist.model.pojo.db.WishListGame;
-
-public class WishlistGamePag<E> {
+public class Pagination<E> implements Iterable<E> {
 
 	private ArrayList<E> al;
 	private int productsPerPage;
 	
-	public WishlistGamePag(ArrayList<E> al, int productsPerPage) {
+	public Pagination(ArrayList<E> al, int productsPerPage) {
 		this.al = al;
 		this.productsPerPage = productsPerPage;
 	}
 	
-	public WishlistGamePag(int productsPerPage) {
+	public Pagination(int productsPerPage) {
 		al = new ArrayList<E>();
 		this.productsPerPage = productsPerPage;
 	}
@@ -79,5 +78,10 @@ public class WishlistGamePag<E> {
 			}
 		}
 		return toReturn;
+	}
+
+	@Override
+	public Iterator<E> iterator() {
+		return this.al.iterator();
 	}
 }

@@ -22,7 +22,10 @@ import mygamewishlist.model.pojo.db.WishListGame;
 import mygamewishlist.model.pojo.db.WishListGameSteam;
 
 /**
- * Servlet implementation class AddGameOptions
+ * @author Patryk
+ *
+ * Servlet used for showing a list of results of games, and for
+ * adding games to the wishlist.
  */
 @WebServlet("/AddGameOptions")
 public class AddGameOptions extends HttpServlet {
@@ -40,6 +43,9 @@ public class AddGameOptions extends HttpServlet {
 	@EJB
 	CreateQueryEJB cq_ejb;
 	
+	/**
+	 * Shows a list of results from the search of AddGameWishlist.
+	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {			
 			RequestDispatcher rd;
@@ -50,6 +56,10 @@ public class AddGameOptions extends HttpServlet {
 				return;
 			}
 			
+			/**
+			 *  if games isn't empty a list of stores and games is
+			 *  forwarded to the jsp
+			 */			
 			if (!games.isEmpty()) {
 				rd = getServletContext().getRequestDispatcher(cp.JSP_ADD_GAME_OPTIONS);
 				request.setAttribute("stores", cq_ejb.getStoreNames());
@@ -67,6 +77,10 @@ public class AddGameOptions extends HttpServlet {
 		}
 	}
 
+	/**
+	 * Either revieves a list of games, and then forward to post, or 
+	 * recieves and adds all of the picked games to the wishlist.
+	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			User usr = sc_ejb.getLoggedUser(request);
@@ -75,16 +89,21 @@ public class AddGameOptions extends HttpServlet {
 				return;
 			}
 
+			// ids of all the picked games
 			String[] id = request.getParameterValues("games");
 			
+			// in each case the games list is cleared.
 			if (id != null) {
+				// if i recieved a list of picked games
 				cq_ejb.addGame2Wishlist(addGames(id, request), usr.getId());
 				games.clear();
 				response.sendRedirect(cp.REDIRECT_MYLIST);
 			} else {
+				// if i recieved a list of games
 				games.clear();
 				ArrayList<String> stNames = cq_ejb.getStoreNames();
 				
+				// for each store name im adding a list of games of each store to the global list
 				for (String str : stNames) {
 					@SuppressWarnings("unchecked")
 					Hashtable<String,ArrayList<ScrapedGame>> tmp = (Hashtable<String,ArrayList<ScrapedGame>>)request.getAttribute(str);
@@ -107,15 +126,27 @@ public class AddGameOptions extends HttpServlet {
 		}
 	}
 	
+	/**
+	 * Reads all of the recieved data and adds games to the wishlist.
+	 * 
+	 * @param id identificators of each game, they must contain a position of the game in the
+	 * ArrayList and the name of their store.
+	 * @param request HttpServletRequest
+	 * @return ArrayList<WishlistGame>
+	 */
 	private ArrayList<WishListGame> addGames(String[] id, HttpServletRequest request) {
 		ArrayList<WishListGame> toInsert = new ArrayList<WishListGame>();
 		
-		for (String s : id) {			
+		// for each id a game is added
+		for (String s : id) {
+			// position in the ArrayList
 			int arrPos = Integer.parseInt(s.substring(s.lastIndexOf("&") + 1));
+			// store name
 			String store = s.substring(0,s.lastIndexOf("&"));			
 			double max = -1;
 			double min = -1;
 			
+			// setting the alert settings
 			try {
 				String minS = request.getParameter(store + "&min" + arrPos);
 				String maxS = request.getParameter(store + "&max" + arrPos);
@@ -130,15 +161,21 @@ public class AddGameOptions extends HttpServlet {
 				LOG.logError(e.getMessage());
 			}		
 			
+			// List of games by name of the store
 			ArrayList<ScrapedGame> stGames = games.get(store);
 			
 			if (stGames == null) {
 				continue;
 			}
 			
+			// game from ArrayList by position
 			ScrapedGame g = stGames.get(arrPos);
 			
 			WishListGame wlg;
+			/*
+			 *  if its a steam game a special object for steam games that can also
+			 *  contain an appid is created, else a normal WishListGame object is created
+			 */			
 			if (!store.equals("Steam")) {
 				wlg = new WishListGame();
 				wlg.setUrlGame(g.getUrlGame());
@@ -148,6 +185,7 @@ public class AddGameOptions extends HttpServlet {
 				wlg.setUrlGame(g.getUrlGame());
 			}
 			
+			// All of the scraped values are being set
 			wlg.setIdStore(cq_ejb.getStoreByName(store).getId());
 			wlg.setGameName(g.getFullName());
 			wlg.setDefaultPrice(g.getDefaultPrice());
@@ -157,6 +195,7 @@ public class AddGameOptions extends HttpServlet {
 			wlg.setMinPrice(min); 
 			wlg.setMaxPrice(max);
 			
+			// game is added to the list of games to insert
 			toInsert.add(wlg);
 		}
 		

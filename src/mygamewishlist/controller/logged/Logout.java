@@ -15,7 +15,9 @@ import mygamewishlist.model.pojo.ClassPaths;
 import mygamewishlist.model.pojo.MyLogger;
 
 /**
- * Servlet implementation class Logout
+ * @author Patryk
+ *
+ * Servlet that closes the user session.
  */
 @WebServlet("/Logout")
 public class Logout extends HttpServlet {
@@ -28,6 +30,9 @@ public class Logout extends HttpServlet {
 	@EJB
 	ClientSessionEJB sc_ejb;
 	
+	/**
+	 * Closes user session.
+	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			sc_ejb.logoutUser(request.getSession());

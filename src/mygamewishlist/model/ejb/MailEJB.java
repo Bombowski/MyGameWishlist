@@ -27,7 +27,7 @@ import mygamewishlist.model.pojo.db.User;
 /**
  * @author Patryk
  *
- * Clase que sirve como puente para enviar correos a usuarios o al administrador
+ * 
  */
 @Stateless
 @LocalBean
@@ -41,13 +41,6 @@ public class MailEJB {
 	
 	public MailEJB() {}
 
-	/**
-	 * Envia un correo con el código de verificacion al usuario, y devuelve
-	 * el código.
-	 * 
-	 * @return String código de verificacion
-	 * @throws MessagingException 
-	 */
 	public void sendMailItemsOnSale(User us, ArrayList<ScrapedGame> toSend) {
 		Session session = createMailSession();
 
@@ -81,19 +74,20 @@ public class MailEJB {
 		prop.put("mail.smtp.ssl.trust", HOST);
 
 		// Abro la session del correo del cual voy a mandar correos
-		Session session = Session.getInstance(prop, new Authenticator() {
+		return Session.getInstance(prop, new Authenticator() {
 			@Override
 			protected PasswordAuthentication getPasswordAuthentication() {
 				return new PasswordAuthentication(USERNAME, SC.mailPasswd);
 			}
 		});
-		
-		return session;
 	}
 
 	private String generateMessage(ArrayList<ScrapedGame> toSend, User us) {
 		StringBuilder sb = new StringBuilder();
 
+		String thC = "</th>";
+		String thO = "<th>";
+		
 		sb.append("<h3>Hi ")
 			.append(us.getName())
 			.append(", some of the items from your wishlist are on sale!</h3>")
@@ -103,20 +97,23 @@ public class MailEJB {
 			.append("box-sizing: border-box; display: table; border-collapse: separate;") 
 			.append("border-spacing: 2px; border-color: grey;'")
 			.append("<tr>")
-			.append("<th>")
-			.append("</th>")
-			.append("<th>")
+			.append(thO)
+			.append(thC)
+			.append(thO)
 			.append("Name")
-			.append("</th>")
-			.append("<th>")
+			.append(thC)
+			.append(thO)
 			.append("Store")
-			.append("</th>")
-			.append("<th>")
+			.append(thC)
+			.append(thO)
 			.append("Current Price")
-			.append("</th>")
-			.append("<th>")
+			.append(thC)
+			.append(thO)
+			.append("Current Discount")
+			.append(thC)
+			.append(thO)
 			.append("Default Price")
-			.append("</th>")
+			.append(thC)
 			.append("</tr>");
 		
 		for (ScrapedGame sg : toSend) {

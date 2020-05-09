@@ -19,7 +19,9 @@ import mygamewishlist.model.pojo.db.Review;
 import mygamewishlist.model.pojo.db.User;
 
 /**
- * Servlet implementation class GameInfo
+ * @author Patryk
+ *
+ * Shows additional information about a game, and lets logged users make a review.
  */
 @WebServlet("/GameInfo")
 public class GameInfo extends HttpServlet {
@@ -36,6 +38,9 @@ public class GameInfo extends HttpServlet {
 	@EJB
 	CreateQueryEJB cq_ejb;
 	
+	/**
+	 * Shows info of the game
+	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			idGame = Integer.parseInt(request.getParameter("id"));
@@ -58,6 +63,9 @@ public class GameInfo extends HttpServlet {
 		}
 	}
 
+	/**
+	 * Creates a review of the game
+	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			User usr = sc_ejb.getLoggedUser(request);

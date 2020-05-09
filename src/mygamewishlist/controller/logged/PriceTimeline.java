@@ -21,6 +21,11 @@ import mygamewishlist.model.pojo.db.Store;
 import mygamewishlist.model.pojo.db.TimelineGameDetailed;
 import mygamewishlist.model.pojo.db.User;
 
+/**
+ * @author Patryk
+ *
+ * Shows a graph with chosen games and their prices during last two weeks.
+ */
 @WebServlet("/PriceTimeline")
 public class PriceTimeline extends HttpServlet {
 	
@@ -38,11 +43,18 @@ public class PriceTimeline extends HttpServlet {
 	@EJB
 	GraphDatesEJB gd_ejb;
 	
+	/**
+	 * This method is not used, it redirects to MyList.
+	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher rd = getServletContext().getRequestDispatcher(cp.MYLIST);
 		rd.forward(request, response);
 	}
 
+	/**
+	 * Revieves all of the data, then using it, this function gets all of the
+	 * selected games and send them to the jsp.
+	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			User usr = sc_ejb.getLoggedUser(request);
@@ -50,16 +62,22 @@ public class PriceTimeline extends HttpServlet {
 			if (usr == null) {
 				response.sendRedirect(cp.REDIRECT_LOGIN);
 			} else {
+				// List of selected games
 				String[] games = request.getParameterValues("games");
 				
 				if (games == null) {
 					response.sendRedirect(cp.REDIRECT_MYLIST);
 				} else {
 					Hashtable<String, ArrayList<TimelineGameDetailed>> list = new Hashtable<String, ArrayList<TimelineGameDetailed>>();
+					// List of stores
 					ArrayList<Store> stores = cq_ejb.getStores();
 					ArrayList<String> names = new ArrayList<String>();
 					
 					for (String str : games) {
+						/*
+						 * String in the games array stores the url of the game, id of the store,
+						 * and the name of the game.
+						 */
 						String[] split = str.split("&");
 						if (split.length != 3) {
 							continue;
@@ -70,6 +88,7 @@ public class PriceTimeline extends HttpServlet {
 						
 						for (Store st : stores) {
 							if (st.getId() == idStore) {
+								// Adding names of games and their stores to the ArrayList
 								names.add(new StringBuilder()
 										.append(split[2])
 										.append(" ")
@@ -79,6 +98,7 @@ public class PriceTimeline extends HttpServlet {
 						}												
 					}
 					
+					// Forwarding list of prices and discounts, dates, and names of games
 					RequestDispatcher rd = getServletContext().getRequestDispatcher(cp.JSP_PRICE_TIMELINE);
 					request.setAttribute("list", gd_ejb.generateTimeline(list));
 					request.setAttribute("dates", gd_ejb.getDates());

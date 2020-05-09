@@ -8,9 +8,9 @@
 	<div class="w-75 row mx-auto">
 		<div class="col-md-6 col-sm-12 navbar navbar-expand ">
 			<ul class="navbar-nav mx-auto mx-lg-0 mr-lg-auto">
-				<li class="nav-link h4"><u><a href="/MyGameWishlist/ReviewList" class="nav-link">Review List</a></u></li>
-				<li class="nav-link h4"><u><a href="/MyGameWishlist/MyList" class="nav-link">My List</a></u></li>
-				<li class="nav-link h4"><u><a href="/MyGameWishlist/GameList" class="nav-link">Game List</a></u></li>
+				<li class="nav-link px-1"><a href="/MyGameWishlist/ReviewList" class="nav-link btn btn-dark">Reviews</a></li>
+	            <li class="nav-link px-1"><a href="/MyGameWishlist/MyList" class="nav-link btn btn-dark">My List</a></li>
+				<li class="nav-link px-1"><a href="/MyGameWishlist/GameList" class="nav-link btn btn-dark">Game List</a></li>
 			</ul>
 		</div>
 		<div class="col-md-3 col-sm-12 d-flex ml-md-auto">

@@ -8,7 +8,7 @@
 	<div class="w-75 row mx-auto">
 		<div class="col-md-6 col-sm-12 navbar navbar-expand ">
 			<ul class="navbar-nav mx-auto mx-lg-0 mr-lg-auto">
-				<li class="nav-link h4"><u><a href="/MyGameWishlist/ReviewList" class="nav-link">Review List</a></u></li>
+				<li class="nav-link h4 mx-0"><a href="/MyGameWishlist/ReviewList" class="nav-link btn btn-dark">Review List</a></li>
 			</ul>
 		</div>
 		<div class="col-md-3 col-sm-12 d-flex ml-md-auto">

@@ -1,3 +1,5 @@
+/********************** HTML/ BODY **********************/
+
 html,
 body {
   height: 100%;
@@ -15,60 +17,20 @@ body {
     color: white !important;
 }
 
-.table-icon {
-    width: 20px;
+#container {
+	width: 75%;
 }
 
-.checkbox-block {
-	cursor: pointer;
-	z-index: 500;
-}
-
-.checkbox-block input {
-	cursor: pointer;
-}
+/********************** HEADER **********************/
 
 header {
     background-color: black;
 }
 
+/********************** NAV **********************/
+
 nav {
     background-image: linear-gradient(black, transparent);
-}
-
-footer {
-    background-image: linear-gradient(transparent, black 35%);
-    margin-top:
-}
-
-main {
-	margin-bottom: 80px !important;
-}
-
-#copyLeft {
-    display:inline-block;
-    transform: rotate(180deg);
-}
-
-.md-table {
-    font-weight: bold;
-    width: 80% !important;
-}
-
-.color-black * {
-	color: black !important;
-}
-
-.color-white * {
-	color: white !important;
-}
-
-.bg-gray {
-    background-color: rgba(0,0,0,.75) !important;
-}
-
-.nav-link {
-	color: white !important;
 }
 
 .logout {
@@ -82,6 +44,10 @@ main {
     box-shadow: 1.5px 1.5px 3px 0 rgba(92, 92, 92, 1), 0 -0.1px 1px 0 rgba(92, 92, 92, 1);
     cursor: pointer;
 }
+.nav-link {
+	color: white !important;
+	font-size: 1.2rem;
+}
 
 .logout:hover {
     box-shadow: 1px 1px 4px 0 rgba(43, 128, 255, 0.5), -1px -1px 4px 0 rgba(43, 128, 255, 0.5);
@@ -89,9 +55,48 @@ main {
     z-index: 2;
 }
 
+/********************** MAIN **********************/
+
+main {
+	margin-bottom: 80px !important;
+}
+
+/********************** FOOTER **********************/
+
+footer {
+    background-image: linear-gradient(transparent, black 35%);
+    margin-top:
+}
+
+#copyLeft {
+    display:inline-block;
+    transform: rotate(180deg);
+}
+
+/********************** TABLE **********************/
+
+.table-icon {
+    width: 20px;
+}
+
+.md-table {
+    font-weight: bold;
+    width: 80% !important;
+}
 
 .table > tbody > tr > td {
      vertical-align: middle;
+}
+
+/********************** CHECKBOXES **********************/
+
+.checkbox-block {
+	cursor: pointer;
+	z-index: 500;
+}
+
+.checkbox-block input {
+	cursor: pointer;
 }
 
 .chkBox {
@@ -99,8 +104,29 @@ main {
     height: 20px;
 }
 
-#container {
-	width: 75%;
+/********************** OTHER **********************/
+
+.color-black * {
+	color: black !important;
+}
+
+.color-white *, .color-white {
+	color: white !important;
+}
+
+.bg-gray {
+    background-color: rgba(0,0,0,.75) !important;
+}
+
+.error {
+    background-color: transparent;
+    color: red !important;
+    border-radius: 10px;
+    animation: 2s errorAnimation;
+}
+
+.error:empty {
+    display: none;
 }
 
 @keyframes errorAnimation {
@@ -109,7 +135,7 @@ main {
         color: white;
     }
     to {
-        background-color: white;
+        background-color: transparent;
         color: red;
     }
 }

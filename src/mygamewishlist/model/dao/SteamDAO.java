@@ -50,8 +50,8 @@ public class SteamDAO {
 	public void addSteamGames(ArrayList<SteamGame> sg) {
 		try {
 			getUserMapper();
-			for (SteamGame game : sg) {
-				steamMapper.addGame(game);
+			for (int i = 0; i < sg.size(); i++) {
+				steamMapper.addGame(sg.get(i));
 			}
 			
 			session.commit();

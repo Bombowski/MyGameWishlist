@@ -94,9 +94,16 @@ public class ScrapingInstantGaming {
 	public ScrapedGame getGame(WishListGame2Scrap wlg) {
 		Document doc = null;
 		try {
+			LOG.logDebug(wlg.toString());
 			doc = ScrapingFunctions.getDoc(wlg.getUrlStore() + wlg.getUrlGame(), "");
 		} catch (IOException e1) {
 			LOG.logError(e1.getMessage().concat(" - IOException ScrapingInstantGaming"));
+			
+			StringBuilder sb = new StringBuilder();
+			for (StackTraceElement ste : e1.getStackTrace()) {
+				sb.append(ste.toString());
+			}
+			LOG.logError(sb.toString());
 		}
 		
 		if (doc == null) {

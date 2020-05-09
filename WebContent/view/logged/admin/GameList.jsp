@@ -1,3 +1,4 @@
+<%@page import="mygamewishlist.model.pojo.Pagination"%>
 <%@page import="bomboshtml.body.Img"%>
 <%@page import="bomboshtml.body.table.Table"%>
 <%@page import="bomboshtml.body.A"%>
@@ -26,6 +27,9 @@
 	} else if (usr.getAdmin() != 1){
 		response.sendRedirect(cp.REDIRECT_MYLIST);
 	}
+	
+	@SuppressWarnings("unchecked")
+	ArrayList<Game> games = (ArrayList<Game>) request.getAttribute("games");
 %>
 
 <html>
@@ -50,50 +54,46 @@
 			</a>
 		</div>
 		<div class="col-12 row justify-content-center d-flex d-md-none">
-			<%
-				try {
-					@SuppressWarnings("unchecked")
-					ArrayList<Game> games = (ArrayList<Game>) request.getAttribute("games");
-					
-					Table tbl = new Table();
-					tbl.addClass("table md-table text-center d-md-block d-none mx-auto");
-					Tr th = new Tr();
-					th.addClass("h4");
-					th.addTd("Name");
-					th.addTd("Description");
-					th.addTd("Genres");
-					th.addTd("Developer");
-					th.addTd("Release date");
-					th.addTd("Edit");
-					th.addTd("Delete");
-					
-					tbl.addRow(th);
-					
-					Img edit = new Img("view/imgs/edit.png");
-					edit.addClass("table-icon");
-					Img del = new Img("view/imgs/delete.png");
-					del.addClass("table-icon");
-					
-					for (Game g : games) {
-						String name = g.getName();
-						String desc = g.getDescription() == null ? "No description" : g.getDescription();
-						String genres = g.getGenres();
-						String dev = g.getDeveloper();
-						String relD = g.getReleaseDate();
-						String update = new A(edit.print(),"/MyGameWishlist/UpdateGame?id=" + g.getId()).print();
-						String delete = new A(del.print(),"/MyGameWishlist/DeleteGame?id=" + g.getId()).print();
+			<%				
+				Table tbl = new Table();
+				tbl.addClass("table md-table text-center d-md-block d-none mx-auto bg-gray");
+				Tr th = new Tr();
+				th.addClass("h4");
+				th.addTd("Name");
+				th.addTd("Description");
+				th.addTd("Genres");
+				th.addTd("Developer");
+				th.addTd("Release date");
+				th.addTd("Edit");
+				th.addTd("Delete");
+				
+				tbl.addRow(th);
+				
+				Img edit = new Img("view/imgs/edit.png");
+				edit.addClass("table-icon");
+				Img del = new Img("view/imgs/delete.png");
+				del.addClass("table-icon");
+				
+				for (Game g : games) {
+					String name = g.getName();
+					String desc = g.getDescription() == null ? "No description" : g.getDescription();
+					String genres = g.getGenres();
+					String dev = g.getDeveloper();
+					String relD = g.getReleaseDate();
+					String update = new A(edit.print(),"/MyGameWishlist/UpdateGame?id=" + g.getId()).print();
+					String delete = new A(del.print(),"/MyGameWishlist/DeleteGame?id=" + g.getId()).print();
 
-						Tr tr = new Tr();
-						tr.addTd(name);
-						tr.addTd(desc);
-						tr.addTd(genres);
-						tr.addTd(dev);
-						tr.addTd(relD);
-						tr.addTd(update);
-						tr.addTd(delete);
-						
-						tbl.addRow(tr);
-					%>
+					Tr tr = new Tr();
+					tr.addTd(name);
+					tr.addTd(desc);
+					tr.addTd(genres);
+					tr.addTd(dev);
+					tr.addTd(relD);
+					tr.addTd(update);
+					tr.addTd(delete);
+					
+					tbl.addRow(tr);
+				%>
 					<div class="boxes bg-gray col-sm-5 col-12 text-center ml-sm-4 ml-0 mt-3 px-2 row">
 		             	<div class="row flex-row mx-auto">
 			             	<div class="col-12 m-1 mt-2">
@@ -140,12 +140,25 @@
 					%>
 					</div>
 					<%
-					out.print(tbl.print());
-				} catch(Exception e) {
-					log.logError(e.getMessage());
-					response.sendRedirect(cp.REDIRECT_GAME_LIST);
+				out.print(tbl.print());
+				StringBuilder sb = new StringBuilder().append("<div class='mt-3 justify-content-center d-flex col-12'>");
+				
+				int noPags = (Integer)request.getAttribute("total");
+				int pag = (Integer)request.getAttribute("pag");
+				
+				for (int i = 0; i < noPags; i++) {
+					A a = new A((i + 1) + "", cp.REDIRECT_GAME_LIST + "?pag=" + i);					
+					String color = i == pag ? "btn-primary" : "btn-dark";					
+					a.addClass("btn " + color);
+					
+					sb.append("<div class='mx-1'>")
+						.append(a.print())
+						.append("</div>");
 				}
+				
+				out.append(sb.append("<div>").toString());
 			%>
+			
 	<jsp:include page="../../template/MainBack.jsp">
 		<jsp:param name="" value="" />
 	</jsp:include>

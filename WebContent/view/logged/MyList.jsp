@@ -1,3 +1,4 @@
+<%@page import="mygamewishlist.model.pojo.Pagination"%>
 <%@page import="bomboshtml.body.table.Td"%>
 <%@page import="bomboshtml.body.table.Table"%>
 <%@page import="bomboshtml.body.Input"%>
@@ -25,8 +26,6 @@
 	User usr = jspF.getLoggedUser(request.getSession(false));
 	String noGamesText = "<p class='text-center h4'>No games on your wishlist... yet.</p>";
 
-	int noPags = (Integer)request.getAttribute("numPags");
-	
 	int pag = 0;
 	try {
 		pag = Integer.parseInt(request.getParameter("pag"));	
@@ -78,7 +77,15 @@
 						</h5>
 					</div>
 					<form method="post" action="<% out.append(cp.REDIRECT_PRICE_TIMELINE); %>">
-						<div class="modal-body">
+						<div class="modal-body d-flex flex-column">
+							<div class="col-12 d-flex flex-row">
+								<div class="col-6">
+									<p class="error my-0 text-center p-1"></p>
+								</div>
+								<div class="col-6 d-flex justify-content-end">
+									<button type="submit" class="btn btn-primary ml-auto mb-2 color-white">Generate</button>
+								</div>							
+							</div>	
 							<%
 								Table tbl = new Table();
 								tbl.addClass("table");
@@ -93,7 +100,7 @@
 								tbl.addRow(th);
 								
 								@SuppressWarnings("unchecked")
-								ArrayList<WishListGame> list = (ArrayList<WishListGame>) request.getAttribute("list");
+								Pagination<WishListGame> list = (Pagination<WishListGame>) request.getAttribute("list");
 								@SuppressWarnings("unchecked")
 								ArrayList<Store> stores = (ArrayList<Store>) request.getAttribute("stores"); 
 								try {
@@ -130,10 +137,15 @@
 								}
 							%>
 						</div>
-						<div class="modal-footer color-white">
-							<button type="button" class="btn btn-secondary"
-								data-dismiss="modal">Cancel</button>
-							<button type="submit" class="btn btn-primary">Generate</button>
+						<div class="modal-footer color-white d-flex flex-row">
+							<div class="col-6">
+								<p class="error my-0 text-center p-1"></p>
+							</div>
+							<div class="col-6 d-flex justify-content-end">
+								<button type="button" class="btn btn-secondary"
+									data-dismiss="modal">Cancel</button>
+								<button type="submit" class="btn btn-primary ml-2">Generate</button>
+							</div>
 						</div>
 					</form>
 				</div>
@@ -163,7 +175,7 @@
 		<%
 			try {
 				tbl = new Table();
-				tbl.addClass("table md-table text-center d-md-block d-none mx-auto");
+				tbl.addClass("table md-table text-center d-md-block d-none mx-auto bg-gray");
 				
 				th = new Tr();
 				th.addClass("h5");
@@ -184,7 +196,7 @@
 				Img edit = new Img("view/imgs/edit.png","edit");
 				edit.addClass("table-icon");
 				
-				for (WishListGame g : list) {
+				for (WishListGame g : list.getPag(pag)) {
 					String img = jspF.buildImg(g);
 					String title = "";
 					String discount = jspF.buildDiscount(g);
@@ -264,7 +276,7 @@
 				}
 				
 				StringBuilder sb = new StringBuilder().append("<div class='mt-3 justify-content-center d-flex col-12'>");
-				for (int i = 0; i < noPags; i++) {
+				for (int i = 0; i < list.getTotalPag(); i++) {
 					A a = new A((i + 1) + "", cp.REDIRECT_MYLIST + "?pag=" + i);					
 					String color = i == pag ? "btn-primary" : "btn-dark";					
 					a.addClass("btn " + color);

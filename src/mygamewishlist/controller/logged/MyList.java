@@ -14,12 +14,14 @@ import mygamewishlist.model.ejb.ClientSessionEJB;
 import mygamewishlist.model.ejb.CreateQueryEJB;
 import mygamewishlist.model.pojo.ClassPaths;
 import mygamewishlist.model.pojo.MyLogger;
-import mygamewishlist.model.pojo.WishlistGamePag;
+import mygamewishlist.model.pojo.Pagination;
 import mygamewishlist.model.pojo.db.User;
 import mygamewishlist.model.pojo.db.WishListGame;
 
 /**
- * Servlet implementation class MyList
+ * @author Patryk
+ *
+ * Servlet that shows a list of games from users wishlist
  */
 @WebServlet("/MyList")
 public class MyList extends HttpServlet {
@@ -29,7 +31,7 @@ public class MyList extends HttpServlet {
 	private static final MyLogger LOG = MyLogger.getLOG();
 	private static final ClassPaths cp = ClassPaths.getCP();
 
-	private WishlistGamePag<WishListGame> list;
+	private Pagination<WishListGame> list;
 	
 	@EJB
 	ClientSessionEJB sc_ejb;
@@ -37,6 +39,9 @@ public class MyList extends HttpServlet {
 	@EJB
 	CreateQueryEJB cq_ejb;
 
+	/**
+	 * Shows a list of games from users wishlist
+	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		try {
@@ -47,16 +52,15 @@ public class MyList extends HttpServlet {
 			if (usr == null) {
 				rd = getServletContext().getRequestDispatcher(cp.LOGIN);
 			} else if (list != null && pag != null) {
-				doPost(request, response);
+				changePage(request, response);
 				return;
 			} else {
 				rd = getServletContext().getRequestDispatcher(cp.JSP_MYLIST);
 
-				list = new WishlistGamePag<WishListGame>(
+				list = new Pagination<WishListGame>(
 						cq_ejb.getListByIdUser(usr.getId()), 10); 
 				request.setAttribute("stores", cq_ejb.getStores());
-				request.setAttribute("list", list.getPag(0));
-				request.setAttribute("numPags", list.getTotalPag());
+				request.setAttribute("list", list);
 			}
 
 			rd.forward(request, response);
@@ -66,12 +70,18 @@ public class MyList extends HttpServlet {
 		}
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+	/**
+	 * Changes page of list
+	 * 
+	 * @param request HttpServletRequest
+	 * @param response HttpServletResponse
+	 * @throws ServletException
+	 * @throws IOException
+	 */
+	private void changePage(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		try {
-			if (!sc_ejb.isSome1Logged(request.getSession(false))) {
-				response.sendRedirect(cp.REDIRECT_LOGIN);
-			} else if (list == null) {
+			if (list == null) {
 				response.sendRedirect(cp.MYLIST);
 			}
 
@@ -82,8 +92,7 @@ public class MyList extends HttpServlet {
 			request.setAttribute("list", list.getPag(pag));
 			request.setAttribute("stores", cq_ejb.getStores());
 			request.setAttribute("numPags", list.getTotalPag());
-			rd.forward(request, response);
-			
+			rd.forward(request, response);			
 		} catch (Exception e) {
 			LOG.logError(e.getMessage());
 			response.sendRedirect(cp.REDIRECT_MYLIST);

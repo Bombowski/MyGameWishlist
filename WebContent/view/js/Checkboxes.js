@@ -7,9 +7,12 @@ $(window).ready(function() {
     
     $(".checkbox-block").click(function(e) {
 		var input = $(this).find("input[type=checkbox]");
-		if (e.target.nodeName == 'INPUT') {
+		
+		var node = e.target.nodeName; 
+		if (node == 'INPUT' || node == 'A') {
 			return;
 		}
+		
 		if (input != undefined) {
 			if ($(input).prop("checked") == true) {
 				$(input).prop("checked",false);
@@ -21,12 +24,10 @@ $(window).ready(function() {
 	
 	$(".hide-chkbox").hover(function() {
 		var input = $(this).find("input[type=checkbox]");
-		$(input).addClass("d-block")
-		$(input).removeClass("d-none")
+		$(input).addClass("d-block").removeClass("d-none")
 	}, function() {
 		var input = $(this).find("input[type=checkbox]");
-		$(input).addClass("d-none")
-		$(input).removeClass("d-block")
+		$(input).addClass("d-none").removeClass("d-block")
 	});
 });
 
@@ -44,4 +45,35 @@ function initCheck(e) {
             return;
         }
     }
+    
+    var errors = $(".error");
+    for (var i = 0; i < errors.length; i++) {
+		$(errors).text("")
+	}
+    
+    var ref = window.location.href;
+    ele = this;
+    setTimeout(function() {
+    	setError(ele, getError(ref.substring(ref.lastIndexOf("/"))));
+    }, 200);
+}
+
+function getError(page) {
+	if (/^(.*\/MyList.*)$/.test(page) || /^(.*\/AddGameOptions.*)$/.test(page)) {
+		return "No items were selected";
+	} else if (/^(.*\/AddGameWishlist.*)$/.test(page)) {
+		return "No stores were selected";
+	} else if (/^(.*\/UpdateGame.*)$/.test(page) || /^(.*\/AddGame.*)$/.test(page)) {
+		return "No game genres were selected";
+	}
+	return "Unexpected error";
+}
+
+function setError(element, message) {
+	var error = element.getElementsByClassName("error");
+	
+	for (var i = 0; i < error.length; i++) {
+		error[i].innerText = message;
+		$(error[i]).removeClass("error").addClass("error");
+	}
 }

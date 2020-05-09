@@ -16,6 +16,11 @@ import mygamewishlist.model.pojo.ClassPaths;
 import mygamewishlist.model.pojo.MyLogger;
 import mygamewishlist.model.pojo.db.User;
 
+/**
+ * @author Patryk
+ *
+ * Servlet used for deleting games from wishlist
+ */
 @WebServlet("/DeleteGameWishlist")
 public class DeleteGameWishlist extends HttpServlet {
 
@@ -30,6 +35,9 @@ public class DeleteGameWishlist extends HttpServlet {
 	@EJB
 	CreateQueryEJB cq_ejb;
 	
+	/**
+	 * Deletes game from wishlist
+	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			User usr = sc_ejb.getLoggedUser(request);

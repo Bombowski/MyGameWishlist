@@ -59,13 +59,16 @@
 		%>
 	
 		<form action="<% out.print(cp.REDIRECT_UPDATE_GAME); %>" method="post">
+			<div class="d-flex justify-content-center">
+				<p class="error my-0 text-center p-1 h5"></p>
+			</div>
 			<div class="row d-flex flex-column w-50 mx-auto">
 				<div class="form-row my-2">
 	                <div class="col-md-3 col-12 d-flex">
 	                    <label class="ml-md-auto mr-md-0 mx-auto my-auto" for="name">Name</label>
 	                </div>
 	                <div class="col-md-9 col-12 color-black">
-	                    <input type="text" name="name" class="col form-control" value="<% out.append(g.getName()); %>">
+	                    <input type="text" name="name" class="col form-control" value="<% out.append(g.getName()); %>" required>
 	                </div>
 	            </div>
 	            <div class="form-row my-2">
@@ -81,7 +84,7 @@
 	                    <label class="ml-md-auto mr-md-0 mx-auto my-auto" for="rDate">Release Year</label>
 	                </div>
 	                <div class="col-md-9 col-12 color-black">
-	                    <input type="date" name="rDate" class="col form-control" value="<% out.append(g.getReleaseDate()); %>">
+	                    <input type="date" name="rDate" class="col form-control" value="<% out.append(g.getReleaseDate()); %>" required>
 	                </div>
 	            </div>
 				<div class="form-row mb-2">

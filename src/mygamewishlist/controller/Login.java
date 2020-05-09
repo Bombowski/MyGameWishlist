@@ -17,7 +17,9 @@ import mygamewishlist.model.pojo.MyLogger;
 import mygamewishlist.model.pojo.db.User;
 
 /**
- * Servlet implementation class Login
+ * @author Patryk
+ *
+ * Opens a session for the user.
  */
 @WebServlet("/Login")
 public class Login extends HttpServlet {
@@ -33,6 +35,9 @@ public class Login extends HttpServlet {
 	@EJB
 	CreateQueryEJB cq_ejb;
 	
+	/**
+	 * Checks if there is a logged user and then redirects to jsp
+	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			if (sc_ejb.isSome1Logged(request.getSession(false))) {
@@ -48,6 +53,9 @@ public class Login extends HttpServlet {
 		}
 	}
 
+	/**
+	 * Checks user data if any and if it exists it opens a session and adds an entry to the database.
+	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			String email = request.getParameter("email");

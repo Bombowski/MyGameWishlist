@@ -1,7 +1,6 @@
 package mygamewishlist.controller.logged.admin;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
@@ -15,6 +14,7 @@ import mygamewishlist.model.ejb.ClientSessionEJB;
 import mygamewishlist.model.ejb.CreateQueryEJB;
 import mygamewishlist.model.pojo.ClassPaths;
 import mygamewishlist.model.pojo.MyLogger;
+import mygamewishlist.model.pojo.Pagination;
 import mygamewishlist.model.pojo.db.Game;
 import mygamewishlist.model.pojo.db.User;
 
@@ -35,6 +35,8 @@ public class GameList extends HttpServlet {
 	@EJB
 	CreateQueryEJB cq_ejb;
 	
+	private Pagination<Game> games;
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			User usr = sc_ejb.getLoggedUser(request);
@@ -46,8 +48,14 @@ public class GameList extends HttpServlet {
 				rd = getServletContext().getRequestDispatcher(cp.MYLIST);
 			} else {
 				rd = getServletContext().getRequestDispatcher(cp.JSP_GAME_LIST);
-				ArrayList<Game> games = cq_ejb.getGames();
-				request.setAttribute("games", games);
+				games = new Pagination<Game>(cq_ejb.getGames(), 10);
+				
+				String pagStr = request.getParameter("pag");
+				int pag = pagStr == null ? Integer.parseInt("0") : Integer.parseInt(pagStr); 
+				
+				request.setAttribute("games", games.getPag(pag));
+				request.setAttribute("total", games.getTotalPag());
+				request.setAttribute("pag", pag);
 			}
 			
 			rd.forward(request, response);

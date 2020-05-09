@@ -12,8 +12,14 @@ function onSignIn(googleUser) {
 			email: profile.getEmail(),
 			name: profile.getName()
 		},
-			function() {
+		function() {
+			var ref = document.referrer;
+			var page = ref.substring(ref.lastIndexOf("/"));
+			if (ref == "/Logout" || ref == "/Login") {
 				window.location.href = "/MyGameWishlist/MyList";
+			} else {
+				window.location.href = "/MyGameWishlist" + page;
+			}
 		}
 	);
 }

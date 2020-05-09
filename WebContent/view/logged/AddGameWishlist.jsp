@@ -94,6 +94,9 @@
 				 	Search
 				</button>
 			</div>
+			<div class="col-12 d-flex justify-content-center">
+				<p class="error my-0 text-center p-1 font-weight-bold h5"></p>
+			</div>
 		</form>
 		<%
 			try {

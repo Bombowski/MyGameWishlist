@@ -18,7 +18,9 @@ import mygamewishlist.model.pojo.db.User;
 import mygamewishlist.model.pojo.db.WishListGame;
 
 /**
- * Servlet implementation class UpdateGameWishlist
+ * @author Patryk
+ *
+ * Servlet used for changing notification rules
  */
 @WebServlet("/UpdateGameWishlist")
 public class UpdateGameWishlist extends HttpServlet {
@@ -35,6 +37,9 @@ public class UpdateGameWishlist extends HttpServlet {
 	@EJB
 	CreateQueryEJB cq_ejb;
 	
+	/**
+	 * Shows current notification rules
+	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			User usr = sc_ejb.getLoggedUser(request);
@@ -63,6 +68,9 @@ public class UpdateGameWishlist extends HttpServlet {
 		}
 	}
 
+	/**
+	 * Changes notification rules
+	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			User usr = sc_ejb.getLoggedUser(request);
@@ -88,6 +96,12 @@ public class UpdateGameWishlist extends HttpServlet {
 		}
 	}
 	
+	/**
+	 * If v is a 0 or lower a -1 is returned
+	 * 
+	 * @param v double
+	 * @return double
+	 */
 	private double lowerThan0(double v) {
 		return v < 0 ? -1 : v;
 	}

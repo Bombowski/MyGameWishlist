@@ -50,7 +50,6 @@ pageEncoding="UTF-8"%>
 	</jsp:include>	
 		<div class="d-flex row justify-content-center">
 		<%
-		try {
 			@SuppressWarnings("unchecked")
 			ArrayList<ReviewList> reviews = (ArrayList<ReviewList>)request.getAttribute("reviews");
 			
@@ -91,10 +90,24 @@ pageEncoding="UTF-8"%>
 				</div>
 			</div>
 		<% 
-			}				
-			} catch(Exception e) {
-				log.logError(e.getMessage());
-			} 
+			}
+			
+			StringBuilder sb = new StringBuilder().append("<div class='mt-3 justify-content-center d-flex col-12'>");
+			
+			int noPags = (Integer)request.getAttribute("total");
+			int pag = (Integer)request.getAttribute("pag");
+			
+			for (int i = 0; i < noPags; i++) {
+				A a = new A((i + 1) + "", cp.REDIRECT_REVIEW_LIST + "?pag=" + i);					
+				String color = i == pag ? "btn-primary" : "btn-dark";					
+				a.addClass("btn " + color);
+				
+				sb.append("<div class='mx-1'>")
+					.append(a.print())
+					.append("</div>");
+			}
+			
+			out.append(sb.append("<div>").toString());
 		%>
         </div>
 	<jsp:include page="template/MainBack.jsp">

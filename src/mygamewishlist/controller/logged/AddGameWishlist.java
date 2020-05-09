@@ -23,7 +23,9 @@ import mygamewishlist.model.pojo.db.Store;
 import mygamewishlist.model.pojo.db.User;
 
 /**
- * Servlet implementation class AddGameWishlist
+ * @author Patryk
+ *
+ * Servlet used to set parameters for searching new games.
  */
 @WebServlet("/AddGameWishlist")
 public class AddGameWishlist extends HttpServlet {
@@ -40,6 +42,9 @@ public class AddGameWishlist extends HttpServlet {
 	@EJB
 	ScrapingEJB scrap_ejb;
 	
+	/**
+	 * Shows list of stores and an input for game title
+	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			if (!sc_ejb.isSome1Logged(request.getSession(false))) {
@@ -67,6 +72,10 @@ public class AddGameWishlist extends HttpServlet {
 		}
 	}
 
+	/**
+	 * Generates a Hashtable with results for each store picked, then forwards the
+	 * results to AddGameOptions
+	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			if (!sc_ejb.isSome1Logged(request.getSession(false))) {
@@ -74,13 +83,21 @@ public class AddGameWishlist extends HttpServlet {
 				return;
 			}
 			
+			// Title of the game
 			String name = request.getParameter("name");
+			// List of checked stores
 			String chked[] = request.getParameterValues("store");
+			// List of stores
 			ArrayList<Store> stores = cq_ejb.getStores();
 			
+			// A search for introduced game is made for each chosen store.
 			for (String str : chked) {
 				for (Store st : stores) {
-					if (str.equals(st.getName())) {						
+					/*
+					 * if store names are equal, a scraping method is called, then
+					 * it's results are set as an atribute and forwarded to AddGameOptions.
+					 */
+					if (str.equals(st.getName())) {
 						Hashtable<String,ArrayList<ScrapedGame>> games = 
 								scrap_ejb.getGamesByNameUrl(new Game2Scrap(name, st.getName(), st.getUrl(), st.getQueryPart()));
 						request.setAttribute(st.getName(), games);
