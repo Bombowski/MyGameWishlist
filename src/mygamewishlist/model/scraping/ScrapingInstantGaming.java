@@ -93,6 +93,7 @@ public class ScrapingInstantGaming {
 	
 	public ScrapedGame getGame(WishListGame2Scrap wlg) {
 		Document doc = null;
+		ScrapedGame toReturn = new ScrapedGame();
 		try {
 			LOG.logDebug(wlg.toString());
 			doc = ScrapingFunctions.getDoc(wlg.getUrlStore() + wlg.getUrlGame(), "");
@@ -107,7 +108,8 @@ public class ScrapingInstantGaming {
 		}
 		
 		if (doc == null) {
-			return new ScrapedGame();
+			toReturn.setCurrentPrice(-1);
+			return toReturn;
 		}
 		
 		Element e = doc.selectFirst(".prices");

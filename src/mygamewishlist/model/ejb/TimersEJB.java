@@ -71,6 +71,10 @@ public class TimersEJB {
 				} else {
 					scGame = scr_ejb.getGame(wlg);
 					
+					if (scGame.getCurrentPrice() == -1) {
+						continue;
+					}
+					
 					scGame.setFullName(wlg.getGameName());
 					scGame.setImg(wlg.getImg());
 					scGame.setStoreName(wlg.getStoreName());
