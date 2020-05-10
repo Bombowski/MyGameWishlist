@@ -31,6 +31,13 @@ public class ScrapedGame {
 	public String getUrlStore() {
 		return urlStore;
 	}
+	
+	@Override
+	public String toString() {
+		return "ScrapedGame [urlStore=" + urlStore + ", urlGame=" + urlGame + ", fullName=" + fullName + ", img=" + img
+				+ ", storeName=" + storeName + ", defaultPrice=" + defaultPrice + ", currentPrice=" + currentPrice
+				+ ", currentDiscount=" + currentDiscount + "]";
+	}
 
 	public void setUrlStore(String urlStore) {
 		this.urlStore = urlStore;

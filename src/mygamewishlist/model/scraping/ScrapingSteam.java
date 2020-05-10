@@ -5,6 +5,7 @@ import java.util.Hashtable;
 
 import javax.ejb.EJB;
 import javax.ws.rs.InternalServerErrorException;
+import javax.ws.rs.ServerErrorException;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
@@ -157,7 +158,7 @@ public class ScrapingSteam {
 				toReturn.setDefaultPrice(wlg.getDefaultPrice());
 				toReturn.setCurrentDiscount(0);
 			}
-		} catch (JSONException e) {
+		} catch (JSONException | ServerErrorException e) {
 			LOG.logError(e.getMessage());
 		}
 		
