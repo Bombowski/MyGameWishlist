@@ -10,7 +10,7 @@ import mygamewishlist.model.pojo.db.User;
 /**
  * @author Patryk
  * 
- * Clase que contiene funciones para manejar las sessiones de usuarios
+ * EJB Class that contains functions for better session management
  */
 @Stateless
 @LocalBean
@@ -19,10 +19,10 @@ public class ClientSessionEJB {
 	public ClientSessionEJB() {}
 	
 	/**
-	 * Comprueba si hay una session abierta
+	 * Checks if there is an open session
 	 * 
 	 * @param session HttpSession
-	 * @return true si la hay, false si no
+	 * @return true if there is, false if not
 	 */
 	public boolean isSome1Logged(HttpSession session) {
 		if (session != null && session.getAttribute("user") != null) {
@@ -32,10 +32,10 @@ public class ClientSessionEJB {
 	}
 	
 	/**
-	 * Consigue el usuario que esta logeado actualmente.
+	 * Gets currently logged user.
 	 * 
 	 * @param session HttpSession
-	 * @return User si existe una session, null si no
+	 * @return User if there is a session, null if not
 	 */
 	public User getLoggedUser(HttpServletRequest request) {
 		HttpSession session = request.getSession();
@@ -46,7 +46,7 @@ public class ClientSessionEJB {
 	}
 	
 	/**
-	 * Cierra la session del usuario
+	 * Closes users session
 	 * 
 	 * @param session HttpSession
 	 */
@@ -57,7 +57,7 @@ public class ClientSessionEJB {
 	}
 	
 	/**
-	 * Crea una session de usuario
+	 * Creates a session for user
 	 * 
 	 * @param session HttpSession
 	 * @param usr User

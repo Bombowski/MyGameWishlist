@@ -77,6 +77,11 @@ public class TimersEJB {
 	public void chkPrices() {
 		// initialize EJB's
 		initAll();
+		/*
+		 * this variable will store todays date, and it will be used for
+		 * inserting into price timeline.
+		 */	
+		String time = getDate();
 
 		/*
 		 * this hashtable will store all of the checked games, it will be used
@@ -101,6 +106,7 @@ public class TimersEJB {
 				if (chkedGames.keySet().contains(wlg.getUrlGame())) {
 					scGame = chkedGames.get(wlg.getUrlGame());
 					
+					// decide what to do with the new game data
 					interpretPriceCodeOld(wlg,scGame);
 				} else {
 					// if the game isn't in the HashTable, scrape it
@@ -124,7 +130,7 @@ public class TimersEJB {
 					chkedGames.put(wlg.getUrlGame(), scGame);					
 					
 					// add new entry or modify old entry of price timeline
-					add2Timeline(scGame);
+					cq_ejb.add2Timeline(scGame, time);
 					// decide what to do with the new game data
 					interpretPriceCodeNew(wlg,scGame);
 				}
@@ -238,7 +244,12 @@ public class TimersEJB {
 		return 0;
 	}
 
-	private void add2Timeline(ScrapedGame sg) {
+	/**
+	 * Generates todays date in the sql format
+	 * 
+	 * @return String today's date
+	 */
+	private String getDate() {
 		StringBuilder sb = new StringBuilder();
 		Calendar c = Calendar.getInstance();
 		
@@ -248,6 +259,6 @@ public class TimersEJB {
 			.append("-")
 			.append(c.get(Calendar.DAY_OF_MONTH));
 		
-		cq_ejb.add2Timeline(sg, sb.toString());
+		return sb.toString();
 	}
 }

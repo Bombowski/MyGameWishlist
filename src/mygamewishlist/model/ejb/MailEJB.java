@@ -27,7 +27,7 @@ import mygamewishlist.model.pojo.db.User;
 /**
  * @author Patryk
  *
- * 
+ * Class used for sending email to users
  */
 @Stateless
 @LocalBean
@@ -41,10 +41,18 @@ public class MailEJB {
 	
 	public MailEJB() {}
 
+	/**
+	 * Sends a mail to a user, user's email is stored in the User object,
+	 * then mail's body is constructed with the toSend list.
+	 * 
+	 * @param us User
+	 * @param toSend ArrayList<ScrapedGame>
+	 */
 	public void sendMailItemsOnSale(User us, ArrayList<ScrapedGame> toSend) {
 		Session session = createMailSession();
 
 		try {
+			// create message
 			Message messageContent = new MimeMessage(session);
 			messageContent.setFrom(new InternetAddress(USERNAME));
 			messageContent.setRecipients(Message.RecipientType.TO, InternetAddress.parse(us.getEmail()));
@@ -52,19 +60,28 @@ public class MailEJB {
 
 			MimeBodyPart mimeBodyPart = new MimeBodyPart();
 			
+			// add content to the message
 	 		mimeBodyPart.setContent(generateMessage(toSend, us), "text/html;charset=utf-8");
 	 		
+	 		// add body to multipart
 			Multipart multipart = new MimeMultipart();
 			multipart.addBodyPart(mimeBodyPart);
 			
+			// add multipart to message content
 			messageContent.setContent(multipart);
 			
+			// send message
 			Transport.send(messageContent);
 		} catch (MessagingException e) {
 			LOG.logError(e.getMessage());
 		}
 	}
 	
+	/**
+	 * Function that creates and returns a session
+	 * 
+	 * @return Session
+	 */
 	private Session createMailSession() {
 		Properties prop = new Properties();
 		prop.put("mail.smtp.auth", true);
@@ -73,7 +90,7 @@ public class MailEJB {
 		prop.put("mail.smtp.port", PORT);
 		prop.put("mail.smtp.ssl.trust", HOST);
 
-		// Abro la session del correo del cual voy a mandar correos
+		// open session from which the email will be sent
 		return Session.getInstance(prop, new Authenticator() {
 			@Override
 			protected PasswordAuthentication getPasswordAuthentication() {
@@ -82,12 +99,20 @@ public class MailEJB {
 		});
 	}
 
+	/**
+	 * Generates main part of the e-mail's message
+	 * 
+	 * @param toSend ArrayList<ScrapedGame>
+	 * @param us User
+	 * @return
+	 */
 	private String generateMessage(ArrayList<ScrapedGame> toSend, User us) {
 		StringBuilder sb = new StringBuilder();
 
 		String thC = "</th>";
 		String thO = "<th>";
 		
+		// generate the title and table with some inline styles, and the th
 		sb.append("<h3>Hi ")
 			.append(us.getName())
 			.append(", some of the items from your wishlist are on sale!</h3>")
@@ -116,6 +141,7 @@ public class MailEJB {
 			.append(thC)
 			.append("</tr>");
 		
+		// add content to the table
 		for (ScrapedGame sg : toSend) {
 			Tr tr = new Tr();
 			tr.addTd("<img src='" + sg.getImg() + "' alt='" + sg.getFullName() + "' width='125'>");
