@@ -8,6 +8,12 @@ import mygamewishlist.model.dao.mapper.SteamMapper;
 import mygamewishlist.model.pojo.MyLogger;
 import mygamewishlist.model.pojo.SteamGame;
 
+/**
+ * @author Patryk
+ *
+ * Class that gets the Steam interface, and gets
+ * the database conection
+ */
 public class SteamDAO {
 
 	private static final MyLogger LOG = MyLogger.getLOG();
@@ -15,8 +21,7 @@ public class SteamDAO {
 	private static SteamMapper steamMapper;
 	
 	/**
-	 * Crea la conexion con la base de datos y consigue
-	 * la interfaz
+	 * Creates conection with the database, and gets the interface
 	 */
 	private static void getUserMapper() {
 		session = MyBatisUtil.getSqlSessionFactory().openSession();
@@ -24,7 +29,7 @@ public class SteamDAO {
 	}
 	
 	/**
-	 * Cierra la conexion
+	 * Closes the conection
 	 */
 	private static void closeAll() {
 		session.close();

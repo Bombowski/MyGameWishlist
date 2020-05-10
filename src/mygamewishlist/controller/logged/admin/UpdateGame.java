@@ -19,7 +19,9 @@ import mygamewishlist.model.pojo.db.GameFull;
 import mygamewishlist.model.pojo.db.User;
 
 /**
- * Servlet implementation class UpdateGame
+ * @author Patryk
+ *
+ * Servlet that updates game infromation
  */
 @WebServlet("/UpdateGame")
 public class UpdateGame extends HttpServlet {
@@ -40,6 +42,9 @@ public class UpdateGame extends HttpServlet {
 	@EJB
 	FormattingEJB fc_ejb;
 	
+	/**
+	 * Recieve game id, get get information, and send it to jsp.
+	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			User usr = sc_ejb.getLoggedUser(request);
@@ -77,17 +82,22 @@ public class UpdateGame extends HttpServlet {
 		}
 	}
 
+	/**
+	 * Recieve intruduced game data, check if its valid, and then update game data.
+	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			if (idGame == -1) {
 				response.sendRedirect(cp.REDIRECT_GAME_LIST);
 			} else {
+				// get all of the data
 				String name = request.getParameter("name");
 				String description = request.getParameter("description");
 				String[] genres = request.getParameterValues("genre");
 				String rDate = request.getParameter("rDate");
 				String idDeveloper = request.getParameter("idDev");
 				
+				// if it isn't correct error won't be an empty string
 				error = fc_ejb.chkGame(name, description, genres, rDate, idDeveloper);
 				
 				if (error.equals("")) {

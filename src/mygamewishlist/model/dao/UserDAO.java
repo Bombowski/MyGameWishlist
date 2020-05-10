@@ -8,6 +8,12 @@ import mygamewishlist.model.dao.mapper.UserMapper;
 import mygamewishlist.model.pojo.MyLogger;
 import mygamewishlist.model.pojo.db.User;
 
+/**
+ * @author Patryk
+ *
+ * Class that gets the User interface, and gets
+ * the database conection
+ */
 public class UserDAO {
 
 	private static final MyLogger LOG = MyLogger.getLOG();
@@ -15,8 +21,7 @@ public class UserDAO {
 	private static UserMapper userMapper;
 	
 	/**
-	 * Crea la conexion con la base de datos y consigue
-	 * la interfaz
+	 * Creates conection with the database, and gets the interface
 	 */
 	private static void getUserMapper() {
 		session = MyBatisUtil.getSqlSessionFactory().openSession();

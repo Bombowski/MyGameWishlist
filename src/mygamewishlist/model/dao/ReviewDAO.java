@@ -10,6 +10,12 @@ import mygamewishlist.model.pojo.db.Review;
 import mygamewishlist.model.pojo.db.ReviewList;
 import mygamewishlist.model.pojo.db.ReviewOfGame;
 
+/**
+ * @author Patryk
+ *
+ * Class that gets the Reviewinterface, and gets
+ * the database conection
+ */
 public class ReviewDAO {
 
 	private static final MyLogger LOG = MyLogger.getLOG();
@@ -17,8 +23,7 @@ public class ReviewDAO {
 	private static ReviewMapper reviewMapper;
 	
 	/**
-	 * Crea la conexion con la base de datos y consigue
-	 * la interfaz
+	 * Creates conection with the database, and gets the interface
 	 */
 	private static void getRevMapper() {
 		session = MyBatisUtil.getSqlSessionFactory().openSession();
@@ -26,7 +31,7 @@ public class ReviewDAO {
 	}
 	
 	/**
-	 * Cierra la conexion
+	 * Closes the conection
 	 */
 	private static void closeAll() {
 		session.close();

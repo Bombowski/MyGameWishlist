@@ -19,7 +19,9 @@ import mygamewishlist.model.pojo.db.Game;
 import mygamewishlist.model.pojo.db.User;
 
 /**
- * Servlet implementation class GameList
+ * @author Patryk
+ *
+ * Servlet used for showing a CRUD for games
  */
 @WebServlet("/GameList")
 public class GameList extends HttpServlet {
@@ -35,8 +37,12 @@ public class GameList extends HttpServlet {
 	@EJB
 	CreateQueryEJB cq_ejb;
 	
+	// Object that contains all of the games
 	private Pagination<Game> games;
 	
+	/**
+	 * Forwards a page of games to jsp
+	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			User usr = sc_ejb.getLoggedUser(request);
@@ -47,9 +53,17 @@ public class GameList extends HttpServlet {
 			} else if (usr.getAdmin() != 1) {
 				rd = getServletContext().getRequestDispatcher(cp.MYLIST);
 			} else {
-				rd = getServletContext().getRequestDispatcher(cp.JSP_GAME_LIST);
-				games = new Pagination<Game>(cq_ejb.getGames(), 10);
+				/*
+				 * if the list is a null or a refresh parameter was sent,
+				 * the list gets refreshed.
+				 */
+				if(games == null || request.getParameter("r") != null) {
+					games = new Pagination<Game>(cq_ejb.getGames(), 10);
+				}
 				
+				rd = getServletContext().getRequestDispatcher(cp.JSP_GAME_LIST);
+								
+				// if the page parameter wasn't sent, page is set to 0
 				String pagStr = request.getParameter("pag");
 				int pag = pagStr == null ? Integer.parseInt("0") : Integer.parseInt(pagStr); 
 				

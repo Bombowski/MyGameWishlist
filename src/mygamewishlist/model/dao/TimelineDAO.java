@@ -10,6 +10,12 @@ import mygamewishlist.model.pojo.ScrapedGame;
 import mygamewishlist.model.pojo.db.TimelineGame;
 import mygamewishlist.model.pojo.db.TimelineGameDetailed;
 
+/**
+ * @author Patryk
+ *
+ * Class that gets the Timeline interface, and gets
+ * the database conection
+ */
 public class TimelineDAO {
 
 	private static final MyLogger LOG = MyLogger.getLOG();
@@ -17,8 +23,7 @@ public class TimelineDAO {
 	private static TimelineMapper timelineMapper;
 	
 	/**
-	 * Crea la conexion con la base de datos y consigue
-	 * la interfaz
+	 * Creates conection with the database, and gets the interface
 	 */
 	private static void getTimeMapper() {
 		session = MyBatisUtil.getSqlSessionFactory().openSession();
@@ -26,7 +31,7 @@ public class TimelineDAO {
 	}
 	
 	/**
-	 * Cierra la conexion
+	 * Closes the conection
 	 */
 	private static void closeAll() {
 		session.close();

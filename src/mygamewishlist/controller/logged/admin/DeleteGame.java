@@ -17,7 +17,9 @@ import mygamewishlist.model.pojo.MyLogger;
 import mygamewishlist.model.pojo.db.User;
 
 /**
- * Servlet implementation class DeleteGame
+ * @author Patryk
+ *
+ * Servlet that deletes a game
  */
 @WebServlet("/DeleteGame")
 public class DeleteGame extends HttpServlet {
@@ -33,6 +35,9 @@ public class DeleteGame extends HttpServlet {
 	@EJB
 	CreateQueryEJB cq_ejb;
 	
+	/**
+	 * recieves the id of the game, then deletes it.
+	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			User usr = sc_ejb.getLoggedUser(request);

@@ -8,6 +8,12 @@ import mygamewishlist.model.dao.mapper.StoreMapper;
 import mygamewishlist.model.pojo.MyLogger;
 import mygamewishlist.model.pojo.db.Store;
 
+/**
+ * @author Patryk
+ *
+ * Class that gets the Store interface, and gets
+ * the database conection
+ */
 public class StoreDAO {
 
 	private static final MyLogger LOG = MyLogger.getLOG();
@@ -15,8 +21,7 @@ public class StoreDAO {
 	private static StoreMapper storeMapper;
 	
 	/**
-	 * Crea la conexion con la base de datos y consigue
-	 * la interfaz
+	 * Creates conection with the database, and gets the interface
 	 */
 	private static void getStMapper() {
 		session = MyBatisUtil.getSqlSessionFactory().openSession();
@@ -24,7 +29,7 @@ public class StoreDAO {
 	}
 	
 	/**
-	 * Cierra la conexion
+	 * Closes the conection
 	 */
 	private static void closeAll() {
 		session.close();

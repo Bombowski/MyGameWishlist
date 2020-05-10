@@ -8,6 +8,12 @@ import mygamewishlist.model.dao.mapper.GenreMapper;
 import mygamewishlist.model.pojo.MyLogger;
 import mygamewishlist.model.pojo.db.Genre;
 
+/**
+ * @author Patryk
+ *
+ * Class that gets the Genre interface, and gets
+ * the database conection
+ */
 public class GenreDAO {
 
 	private static final MyLogger LOG = MyLogger.getLOG();
@@ -15,8 +21,7 @@ public class GenreDAO {
 	private static GenreMapper genreMapper;
 	
 	/**
-	 * Crea la conexion con la base de datos y consigue
-	 * la interfaz
+	 * Creates conection with the database, and gets the interface
 	 */
 	private static void getGeMapper() {
 		session = MyBatisUtil.getSqlSessionFactory().openSession();
@@ -24,7 +29,7 @@ public class GenreDAO {
 	}
 	
 	/**
-	 * Cierra la conexion
+	 * Closes the conection
 	 */
 	private static void closeAll() {
 		session.close();

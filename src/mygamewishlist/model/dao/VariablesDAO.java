@@ -5,6 +5,12 @@ import org.apache.ibatis.session.SqlSession;
 import mygamewishlist.model.dao.mapper.VariablesMapper;
 import mygamewishlist.model.pojo.MyLogger;
 
+/**
+ * @author Patryk
+ *
+ * Class that gets the Variables interface, and gets
+ * the database conection
+ */
 public class VariablesDAO {
 
 	private static final MyLogger LOG = MyLogger.getLOG();
@@ -12,8 +18,7 @@ public class VariablesDAO {
 	private static VariablesMapper variablesMapper;
 	
 	/**
-	 * Crea la conexion con la base de datos y consigue
-	 * la interfaz
+	 * Creates conection with the database, and gets the interface
 	 */
 	private static void getUserMapper() {
 		session = MyBatisUtil.getSqlSessionFactory().openSession();
@@ -21,7 +26,7 @@ public class VariablesDAO {
 	}
 	
 	/**
-	 * Cierra la conexion
+	 * Closes the conection
 	 */
 	private static void closeAll() {
 		session.close();

@@ -19,7 +19,9 @@ import mygamewishlist.model.pojo.db.GameFull;
 import mygamewishlist.model.pojo.db.User;
 
 /**
- * Servlet implementation class AddGame
+ * @author Patryk
+ *
+ * Servlet that adds a game.
  */
 @WebServlet("/AddGame")
 public class AddGame extends HttpServlet {
@@ -40,6 +42,9 @@ public class AddGame extends HttpServlet {
 	
 	private String error = "";
 	
+	/**
+	 * Gets and then forwards a list of genres and developers to the jsp
+	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			User usr = sc_ejb.getLoggedUser(request);
@@ -63,6 +68,9 @@ public class AddGame extends HttpServlet {
 		}
 	}
 
+	/**
+	 * Revieves data of the game and if its correct, adds it.
+	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			User usr = sc_ejb.getLoggedUser(request);
@@ -71,18 +79,19 @@ public class AddGame extends HttpServlet {
 				response.sendRedirect(cp.REDIRECT_LOGIN);
 			} else if (usr.getAdmin() != 1) {
 				response.sendRedirect(cp.REDIRECT_MYLIST);
-			} else {
-				response.sendRedirect(cp.REDIRECT_ADD_GAME);
 			}
 			
+			// get all of the game data
 			String name = request.getParameter("name");
 			String description = request.getParameter("description");
 			String[] genres = request.getParameterValues("genre");
 			String rDate = request.getParameter("rDate");
 			String idDeveloper = request.getParameter("idDev");
 			
+			// check if its correct
 			error = fc_ejb.chkGame(name, description, genres, rDate, idDeveloper);
 			
+			// if its correct, add it
 			if (error.equals("")) {
 				int idDevInt = Integer.parseInt(idDeveloper); 
 				GameFull g = new GameFull(fc_ejb.arrToString(genres), idDevInt);

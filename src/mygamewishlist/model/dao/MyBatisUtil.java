@@ -12,7 +12,7 @@ import mygamewishlist.model.pojo.MyLogger;
 /**
  * @author Patryk
  * 
- * Clase de utilidad para obtener una configuraciónn de MyBatis
+ * Utility class for getting MyBatis configuration
  */
 public class MyBatisUtil {
 	
@@ -22,7 +22,7 @@ public class MyBatisUtil {
 	private MyBatisUtil() {}
 
 	/**
-	 * Estático para que sólo se configure MyBatis una vez
+	 * Initializes MyBatis config
 	 */
 	static {
 		Reader reader = null;
@@ -35,7 +35,7 @@ public class MyBatisUtil {
 	}
 
 	/**
-	 * Obtiene una SqlSessionFactory
+	 * Returns a SqlSessionFactory
 	 * 
 	 * @return SqlSessionFactory
 	 */

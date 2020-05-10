@@ -16,6 +16,11 @@ import mygamewishlist.model.pojo.ScrapedGame;
 import mygamewishlist.model.pojo.db.User;
 import mygamewishlist.model.pojo.db.WishListGame2Scrap;
 
+/**
+ * @author Patryk
+ * 
+ * EJB class with timers
+ */
 @LocalBean
 @Stateless
 public class TimersEJB {
@@ -31,15 +36,28 @@ public class TimersEJB {
 	@EJB
 	MailEJB mail_ejb;
 	
+	/*
+	 * this list will contain games that will be sent to users to 
+	 * notify them about price changes
+	 */
+	ArrayList<ScrapedGame> toSend;
+	
 	public TimersEJB() {
 	}
 
+	/**
+	 * Used for initializing EJB, as they don't seem to initialize
+	 * in a timer class
+	 */ 
 	private void initAll() {
 		scr_ejb = new ScrapingEJB();
 		cq_ejb = new CreateQueryEJB();
 		mail_ejb = new MailEJB();
 	}
 	
+	/**
+	 * Once a day this function is used to load new steam games into the database.
+	 */ 
 	@Schedule(second = "00", minute = "00", hour = "12")
 	public void loadGames() {
 		initAll();
@@ -50,31 +68,54 @@ public class TimersEJB {
 		}
 	}
 
+	/**
+	 * Every hour this function runs and updates prices, if they need to be
+	 * updated (if they are different), and also inserts current price into
+	 * the timeline table.
+	 */ 
 	@Schedule(second = "00", minute = "00", hour = "*/1")
 	public void chkPrices() {
+		// initialize EJB's
 		initAll();
 
+		/*
+		 * this hashtable will store all of the checked games, it will be used
+		 */
 		Hashtable<String, ScrapedGame> chkedGames = new Hashtable<String, ScrapedGame>();
+		// get users that have at least one game in their wishlist
 		ArrayList<User> users = cq_ejb.getUsersWithList();
 
+		// initialize the list of games notifications to send
+		toSend = new ArrayList<ScrapedGame>();
+		
 		for (User us : users) {
+			// get current user's wishlist
 			ArrayList<WishListGame2Scrap> games = cq_ejb.getGamesFromListById(us.getId());
+			// get steam games from user's wishlist
 			games.addAll(cq_ejb.getSteamGamesFromListById(us.getId()));
-			
-			ArrayList<ScrapedGame> toSend = new ArrayList<ScrapedGame>();
 
 			for (WishListGame2Scrap wlg : games) {
 				ScrapedGame scGame;
 				
+				// if the game is in the chkedGames HashTable, it was already cheched
 				if (chkedGames.keySet().contains(wlg.getUrlGame())) {
 					scGame = chkedGames.get(wlg.getUrlGame());
+					
+					interpretPriceCodeOld(wlg,scGame);
 				} else {
+					// if the game isn't in the HashTable, scrape it
 					scGame = scr_ejb.getGame(wlg);
 					
+					/*
+					 * if games current price is -1 it means that something went wrong 
+					 * in the scraping. Currently the only scraping that returns a -1 price
+					 * is Instant Gaming.
+					 */
 					if (scGame.getCurrentPrice() == -1) {
 						continue;
 					}
 					
+					// set all of the scraped parameters to ScrapedGame object
 					scGame.setFullName(wlg.getGameName());
 					scGame.setImg(wlg.getImg());
 					scGame.setStoreName(wlg.getStoreName());
@@ -82,38 +123,119 @@ public class TimersEJB {
 					scGame.setUrlStore(wlg.getUrlStore());
 					chkedGames.put(wlg.getUrlGame(), scGame);					
 					
-					add2Timeline(scGame);					
-				}
-
-				if (lowerPrice(wlg, scGame)) {
-					toSend.add(scGame);
+					// add new entry or modify old entry of price timeline
+					add2Timeline(scGame);
+					// decide what to do with the new game data
+					interpretPriceCodeNew(wlg,scGame);
 				}
 			}
 
+			// if the list of games to notify is not empty, sen an email.
 			if (!toSend.isEmpty()) {
 				mail_ejb.sendMailItemsOnSale(us, toSend);
-				cq_ejb.updatePrices(toSend);
 			}
+			
+			toSend.clear();
 		}
 	}
 
-	private boolean lowerPrice(WishListGame2Scrap wlg, ScrapedGame sg) {
+	/**
+	 * This function is used when the game isn't in the list of games yet
+	 * Calls the lowerPrice function, then interprets the code returned, and
+	 * desides whether or not add the game to toSend, update prices, or do nothing
+	 * 
+	 * @param wlg WishlistGame2Scrap game from database
+	 * @param scGame ScrapedGame game from scraping
+	 */
+	private void interpretPriceCodeNew(WishListGame2Scrap wlg, ScrapedGame scGame) {
+		switch(lowerPrice(wlg, scGame)) {
+		case 1:
+			cq_ejb.updatePrices(scGame);
+			toSend.add(scGame);
+			break;
+		case 2:
+			cq_ejb.updatePrices(scGame);
+			break;
+		case 0:
+		default:
+			break;
+		}
+	}
+
+	/**
+	 * This function is used when the game is in the list of checked games,
+	 * calls the lowerPrice function, then interprets the code reutrned, and
+	 * desides wether or not add the game to toSend, update pirces, or do nothing
+	 * 
+	 * @param wlg WishlistGame2Scrap game from database
+	 * @param scGame ScrapedGame game from scraping
+	 */
+	private void interpretPriceCodeOld(WishListGame2Scrap wlg, ScrapedGame scGame) {
+		switch(lowerPrice(wlg, scGame)) {
+		case 1:
+			toSend.add(scGame);
+			break;
+		case 2:
+		case 0:
+		default:
+			break;
+		}
+	}
+	
+	/**
+	 * This function will check current prices of both database game (old) and
+	 * scraped game (new), it will also check default prices.
+	 * 
+	 * code 0 = no changes - don't update price nor add it to notification list
+	 * code 1 = different price - update price and send notification to suer
+	 * code 2 = no changes - do nothing 
+	 * 
+	 * @param wlg WishlistGame2Scrap from database
+	 * @param sg ScrapedGame from scraping
+	 * @return int
+	 */
+	private int lowerPrice(WishListGame2Scrap wlg, ScrapedGame sg) {
+		/*
+		 * save object parameters in local variables so they will
+		 * be easier to manage
+		 */
 		double newCurrent = sg.getCurrentPrice();
 		double oldCurrent = wlg.getCurrentPrice();
 		double min = wlg.getMinPrice();
 		double max = wlg.getMaxPrice();
 		
-		if (min != -1 && min >= newCurrent) {
-			return true;
-		} else if (max != -1 && max <= newCurrent) {
-			return true;
-		} else if (oldCurrent != newCurrent) {
-			return true;
-		} else if (wlg.getDefaultPrice() != sg.getDefaultPrice()) {
-			cq_ejb.updatePrices(sg);
+		/*
+		 * check if current price is lower, then if min price is set,
+		 * then if current price is lower or equal to min price.
+		 */
+		if (newCurrent < oldCurrent) {
+			if (min != -1) {
+				if (min >= newCurrent) {				
+					return 1;
+				}
+				return 2;
+			}
+			return 1;
+		/*
+		 * check if current price is higher, then if max price is set,
+		 * then if current price is higher or equal to max price.
+		 */
+		} else if (newCurrent > oldCurrent) {
+			if (max != -1) {
+				if (max <= newCurrent) {
+					return 1;
+				}			
+				return 2;
+			}
+			return 1;
+		} 
+		
+		// check if default prices are different
+		if (wlg.getDefaultPrice() != sg.getDefaultPrice()) {
+			return 2;
 		}
-
-		return false;
+		
+		return 0;
 	}
 
 	private void add2Timeline(ScrapedGame sg) {

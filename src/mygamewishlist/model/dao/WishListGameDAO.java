@@ -12,6 +12,12 @@ import mygamewishlist.model.pojo.db.WishListGame2Scrap;
 import mygamewishlist.model.pojo.db.WishListGame2ScrapSteam;
 import mygamewishlist.model.pojo.db.WishListGameSteam;
 
+/**
+ * @author Patryk
+ *
+ * Class that gets the WishListGame interface, and gets
+ * the database conection
+ */
 public class WishListGameDAO {
 
 	private static final MyLogger LOG = MyLogger.getLOG();
@@ -19,8 +25,7 @@ public class WishListGameDAO {
 	private static WishListGameMapper listMapper;
 	
 	/**
-	 * Crea la conexion con la base de datos y consigue
-	 * la interfaz
+	 * Creates conection with the database, and gets the interface
 	 */
 	private static void getWlgMapper() {
 		session = MyBatisUtil.getSqlSessionFactory().openSession();
@@ -28,7 +33,7 @@ public class WishListGameDAO {
 	}
 	
 	/**
-	 * Cierra la conexion
+	 * Closes conection
 	 */
 	private static void closeAll() {
 		session.close();
@@ -69,6 +74,10 @@ public class WishListGameDAO {
 	public void addGame2Wishlist(ArrayList<WishListGame> games, int idUser) {
 		try {
 			getWlgMapper();
+			/**
+			 * for each game, there is a check if its a steam game, 
+			 * then it is added with a correcect steam appid value
+			 */
 			for (WishListGame wlg : games) {
 				if (wlg instanceof WishListGameSteam) {
 					listMapper.addUrlWLPT(wlg, ((WishListGameSteam) wlg).getAppid() + "");
@@ -142,6 +151,7 @@ public class WishListGameDAO {
 	public void updatePrices(ArrayList<ScrapedGame> games) {
 		try {
 			getWlgMapper();
+			// for each game an update is run
 			for (ScrapedGame sg : games) {
 				listMapper.updatePrices(sg);
 			}
@@ -176,6 +186,7 @@ public class WishListGameDAO {
 	public void updateMinMax(double min, double max, String url, int idUser) {
 		try {
 			getWlgMapper();
+			// get the id of the url by url, then update
 			listMapper.updateMinMax(min, max, listMapper.getIdUrlByUrl(url), idUser);
 			session.commit();
 		} catch(Exception e) {
