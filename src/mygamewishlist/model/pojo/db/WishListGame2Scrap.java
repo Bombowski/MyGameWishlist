@@ -29,6 +29,13 @@ public class WishListGame2Scrap {
 		this.minPrice = minPrice;
 		this.maxPrice = maxPrice;
 	}
+	
+	@Override
+	public String toString() {
+		return "WishListGame2Scrap [urlStore=" + urlStore + ", urlGame=" + urlGame + ", storeName=" + storeName
+				+ ", gameName=" + gameName + ", img=" + img + ", defaultPrice=" + defaultPrice + ", currentPrice="
+				+ currentPrice + ", minPrice=" + minPrice + ", maxPrice=" + maxPrice + "]";
+	}
 
 	public String getUrlStore() {
 		return urlStore;

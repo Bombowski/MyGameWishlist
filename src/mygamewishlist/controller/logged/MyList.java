@@ -52,16 +52,16 @@ public class MyList extends HttpServlet {
 			if (usr == null) {
 				rd = getServletContext().getRequestDispatcher(cp.LOGIN);
 			} else if (list != null && pag != null) {
-				changePage(request, response);
-				return;
+				rd = getServletContext().getRequestDispatcher(cp.JSP_MYLIST);
 			} else {
 				rd = getServletContext().getRequestDispatcher(cp.JSP_MYLIST);
 
 				list = new Pagination<WishListGame>(
 						cq_ejb.getListByIdUser(usr.getId()), 10); 
-				request.setAttribute("stores", cq_ejb.getStores());
-				request.setAttribute("list", list);
 			}
+			
+			request.setAttribute("stores", cq_ejb.getStores());
+			request.setAttribute("list", list);
 
 			rd.forward(request, response);
 		} catch (Exception e) {
@@ -89,9 +89,8 @@ public class MyList extends HttpServlet {
 			int pag = Integer.parseInt(pagChk == null ? "0" : pagChk);
 			
 			RequestDispatcher rd = getServletContext().getRequestDispatcher(cp.JSP_MYLIST);
-			request.setAttribute("list", list.getPag(pag));
+			request.setAttribute("list", list);
 			request.setAttribute("stores", cq_ejb.getStores());
-			request.setAttribute("numPags", list.getTotalPag());
 			rd.forward(request, response);			
 		} catch (Exception e) {
 			LOG.logError(e.getMessage());

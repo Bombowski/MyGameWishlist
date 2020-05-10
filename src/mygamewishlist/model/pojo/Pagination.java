@@ -73,7 +73,7 @@ public class Pagination<E> implements Iterable<E> {
 		int productoFinal = productoInicial + productsPerPage;
 				
 		for (int i = productoInicial; i < productoFinal; i++) {
-			if (al.size() - i > 1) {
+			if (al.size() - i >= 1) {
 				toReturn.add((E) al.get(i));	
 			}
 		}
