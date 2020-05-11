@@ -1,5 +1,11 @@
 package mygamewishlist.model.pojo.db;
 
+/**
+ * @author Patryk
+ *
+ * POJO class that contains data of the wishlist game,
+ * and all of the data necessary for scraping
+ */
 public class WishListGame2Scrap {
 
 	private String urlStore;

@@ -1,5 +1,10 @@
 package mygamewishlist.model.pojo.db;
 
+/**
+ * @author Patryk
+ *
+ * POJO class taht contains a review of a game
+ */
 public class ReviewOfGame {
 
 	private String usrName;

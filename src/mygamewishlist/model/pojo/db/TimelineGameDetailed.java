@@ -1,5 +1,11 @@
 package mygamewishlist.model.pojo.db;
 
+/**
+ * @author Patryk
+ * 
+ * POJO class that extends TimelineGame and additionally contains
+ * name of the game and url of the store
+ */
 public class TimelineGameDetailed extends TimelineGame {
 
 	private String name;

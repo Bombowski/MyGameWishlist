@@ -1,5 +1,11 @@
 package mygamewishlist.model.pojo;
 
+/**
+ * @author Patryk
+ *
+ * POJO class that contains the information about games that must
+ * be scraped
+ */
 public class Game2Scrap {
 
 	private String name;

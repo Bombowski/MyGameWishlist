@@ -4,12 +4,20 @@ import javax.ejb.EJB;
 
 import mygamewishlist.model.ejb.CreateQueryEJB;
 
+/**
+ * @author Patryk
+ *
+ * Singleton class that contains all of the variables from the database
+ */
 public class SecretClass {
 
 	private static SecretClass sc;
 	
 	@EJB
 	CreateQueryEJB cq_ejb;
+	
+	public String mailPasswd;
+	public String steamToken;
 	
 	private SecretClass() {
 		if (cq_ejb == null) {
@@ -29,7 +37,4 @@ public class SecretClass {
 		}
 		return sc;
 	}
-	
-	public String mailPasswd;
-	public String steamToken;
 }

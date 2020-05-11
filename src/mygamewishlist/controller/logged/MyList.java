@@ -32,13 +32,14 @@ public class MyList extends HttpServlet {
 	private static final ClassPaths cp = ClassPaths.getCP();
 
 	private Pagination<WishListGame> list;
+	private int previousUser = -1;
 	
 	@EJB
 	ClientSessionEJB sc_ejb;
 
 	@EJB
 	CreateQueryEJB cq_ejb;
-
+	
 	/**
 	 * Shows a list of games from users wishlist
 	 */
@@ -46,18 +47,25 @@ public class MyList extends HttpServlet {
 			throws ServletException, IOException {
 		try {
 			User usr = sc_ejb.getLoggedUser(request);
-			String pag = request.getParameter("pag");
 			RequestDispatcher rd;
 
 			if (usr == null) {
 				rd = getServletContext().getRequestDispatcher(cp.LOGIN);
-			} else if (list != null && pag != null) {
-				rd = getServletContext().getRequestDispatcher(cp.JSP_MYLIST);
 			} else {
 				rd = getServletContext().getRequestDispatcher(cp.JSP_MYLIST);
-
-				list = new Pagination<WishListGame>(
-						cq_ejb.getListByIdUser(usr.getId()), 10); 
+			
+				if (previousUser == -1) {
+					previousUser = usr.getId();
+				} else if(previousUser != usr.getId()) {
+					previousUser = usr.getId();
+					list = new Pagination<WishListGame>(
+							cq_ejb.getListByIdUser(usr.getId()), 10);
+				}
+				
+				if (list == null) {
+					list = new Pagination<WishListGame>(
+						cq_ejb.getListByIdUser(usr.getId()), 10);
+				}
 			}
 			
 			request.setAttribute("stores", cq_ejb.getStores());
@@ -67,34 +75,6 @@ public class MyList extends HttpServlet {
 		} catch (Exception e) {
 			LOG.logError(e.getMessage());
 			response.sendRedirect(cp.JSP_LOGIN);
-		}
-	}
-
-	/**
-	 * Changes page of list
-	 * 
-	 * @param request HttpServletRequest
-	 * @param response HttpServletResponse
-	 * @throws ServletException
-	 * @throws IOException
-	 */
-	private void changePage(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		try {
-			if (list == null) {
-				response.sendRedirect(cp.MYLIST);
-			}
-
-			String pagChk = request.getParameter("pag");
-			int pag = Integer.parseInt(pagChk == null ? "0" : pagChk);
-			
-			RequestDispatcher rd = getServletContext().getRequestDispatcher(cp.JSP_MYLIST);
-			request.setAttribute("list", list);
-			request.setAttribute("stores", cq_ejb.getStores());
-			rd.forward(request, response);			
-		} catch (Exception e) {
-			LOG.logError(e.getMessage());
-			response.sendRedirect(cp.REDIRECT_MYLIST);
 		}
 	}
 }

@@ -9,9 +9,6 @@ import javax.servlet.http.HttpSession;
 
 import bomboshtml.body.A;
 import bomboshtml.body.Img;
-import bomboshtml.body.Input;
-import bomboshtml.body.table.Tr;
-import mygamewishlist.model.pojo.ScrapedGame;
 import mygamewishlist.model.pojo.db.Store;
 import mygamewishlist.model.pojo.db.User;
 import mygamewishlist.model.pojo.db.WishListGame;
@@ -19,7 +16,7 @@ import mygamewishlist.model.pojo.db.WishListGame;
 /**
  * @author Patryk
  *
- * 
+ * Singleton class that contains functions used by jsp's.
  */
 public class JspFunctions {
 
@@ -38,10 +35,22 @@ public class JspFunctions {
 		return jsp;
 	}
 	
+	/**
+	 * Checks if there is a logged user.
+	 * 
+	 * @param session HttpSession
+	 * @return boolean
+	 */
 	public boolean isSome1Logged(HttpSession session) {
 		return session != null && session.getAttribute("user") != null;
 	}
 	
+	/**
+	 * Returns the logged user and his data, if there is one.
+	 * 
+	 * @param session HttpSession
+	 * @return User
+	 */
 	public User getLoggedUser(HttpSession session) {
 		if (isSome1Logged(session)) {
 			return (User) session.getAttribute("user");
@@ -49,16 +58,33 @@ public class JspFunctions {
 		return null;
 	}
 	
+	/**
+	 * Closes user's session.
+	 * 
+	 * @param session HttpSession
+	 */
 	public void logoutUser(HttpSession session) {
 		if (session != null) {
 			session.invalidate();
 		}
 	}
 	
+	/**
+	 * Opens a session for the user.
+	 * 
+	 * @param session HttpSession
+	 * @param usr User, object that is added to the session
+	 */
 	public void loginUser(HttpSession session, User usr) {
 		session.setAttribute("user", usr);
 	}
 	
+	/**
+	 * Returns an error if there is one.
+	 * 
+	 * @param request HttpServletRequest
+	 * @return String
+	 */
 	public String getError(HttpServletRequest request) {
 		String error = (String)request.getAttribute("error");
 		
@@ -67,48 +93,29 @@ public class JspFunctions {
 		}
 		
 		return new StringBuilder()
-				.append("<p id='error' class='align-self-center'>")
+				.append("<p class='error align-self-center'>")
 				.append(error)
 				.append("</p>")
 				.toString();
 	}
 	
-	public String buildScrapedGameTable(ArrayList<ScrapedGame> games) {
-		StringBuilder toReturn = new StringBuilder();
-		int i = 0;
-				
-		for (ScrapedGame sg : games) {
-			Tr tr = new Tr();
-			tr.addTd(new Img(sg.getImg(), sg.getFullName()));
-			tr.addTd(new A(sg.getFullName().replace("'", "&#39;"), sg.getUrlStore() + sg.getUrlGame()));
-			tr.addTd(Math.round(sg.getDefaultPrice() * 100f) / 100f + "€");
-			tr.addTd(Math.round(sg.getCurrentPrice() * 100f) / 100f + "€");
-			tr.addTd(sg.getCurrentDiscount() + "%");
-			tr.addTd(new Input("checkbox", "games", sg.getStoreName() + "&" +  i));
-			tr.addTd(new StringBuilder()
-						.append(">=<input type='number' name='")
-						.append(sg.getStoreName())
-						.append("&min")
-						.append(i + "' step='0.01' min='-1'>")
-						.toString());
-			tr.addTd(new StringBuilder()
-						.append(">=<input type='number' name='")
-						.append(sg.getStoreName())
-						.append("&max")
-						.append(i + "' step='0.01' min='-1'>")
-						.toString());
-			
-			toReturn.append(tr.print());
-			i++;
-		}
-		
-		return toReturn.toString();
-	}
-	
+	/**
+	 * If provided string is a null, an empty string is returned,
+	 * else the entry string is returned.
+	 * 
+	 * @param chk String
+	 * @return String
+	 */
 	public String ifNullEmpty(String chk) {
 		return chk == null ? "" : chk;
 	}
 	
+	/**
+	 * Generates a list of random rgb colors.
+	 * 
+	 * @param noColors number of colors
+	 * @return ArrayList<Color>
+	 */
 	public ArrayList<Color> generateColors(int noColors) {
 		ArrayList<Color> colors = new ArrayList<Color>();
 		Random r = new Random();
@@ -119,8 +126,15 @@ public class JspFunctions {
 		return colors;
 	}
 	
+	/**
+	 * Based on the integer provided, a different bootstrap-4 css rule
+	 * will be returned.
+	 * 
+	 * @param num double
+	 * @return String
+	 */
 	public String getPriceBgColor(double num) {
-		if (num == -1) {
+		if (num < 0) {
 			return "bg-dark";
 		} else if (num < 4) {
 			return "bg-danger";
@@ -131,10 +145,23 @@ public class JspFunctions {
 		}
 	}
 	
+	/**
+	 * Builds an image using data stored in the WishlistGame object.
+	 * 
+	 * @param g WishlistGame
+	 * @return String
+	 */
 	public String buildImg(WishListGame g) {
 		return new Img(g.getImg(), g.getGameName()).print();
 	}
 	
+	/**
+	 * Builds title of a game from user's wishlist
+	 * 
+	 * @param g WishListGame
+	 * @param st Store
+	 * @return String
+	 */
 	public String buildTitle(WishListGame g, Store st) {
 		return new StringBuilder()
 				.append("<a target='_blank' href='")
@@ -149,10 +176,23 @@ public class JspFunctions {
 				.toString();
 	}
 	
+	/**
+	 * Builds discount of a game from user's wishlist
+	 * 
+	 * @param g WishlistGame
+	 * @return String
+	 */
 	public String buildDiscount(WishListGame g) {
 		return (Math.round(g.getDiscount() * 100f) / 100f) + "%";
 	}
 	
+	/**
+	 * Builds prices of a game from user's wishlist
+	 * 
+	 * @param discount String, double value with a % at the end
+	 * @param g WishListGame
+	 * @return String
+	 */
 	public String buildPrices(String discount, WishListGame g) {
 		return discount.equals("0.0%") ? g.getCurrentPrice() + "€"
 				: new StringBuilder()
@@ -160,9 +200,16 @@ public class JspFunctions {
 					.append(g.getDefaultPrice())
 					.append("€</s><span class='h5'> ")
 					.append(g.getCurrentPrice())
-					.append("€</span>").toString();
+					.append("€</span>")
+					.toString();
 	}
 	
+	/**
+	 * Builds minimal price of a game from user's wishlist
+	 * 
+	 * @param g WishListGame
+	 * @return String
+	 */
 	public String buildMinPrice(WishListGame g) {
 		return g.getMinPrice() == -1 ? "-"
 				: new StringBuilder()
@@ -171,6 +218,12 @@ public class JspFunctions {
 				.toString();
 	}
 
+	/**
+	 * Build maximal price of a game from user's wishlist
+	 * 
+	 * @param g WishlistGame
+	 * @return String
+	 */
 	public String buildMaxPrice(WishListGame g) {
 		return g.getMaxPrice() == -1 ? "-"
 				: new StringBuilder()
@@ -179,6 +232,14 @@ public class JspFunctions {
 				.toString();
 	}
 	
+	/**
+	 * Builds edit button of a game from user's wishlist
+	 * 
+	 * @param g WishlistGame
+	 * @param edit Img, image that the button will contain
+	 * @param targetClass String, target of the button
+	 * @return String
+	 */
 	public String buildEdit(WishListGame g, Img edit, String targetClass) {
 		return new A(edit.print(), 
 				new StringBuilder()
@@ -189,6 +250,14 @@ public class JspFunctions {
 				.toString()).print();
 	}
 	
+	/**
+	 * Builds delete button of a game from user's wishlist
+	 * 
+	 * @param g WishlistGame
+	 * @param del Img, image that the button will contain
+	 * @param targetClass String, target of the button
+	 * @return String
+	 */
 	public String buildDelete(WishListGame g, Img del, String targetClass) {
 		return new A(del.print(), 
 				new StringBuilder()

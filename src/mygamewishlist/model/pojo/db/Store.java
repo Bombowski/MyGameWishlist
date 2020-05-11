@@ -1,5 +1,10 @@
 package mygamewishlist.model.pojo.db;
 
+/**
+ * @author Patryk
+ * 
+ * POJO class that contains store data
+ */
 public class Store {
 
 	private int id;

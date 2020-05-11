@@ -65,54 +65,54 @@ pageEncoding="UTF-8"%>
 				 response.sendRedirect(cp.REDIRECT_GAME_LIST);
 			}
 		%>
-		<div class="row d-flex flex-row mb-5">
-			<div class="row d-flex flex-column col-6 mx-auto">
-                <div class="form-row my-2">
-                	<div class="col-12 d-flex">
-	                    <div class="col-3 d-flex">
-	                        <span class="ml-auto my-auto" >Game Title</span>
+		<div class="row d-flex flex-md-row flex-column mb-5">
+			<div class="row d-flex flex-column col-md-6 col-12 mx-auto">
+                <div class="d-flex flex-column my-2">
+                	<div class="col-12 d-flex flex-md-row flex-column">
+	                    <div class="col-lg-3 col-md-4 col-12 d-flex">
+	                        <span class="ml-md-auto my-auto mx-auto" >Game Title</span>
 	                    </div>
-	                    <div class="col-6 d-flex color-black">
+	                    <div class="col-lg-6 col-md-8 col-12 d-flex color-black">
 	                        <span class="form-control my-auto"><% out.append(g.getName()); %></span>
 	                    </div>
                     </div>
                 </div>
-                <div class="form-row my-2">
-                	<div class="col-12 d-flex">
-	                    <div class="col-3 d-flex">
-	                        <span class="ml-auto my-auto" >Developer</span>
+                <div class="d-flex flex-column my-2">
+                	<div class="col-12 d-flex flex-md-row flex-column">
+	                    <div class="col-lg-3 col-md-4 col-12 d-flex">
+	                        <span class="ml-md-auto my-auto mx-auto" >Developer</span>
 	                    </div>
-	                    <div class="col-6 d-flex color-black">
+	                    <div class="col-lg-6 col-md-8 col-12 d-flex color-black">
 	                        <span class="form-control my-auto"><% out.append(g.getDeveloper()); %></span>
 	                    </div>
                     </div>
                 </div>
-                <div class="form-row my-2">
-                	<div class="col-12 d-flex">
-	                    <div class="col-3 d-flex">
-	                        <span class="ml-auto my-auto" >Realese Date</span>
+                <div class="d-flex flex-column my-2">
+                	<div class="col-12 d-flex flex-md-row flex-column">
+	                    <div class="col-lg-3 col-md-4 col-12 d-flex">
+	                        <span class="ml-md-auto my-auto mx-auto" >Realese Date</span>
 	                    </div>
-	                    <div class="col-6 d-flex color-black">
+	                    <div class="col-lg-6 col-md-8 col-12 d-flex color-black">
 	                        <span class="form-control my-auto"><% out.append(g.getReleaseDate()); %></span>
 	                    </div>
                     </div>
                 </div>
-                <div class="form-row my-2">
-                	<div class="col-12 d-flex">
-	                    <div class="col-3 d-flex">
-	                        <span class="ml-auto my-auto" >Description</span>
+                <div class="d-flex flex-column my-2">
+                	<div class="col-12 d-flex flex-md-row flex-column">
+	                    <div class="col-lg-3 col-md-4 col-12 d-flex">
+	                        <span class="ml-md-auto my-auto mx-auto" >Description</span>
 	                    </div>
-	                    <div class="col-6 d-flex color-black">
+	                    <div class="col-lg-6 col-md-8 col-12 d-flex color-black">
 	                        <span class="form-control my-auto"><% out.append(g.getDescription()); %></span>
 	                    </div>
                     </div>
                 </div>
-                <div class="form-row my-2">
-                	<div class="col-12 d-flex">
-	                    <div class="col-3 d-flex">
-	                        <span class="ml-auto my-auto" >Genres</span>
+                <div class="d-flex flex-column my-2">
+                	<div class="col-12 d-flex flex-md-row flex-column">
+	                    <div class="col-lg-3 col-md-4 col-12 d-flex">
+	                        <span class="ml-md-auto my-auto mx-auto" >Genres</span>
 	                    </div>
-	                    <div class="col-6 d-flex color-black">
+	                    <div class="col-lg-6 col-md-8 col-12 d-flex color-black">
 	                        <span class="form-control my-auto"><% out.append(g.getGenres()); %></span>
 	                    </div>
                     </div>
@@ -121,32 +121,32 @@ pageEncoding="UTF-8"%>
             <%
             	if (jspF.isSome1Logged(request.getSession(false))) {
             %>
-            <form method="post" action="<% out.append(cp.REDIRECT_GAME_INFO); %>" class="row d-flex flex-column col-6">
-            	<div class="form-row my-2 mx-auto">
-	                <span class="h4">Review</span>
+            <form method="post" action="<% out.append(cp.REDIRECT_GAME_INFO); %>" class="row d-flex flex-column col-md-6 col-12 mx-auto">
+            	<div class="my-md-2 mt-5 d-flex">
+	                <span class="h4 mx-auto">Review</span>
 	            </div>
-	            <div class="form-row my-2">
-                	<div class="col-12 d-flex">
-	                    <div class="col-6 d-flex">
-	                        <span class="ml-auto my-auto">Review</span>
+	            <div class="my-2">
+                	<div class="col-12 d-flex flex-column">
+	                    <div class="col-md-6 col-12 d-flex mx-auto">
+	                        <span class="ml-md-auto mx-auto my-auto">Review</span>
 	                    </div>
-	                    <div class="col-6 d-flex color-black">
+	                    <div class="col-md-6 col-12 d-flex color-black mx-auto">
 	                        <textarea name="review" class="form-control my-auto"><% out.append(jspF.ifNullEmpty(rog.getReview())); %></textarea>
 	                    </div>
                     </div>
                 </div>
-                <div class="form-row my-2">
-                	<div class="col-12 d-flex">
-	                    <div class="col-6 d-flex">
-	                        <span class="ml-auto my-auto">Rating</span>
+                <div class="my-2">
+                	<div class="col-12 d-flex flex-column">
+	                    <div class="col-md-6 col-12 d-flex mx-auto">
+	                        <span class="ml-md-auto mx-auto my-auto">Rating</span>
 	                    </div>
-	                    <div class="col-6 d-flex color-black">
+	                    <div class="col-md-6 col-12 d-flex color-black mx-auto">
 	                        <input class="form-control my-auto" name="rating" type="number" step='0.01' min='0' required 
 	                        	value="<% out.append(rog.getRating() + ""); %>">
 	                    </div>
                     </div>
                 </div>
-	            <div class="form-row my-2 color-black">
+	            <div class="my-2 color-black mx-auto">
 	                <button type="submit" class="btn button-dark mx-auto">
 	                	Send review
 	                </button>

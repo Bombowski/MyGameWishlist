@@ -9,10 +9,8 @@ import mygamewishlist.model.pojo.db.ReviewList;
 import mygamewishlist.model.pojo.db.ReviewOfGame;
 
 public interface ReviewMapper {
-
-	public ArrayList<ReviewList> getReviewList(@Param("idUser") int idUser);
 	
-	public ArrayList<ReviewList> getReviewListNotLogged();
+	public ArrayList<ReviewList> getReviewList();
 	
 	public void addOrUpdateReview(Review rev);
 	

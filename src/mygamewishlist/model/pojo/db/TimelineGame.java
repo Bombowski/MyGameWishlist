@@ -1,5 +1,11 @@
 package mygamewishlist.model.pojo.db;
 
+/**
+ * @author Patryk
+ *
+ * POJO class that contains all of the information needed
+ * for generating a timeline of game prices
+ */
 public class TimelineGame {
 
 	private String urlGame;

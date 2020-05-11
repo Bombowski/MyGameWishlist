@@ -7,7 +7,7 @@ import ch.qos.logback.classic.Logger;
 /**
  * @author Patryk
  *
- * Clase logger
+ * Singleton logger class
  */
 public class MyLogger {
 
@@ -30,7 +30,7 @@ public class MyLogger {
 	}
 	
 	/**
-	 * Logea un mensaje
+	 * Logs a message as an error
 	 * 
 	 * @param msg String
 	 */
@@ -38,6 +38,11 @@ public class MyLogger {
 		err.error(msg);
 	}
 	
+	/**
+	 * Logs a message as debug
+	 * 
+	 * @param msg String
+	 */
 	public void logDebug(String msg) {
 		err.debug(msg);
 	}

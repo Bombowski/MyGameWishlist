@@ -3,33 +3,8 @@
   'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
   
 <mapper namespace="mygamewishlist.model.dao.mapper.ReviewMapper">
-
-	<select id="getReviewList" resultMap="reviewListMap">
-		SELECT
-			IFNULL(AVG(RE.RATING),-1) AS AVERAGE_RATING, 
-            IFNULL(SUB.USER_RATING, -1),
-			GA.ID AS ID_GAME, GA.NAME AS NAME,
-		    GROUP_CONCAT(DISTINCT GE.NAME SEPARATOR ', ') AS GENRES
-		FROM
-			REVIEW RE RIGHT JOIN GAME GA ON RE.ID_GAME = GA.ID,
-			(SELECT
-					GA2.ID AS IDG, RE2.RATING AS USER_RATING
-				FROM
-					GAME GA2 LEFT JOIN REVIEW RE2 ON GA2.ID = RE2.ID_GAME AND RE2.ID_USER = #{idUser}
-				ORDER BY
-					GA2.ID
-			) SUB, GENRE GE, GAME_GENRE GG
-		WHERE
-			IDG = GA.ID AND
-		    GE.ID = GG.ID_GENRE AND
-		    GA.ID = GG.ID_GAME
-		GROUP BY
-			GA.NAME, GA.ID, IDG
-		ORDER BY 
-			GA.ID;
-	</select>
 	
-	<select id="getReviewListNotLogged" resultMap="reviewListMap">
+	<select id="getReviewList" resultMap="reviewListMap">
 		SELECT
 			IFNULL(AVG(RE.RATING), -1) AS AVERAGE_RATING, -1 AS USER_RATING, GA.ID AS ID_GAME, 
 			GA.NAME AS NAME, GROUP_CONCAT(GE.NAME SEPARATOR ', ') AS GENRES

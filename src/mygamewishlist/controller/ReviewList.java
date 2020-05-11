@@ -15,7 +15,6 @@ import mygamewishlist.model.ejb.CreateQueryEJB;
 import mygamewishlist.model.pojo.ClassPaths;
 import mygamewishlist.model.pojo.MyLogger;
 import mygamewishlist.model.pojo.Pagination;
-import mygamewishlist.model.pojo.db.User;
 
 /**
  * @author Patryk
@@ -43,10 +42,7 @@ public class ReviewList extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-			User usr = sc_ejb.getLoggedUser(request);
-			
-			reviews = new Pagination<mygamewishlist.model.pojo.db.ReviewList>(
-					(usr == null ? cq_ejb.getReviewListNotLogged() : cq_ejb.getReviewList(usr.getId())),20);
+			reviews = new Pagination<mygamewishlist.model.pojo.db.ReviewList>(cq_ejb.getReviewList(),20);
 			
 			String pagStr = request.getParameter("pag");
 			int pag = pagStr == null ? Integer.parseInt("0") : Integer.parseInt(pagStr); 

@@ -1,5 +1,10 @@
 package mygamewishlist.model.pojo.db;
 
+/**
+ * @author Patryk
+ *
+ * POJO class that contians all of the user data
+ */
 public class User {
 
 	private int id;

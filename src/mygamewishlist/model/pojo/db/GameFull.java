@@ -1,5 +1,11 @@
 package mygamewishlist.model.pojo.db;
 
+/**
+ * @author Patryk
+ * 
+ * POJO class that extends Game, and additionally stores
+ * a list of id's of genres in a string, and an id of a developer
+ */
 public class GameFull extends Game {
 
 	private String idGenres;

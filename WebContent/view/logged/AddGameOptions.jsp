@@ -96,7 +96,7 @@
 					</button>
 				</div>
 			</div>
-            <div id="tables" class="col-12 row flex-row">
+            <div id="tables" class="col-12 row flex-row mx-auto justify-content-center">
 				<%
 						String noR = "No results.";
 						

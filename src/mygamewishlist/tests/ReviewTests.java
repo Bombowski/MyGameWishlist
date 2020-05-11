@@ -23,18 +23,18 @@ public class ReviewTests {
 	
 	@Test
 	public void getReviewList() {
-		assertEquals(true, Tests.cq_ejb.getReviewList(rev.getIdUser()).size() > 0);
+		assertEquals(true, Tests.cq_ejb.getReviewList().size() > 0);
 	}
 
 	@Test
 	public void getReviewListNotLogged() {
-		assertEquals(true, Tests.cq_ejb.getReviewListNotLogged().size() > 0);
+		assertEquals(true, Tests.cq_ejb.getReviewList().size() > 0);
 	}
 
 	@Test
 	public void addOrUpdateReview() {
 		Tests.cq_ejb.addOrUpdateReview(rev);
-		for (ReviewList rl : Tests.cq_ejb.getReviewList(rev.getIdUser())) {
+		for (ReviewList rl : Tests.cq_ejb.getReviewList()) {
 			if (rl.getIdGame() == rev.getIdGame() && rl.getUserRating() == rev.getRating()) {
 				assertEquals(true, true);
 				return;
@@ -45,7 +45,7 @@ public class ReviewTests {
 	@Test
 	public void deleteReview() {
 		Tests.cq_ejb.deleteReview(rev.getIdUser(), rev.getIdGame());
-		for (ReviewList rl : Tests.cq_ejb.getReviewList(rev.getIdUser())) {
+		for (ReviewList rl : Tests.cq_ejb.getReviewList()) {
 			if (rl.getIdGame() == rev.getIdGame() && rl.getUserRating() == rev.getRating()) {
 				assertEquals(true, false);
 				return;

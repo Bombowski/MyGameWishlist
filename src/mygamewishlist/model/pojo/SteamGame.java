@@ -1,8 +1,10 @@
 package mygamewishlist.model.pojo;
 
-import javax.xml.bind.annotation.XmlRootElement;
-
-@XmlRootElement
+/**
+ * @author Patryk
+ *
+ * POJO class form steam games, it contains steam game title and appid
+ */
 public class SteamGame {
 
 	private String name;

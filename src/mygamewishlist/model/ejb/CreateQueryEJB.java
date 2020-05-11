@@ -73,23 +73,12 @@ public class CreateQueryEJB {
 	}
 	
 	/**
-	 * Gets a list of games and their average reviews score, 
-	 * and also currently logged user's score in a separated column
-	 * 
-	 * @param idUser int
-	 * @return ArrayList<ReviewList>
-	 */
-	public ArrayList<ReviewList> getReviewList(int idUser) {
-		return REV_DAO.getReviewList(idUser);
-	}
-	
-	/**
 	 * Gets a list of games and their average reviews score
 	 * 
 	 * @return ArrayList<ReviewList>
 	 */
-	public ArrayList<ReviewList> getReviewListNotLogged() {
-		return REV_DAO.getReviewListNotLogged();
+	public ArrayList<ReviewList> getReviewList() {
+		return REV_DAO.getReviewList();
 	}
 	
 	/**

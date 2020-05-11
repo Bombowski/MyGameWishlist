@@ -1,5 +1,10 @@
 package mygamewishlist.model.pojo;
 
+/**
+ * @author Patryk
+ *
+ * Class that contains data from scraped game
+ */
 public class ScrapedGame {
 
 	private String urlStore;

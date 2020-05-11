@@ -1,5 +1,10 @@
 package mygamewishlist.model.pojo.db;
 
+/**
+ * @author Patryk
+ *
+ * POJO class that contians data of a developer
+ */
 public class Developer {
 
 	private int id;

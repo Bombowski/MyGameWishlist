@@ -1,5 +1,10 @@
 package mygamewishlist.model.pojo.db;
 
+/**
+ * @author Patryk
+ *
+ * POJO class that contians all of the wishlist game data
+ */
 public class WishListGame {
 
 	private String urlGame;

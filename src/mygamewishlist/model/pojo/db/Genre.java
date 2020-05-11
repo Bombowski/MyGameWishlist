@@ -1,5 +1,10 @@
 package mygamewishlist.model.pojo.db;
 
+/**
+ * @author Patryk
+ *
+ * POJO class that contains data of a genre
+ */
 public class Genre {
 
 	private int id;

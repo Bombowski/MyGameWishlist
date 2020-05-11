@@ -194,7 +194,7 @@ public class TimersEJB {
 	 * 
 	 * code 0 = no changes - don't update price nor add it to notification list
 	 * code 1 = different price - update price and send notification to suer
-	 * code 2 = no changes - do nothing 
+	 * code 2 = different price but not beetween min and max - update price 
 	 * 
 	 * @param wlg WishlistGame2Scrap from database
 	 * @param sg ScrapedGame from scraping

@@ -1,5 +1,21 @@
 package mygamewishlist.model.pojo;
 
+/**
+ * @author Patryk
+ *
+ * Singleton class that contains paths to all of the servlets
+ * and jsp's.
+ * There are 3 versions of each path:
+ * 1.- variables with just the name of the class contain a slash and name of
+ * class, and are meant to be used for request dispatchers, example:
+ * RequestDispacher rd = getServletContext.getRequestDispatcher(ClassPaths.getCP().LOGIN);
+ * 2.- variables with "REDIRECT_" and name of the class, these are used for send redirects,
+ * example: response.sendRedirect(ClassPaths.getCP().REDIRECT_LOGIN);
+ * 3.- variables with "JSP_" and name of the class, these are used for redirecting to jsp's,
+ * example: RequestDispacher rd = getServletContext.getRequestDispatcher(ClassPaths.getCP().JSP_LOGIN);
+ * 
+ * Not all of the classes have all of the options as some of them don't need a servlet, etc.
+ */
 public class ClassPaths {
 
 	private static ClassPaths cp = new ClassPaths();
@@ -65,10 +81,23 @@ public class ClassPaths {
 	public final String JSP_UPDATE_GAME = jsp(ADMIN,UPDATE_GAME);
 	public final String JSP_GAME_LIST = jsp(ADMIN,GAME_LIST);
 	
+	/**
+	 * Appends project path to the provided string
+	 * 
+	 * @param name String
+	 * @return String
+	 */
 	private String redirect(String name) {
 		return new StringBuilder().append(PROJECT).append(name).toString();
 	}
 	
+	/**
+	 * Appends path of the folder, to the name, and then to the JSP string.
+	 * 
+	 * @param where String, path of the folder
+	 * @param name String name of the file
+	 * @return String
+	 */
 	private String jsp(String where, String name) {
 		return new StringBuilder().append(where).append(name).append(JSP).toString();
 	}

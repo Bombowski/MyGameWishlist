@@ -1,5 +1,11 @@
 package mygamewishlist.model.pojo.db;
 
+/**
+ * @author Patryk
+ *
+ * POJO class that contains a review, and it is used for
+ * generating a list of reviews
+ */
 public class ReviewList {
 
 	private double averageRating;

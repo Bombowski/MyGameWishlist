@@ -10,8 +10,8 @@
 	<div class="w-75 row mx-auto">
 	    <div class="col-md-6 col-sm-12 navbar navbar-expand ">
 	        <ul class="navbar-nav mx-auto mx-lg-0 mr-lg-auto">
-	            <li class="nav-link h4"><a href="/MyGameWishlist/ReviewList" class="nav-link btn btn-dark">Reviews</a></li>
-	            <li class="nav-link h4"><a href="/MyGameWishlist/MyList" class="nav-link btn btn-dark">My List</a></li>
+	            <li class="nav-link px-1"><a href="/MyGameWishlist/ReviewList" class="nav-link btn btn-dark">Reviews</a></li>
+	            <li class="nav-link px-1"><a href="/MyGameWishlist/MyList" class="nav-link btn btn-dark">My List</a></li>
 	        </ul>
 	    </div>
 	    <div class="col-md-3 col-sm-12 d-flex ml-md-auto">

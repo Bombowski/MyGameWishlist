@@ -1,5 +1,11 @@
 package mygamewishlist.model.pojo.db;
 
+/**
+ * @author Patryk
+ *
+ * POJO Class that additionally to containing WishListGame2Scrap
+ * objects, it also contains steam appid
+ */
 public class WishListGame2ScrapSteam extends WishListGame2Scrap {
 
 	private int appid;
