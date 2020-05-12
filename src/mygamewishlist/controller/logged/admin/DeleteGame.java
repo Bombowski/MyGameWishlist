@@ -53,6 +53,7 @@ public class DeleteGame extends HttpServlet {
 			cq_ejb.deleteGame(id);
 			
 			rd = getServletContext().getRequestDispatcher(cp.GAME_LIST);
+			request.setAttribute("r", "r");
 			rd.forward(request, response);
 		} catch(Exception e) {
 			LOG.logError(e.getMessage());

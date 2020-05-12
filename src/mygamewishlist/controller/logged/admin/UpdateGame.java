@@ -109,7 +109,7 @@ public class UpdateGame extends HttpServlet {
 					
 					cq_ejb.updateGame(g);
 					
-					response.sendRedirect(cp.REDIRECT_GAME_LIST);
+					getServletContext().getRequestDispatcher(cp.GAME_LIST).forward(request, response);
 				} else {
 					response.sendRedirect(cp.REDIRECT_UPDATE_GAME);
 				}

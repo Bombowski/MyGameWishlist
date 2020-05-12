@@ -73,7 +73,7 @@ pageEncoding="UTF-8"%>
 			        <div class="mr-3 my-auto">
 			             Average score
 			        </div>
-			        <div class="ml-3 align-self-end">
+			        <div class="ml-3 align-self-end my-auto">
 			            <div class="<% out.append(color); %> p-2 h5 my-auto">
 			                <% out.append(rating); %>
 			            </div>

@@ -97,7 +97,8 @@ public class AddGameOptions extends HttpServlet {
 				// if i recieved a list of picked games
 				cq_ejb.addGame2Wishlist(addGames(id, request), usr.getId());
 				games.clear();
-				response.sendRedirect(cp.REDIRECT_MYLIST);
+				RequestDispatcher rd = getServletContext().getRequestDispatcher(cp.MYLIST);
+				rd.forward(request, response);
 			} else {
 				// if i recieved a list of games
 				games.clear();

@@ -62,9 +62,15 @@ public class MyList extends HttpServlet {
 							cq_ejb.getListByIdUser(usr.getId()), 10);
 				}
 				
-				if (list == null) {
+				/*
+				 * if the list is null, or the restart attribute was sent, 
+				 * the list gets refreshed
+				 */
+				if (list == null || request.getAttribute("r") != null) {
+					request.removeAttribute("r");
+					
 					list = new Pagination<WishListGame>(
-						cq_ejb.getListByIdUser(usr.getId()), 10);
+						cq_ejb.getListByIdUser(usr.getId()), 10);					
 				}
 			}
 			
@@ -75,6 +81,19 @@ public class MyList extends HttpServlet {
 		} catch (Exception e) {
 			LOG.logError(e.getMessage());
 			response.sendRedirect(cp.JSP_LOGIN);
+		}
+	}
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		User usr = sc_ejb.getLoggedUser(request);
+		
+		if (usr == null) {
+			response.sendRedirect(cp.REDIRECT_LOGIN);
+		} else {
+			list = new Pagination<WishListGame>(
+					cq_ejb.getListByIdUser(usr.getId()), 10);
+			
+			response.sendRedirect(cp.REDIRECT_MYLIST);
 		}
 	}
 }

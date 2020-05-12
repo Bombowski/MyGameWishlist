@@ -154,16 +154,17 @@
 		<% if (list.size() == 0) { %>
 		<div class="mt-2 mx-auto w-75 d-flex justify-content-center">
 		<% } else { %>
-		<div class="mt-2 mx-auto w-75">
+		<div class="mt-2 mx-auto w-75 d-flex">
 		<% } %>
-               <a href="/MyGameWishlist/AddGameWishlist" class="btn btn-dark mx-2 bg-black">
-                   Add game
-               </a>
-               <button type="button" class="btn btn-dark mx-2" data-toggle="modal"
-                       data-target="#priceTimeline">Price timelines
-               </button>
-           </div>
-           <div class="d-flex flex-column justify-content-center mt-4 row">
+				
+            <a href="/MyGameWishlist/AddGameWishlist" class="btn btn-dark mx-2 bg-black">
+                Add game
+            </a>
+            <button type="button" class="btn btn-dark mx-2" data-toggle="modal"
+                 data-target="#priceTimeline">Price timelines
+            </button>
+        </div>
+        <div class="d-flex flex-column justify-content-center mt-4 row">
                <%
                    if (list.size() == 0) {
                 	   out.append(noGamesText);

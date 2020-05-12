@@ -2,27 +2,23 @@ package mygamewishlist.tests;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.ArrayList;
+import javax.ejb.EJB;
 
 import org.json.JSONException;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import mygamewishlist.model.ejb.CreateQueryEJB;
 import mygamewishlist.model.ejb.ScrapingEJB;
-import mygamewishlist.model.pojo.Pagination;
 import mygamewishlist.model.pojo.ScrapedGame;
-import mygamewishlist.model.pojo.db.WishListGame;
 import mygamewishlist.model.pojo.db.WishListGame2Scrap;
 
 public class ScrapingTesting {
 
-	private static CreateQueryEJB cq_ejb;
+	@EJB
 	private static ScrapingEJB scr_ejb;
 	
 	@BeforeClass
 	public static void init() {
-		cq_ejb = new CreateQueryEJB();
 		scr_ejb = new ScrapingEJB();
 	}
 	

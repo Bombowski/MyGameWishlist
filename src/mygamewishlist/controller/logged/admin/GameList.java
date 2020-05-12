@@ -57,7 +57,8 @@ public class GameList extends HttpServlet {
 				 * if the list is a null or a refresh parameter was sent,
 				 * the list gets refreshed.
 				 */
-				if(games == null || request.getParameter("r") != null) {
+				if(games == null || request.getAttribute("r") != null) {
+					request.removeAttribute("r");
 					games = new Pagination<Game>(cq_ejb.getGames(), 10);
 				}
 				
@@ -75,6 +76,19 @@ public class GameList extends HttpServlet {
 			rd.forward(request, response);
 		} catch(Exception e) {
 			LOG.logError(e.getMessage());
+		}
+	}
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		User usr = sc_ejb.getLoggedUser(request);
+		
+		if (usr == null) {
+			response.sendRedirect(cp.REDIRECT_LOGIN);
+		} else if (usr.getAdmin() != 1) {
+			response.sendRedirect(cp.REDIRECT_MYLIST);
+		} else {
+			games = new Pagination<Game>(cq_ejb.getGames(), 10);
+			response.sendRedirect(cp.REDIRECT_GAME_LIST);
 		}
 	}
 }

@@ -48,16 +48,19 @@
 	<jsp:include page="../../template/MainFront.jsp">
 		<jsp:param name="" value="" />
 	</jsp:include>
-		<div class="w-75 mx-auto">
-			<a class="btn btn-primary mb-4" href="/MyGameWishlist/AddGame">
-				Add game
-			</a>
+		<div class="w-75 mx-auto d-flex">
+			<div class="col-6">
+				<a class="btn btn-primary mb-4" href="/MyGameWishlist/AddGame">
+					Add game
+				</a>
+			</div class="col-6">
 		</div>
 		<div class="col-12 row justify-content-center d-flex d-md-none">
 			<%				
 				Table tbl = new Table();
-				tbl.addClass("table md-table text-center d-md-block d-none mx-auto bg-gray");
+				tbl.addClass("table md-table text-center d-md-block d-none mx-auto");
 				Tr th = new Tr();
+				th.addClass("bg-gray");
 				th.addClass("h4");
 				th.addTd("Name");
 				th.addTd("Description");
@@ -84,6 +87,7 @@
 					String delete = new A(del.print(),"/MyGameWishlist/DeleteGame?id=" + g.getId()).print();
 
 					Tr tr = new Tr();
+					tr.addClass("bg-gray");
 					tr.addTd(name);
 					tr.addTd(desc);
 					tr.addTd(genres);
@@ -113,7 +117,7 @@
 			                	<div class="my-auto">
 		                            <p class="m-0 p-0">Developer: </p>
 			                    </div>
-			                    <div class="my-auto">
+			                    <div class="ml-1 my-auto">
 		                            <% out.append(dev); %>
 			                    </div>
 		                	</div>
@@ -121,7 +125,7 @@
 		                		<div class="my-auto">
 		                            <p class="m-0 p-0">Release date: </p>
 			                    </div>    
-			                    <div class="my-auto">
+			                    <div class="ml-1 my-auto">
 		                            <% out.append(relD); %>
 			                    </div>
 		                	</div>

@@ -140,7 +140,7 @@ footer {
     }
 }
 
-@media only screen and (max-width: 1000px) {
+@media only screen and (max-width: 1200px) {
     .md-table {
     	width: 100% !important;
     }

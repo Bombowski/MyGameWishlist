@@ -101,7 +101,8 @@ public class AddGame extends HttpServlet {
 				g.setReleaseDate(rDate);
 				
 				cq_ejb.addGame(g);
-				response.sendRedirect(cp.REDIRECT_GAME_LIST);
+				
+				getServletContext().getRequestDispatcher(cp.GAME_LIST).forward(request, response);
 			} else {
 				response.sendRedirect(cp.REDIRECT_ADD_GAME);
 			}

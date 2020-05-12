@@ -89,7 +89,8 @@ public class UpdateGameWishlist extends HttpServlet {
 			double max = lowerThan0(Double.parseDouble(request.getParameter("max")));
 			
 			cq_ejb.updateMinMax(min, max, url, usr.getId());
-			response.sendRedirect(cp.REDIRECT_MYLIST);			
+			RequestDispatcher rd = getServletContext().getRequestDispatcher(cp.MYLIST);
+			rd.forward(request, response);
 		} catch(Exception e) {
 			LOG.logError(e.getMessage());
 			response.sendRedirect(cp.REDIRECT_MYLIST);

@@ -39,11 +39,12 @@ public class DeleteGameWishlist extends HttpServlet {
 	 * Deletes game from wishlist
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		RequestDispatcher rd;
 		try {
 			User usr = sc_ejb.getLoggedUser(request);
 			
 			if (usr == null) {
-				RequestDispatcher rd = getServletContext().getRequestDispatcher(cp.LOGIN);
+				rd = getServletContext().getRequestDispatcher(cp.LOGIN);
 				rd.forward(request, response);
 				return;
 			}
@@ -54,7 +55,8 @@ public class DeleteGameWishlist extends HttpServlet {
 		} catch(Exception e) {
 			LOG.logError(e.getMessage());
 		}
-		RequestDispatcher rd = getServletContext().getRequestDispatcher(cp.MYLIST);
+		rd = getServletContext().getRequestDispatcher(cp.MYLIST);
+		request.setAttribute("r", "r");
 		rd.forward(request, response);
 	}
 }

@@ -52,7 +52,7 @@
 	<jsp:include page="../template/MainFront.jsp">
 		<jsp:param name="" value="" />
 	</jsp:include>
-		<div style="width: 900px; height: 450px;" class="m-auto color-white">
+		<div id="chartContainer" style="width: 100%; height: 80vh;" class="m-auto color-white">
             <canvas id="ctx" class="bg-gray color-white">
                 <script>
 	                <%
@@ -118,6 +118,8 @@
                     		],
                         },                            
                         options: {
+                        	responsive: true,
+                        	maintainAspectRatio: false,
                             scales: {
                                 yAxes: [{
                                     ticks: {
