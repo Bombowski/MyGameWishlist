@@ -43,6 +43,7 @@
 		<jsp:param name="" value="" />
 	</jsp:include>
 	<%
+		// getting lists of genres and developers
 		@SuppressWarnings("unchecked")
 		ArrayList<Genre> genres = (ArrayList<Genre>)request.getAttribute("genres");
 		@SuppressWarnings("unchecked")
@@ -87,7 +88,8 @@
 						<select name="idDev" class="form-control">
 							<% 
 								StringBuilder sb = new StringBuilder();
-							
+								
+	                    		// printing developers list
 								for (Developer dev : developers) {
 									sb.append("<option value='")
 										.append(dev.getId())
@@ -105,6 +107,7 @@
 			<div class="my-2 mx-auto bg-gray w-75">
                 <div class="row mx-auto justify-content-center">
                     <%
+                    	// printing genres list
 						for (Genre g : genres) {
 							%>
 							<div class="d-flex flex-row col-xl-2 col-lg-3 col-md-4 col-sm-5 col-12 my-1 border-right border-white checkbox-block">

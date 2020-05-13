@@ -1,6 +1,7 @@
 <%@page import="java.awt.Color"%>
 <%@page import="bomboshtml.body.A"%>
 <%@page import="java.util.List"%>
+<%@page import="java.util.Map.Entry"%>
 <%@page import="java.util.Calendar"%>
 <%@page import="java.time.LocalDate"%>
 <%@page import="org.json.JSONArray"%>
@@ -56,6 +57,7 @@
             <canvas id="ctx" class="bg-gray color-white">
                 <script>
 	                <%
+	                // getting all of the object lists
 	                @SuppressWarnings("unchecked")
 	                Hashtable<String, ArrayList<TimelineGameDetailed>> list = (Hashtable<String, ArrayList<TimelineGameDetailed>>)request.getAttribute("list");
 	                @SuppressWarnings("unchecked")
@@ -64,27 +66,33 @@
 	                ArrayList<String> names = (ArrayList<String>)request.getAttribute("names");
 	                JSONArray labels = new JSONArray();
 	                
-	                for (LocalDate ld : dates) {
-	                	labels.put(ld);
-	                }
-	                
 	                if (list == null || dates == null) {
 	                	response.sendRedirect(cp.REDIRECT_MYLIST);
 	                }
+	                
+	                // creating all of the labels with dates.
+	                for (LocalDate ld : dates) {
+	                	labels.put(ld);
+	                }
 	                %>
+	                // getting canvas context
                     var ctx = document.getElementById("ctx").getContext('2d');
+	                // creating chart
                     var chart = new Chart(ctx, {
                         type: 'line',
                         data: {
+                        	// printing labels
                             labels: <% out.append(labels.toString()); %>,
                             datasets: [
                             <%
+                            // generating list with random colors
+                            ArrayList<Color> colors = jspF.generateColors(list.size());                            
                             int i = 0;
-                            ArrayList<Color> colors = jspF.generateColors(list.size()); 
-                            for (String key : list.keySet()) {
-                            	ArrayList<TimelineGameDetailed> tmp = list.get(key);
+                            for (ArrayList<TimelineGameDetailed> value : list.values()) {
                             	JSONArray jsArr = new JSONArray();
+                            	// getting colors
                             	Color c = colors.get(i);
+                            	// generating html rgb color
                             	String color = new StringBuilder()
                             			.append("rgb(")
                        					.append(c.getRed())
@@ -95,11 +103,13 @@
                        					.append(")")
                        					.toString();
                             	
-                            	for (TimelineGameDetailed tlgd : tmp) {
+                            	// adding prices to timeline
+                            	for (TimelineGameDetailed tlgd : value) {
                             		jsArr.put(tlgd.getPrice() == 0 ? null : tlgd.getPrice());
                             	}
                             %>	                            
 	                        	{
+	                        		// generating line
 	                            	label: "<% out.print(names.get(i)); %>",
 	                            	fill: false,
 	                                lineTension: 0,

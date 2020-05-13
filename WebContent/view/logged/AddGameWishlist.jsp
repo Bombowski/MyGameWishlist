@@ -63,10 +63,12 @@
 				<div class="col-12 row flex-row justify-content-center">
 					<%
 						try {
+							// getting list of stores
 							@SuppressWarnings("unchecked")
 							ArrayList<Store> stores = (ArrayList<Store>) request.getAttribute("stores");
 							StringBuilder sb = new StringBuilder();
 							
+							// for each store printing an option
 							for (Store st : stores) {
 							%>
 							<div class="flex-column row col-xl-3 col-lg-4 col-md-5 col-sm-6 col-12 bg-gray my-3 mx-2 px-0 py-2 checkbox-block hide-chkbox">

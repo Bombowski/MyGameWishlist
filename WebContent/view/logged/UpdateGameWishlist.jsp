@@ -18,6 +18,7 @@
 
 	if (usr == null) {
 		response.sendRedirect(cp.REDIRECT_LOGIN);
+		return;
 	}
 %>
 

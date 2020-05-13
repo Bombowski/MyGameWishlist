@@ -28,6 +28,7 @@
 		response.sendRedirect(cp.REDIRECT_MYLIST);
 	}
 	
+	// getting list of games from request
 	@SuppressWarnings("unchecked")
 	ArrayList<Game> games = (ArrayList<Game>) request.getAttribute("games");
 %>
@@ -56,7 +57,8 @@
 			</div class="col-6">
 		</div>
 		<div class="col-12 row justify-content-center d-flex d-md-none">
-			<%				
+			<%		
+				// creating table
 				Table tbl = new Table();
 				tbl.addClass("table md-table text-center d-md-block d-none mx-auto");
 				Tr th = new Tr();
@@ -72,11 +74,13 @@
 				
 				tbl.addRow(th);
 				
+				// preparing images
 				Img edit = new Img("view/imgs/edit.png");
 				edit.addClass("table-icon");
 				Img del = new Img("view/imgs/delete.png");
 				del.addClass("table-icon");
 				
+				// printing games
 				for (Game g : games) {
 					String name = g.getName();
 					String desc = g.getDescription() == null ? "No description" : g.getDescription();
@@ -98,6 +102,7 @@
 					
 					tbl.addRow(tr);
 				%>
+					<!-- Printing view for mobile devices -->
 					<div class="boxes bg-gray col-sm-5 col-12 text-center ml-sm-4 ml-0 mt-3 px-2 row">
 		             	<div class="row flex-row mx-auto">
 			             	<div class="col-12 m-1 mt-2">
@@ -144,6 +149,7 @@
 					%>
 					</div>
 					<%
+					// printing buttons with page numbers
 				out.print(tbl.print());
 				StringBuilder sb = new StringBuilder().append("<div class='mt-3 justify-content-center d-flex col-12'>");
 				

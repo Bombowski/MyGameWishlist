@@ -43,6 +43,7 @@
 		<jsp:param name="" value="" />
 	</jsp:include>		
 		<%
+			// getting game
 			GameFull g = (GameFull)request.getAttribute("game");
 		
 			if (g == null) {
@@ -50,6 +51,7 @@
 				return;
 			}
 		
+			// getting lists of genres and developers
 			@SuppressWarnings("unchecked")
 			ArrayList<Genre> genres = (ArrayList<Genre>)request.getAttribute("genres");
 			@SuppressWarnings("unchecked")
@@ -96,6 +98,7 @@
 							<% 
 								StringBuilder sb = new StringBuilder();
 							
+	                    		// printing select with developers
 								for (Developer dev : developers) {
 									if (g.getDeveloper().equals(dev.getName())) {
 										sb.append("<option selected value='");
@@ -117,15 +120,23 @@
 			<div class="my-2 mx-auto bg-gray w-75">
                 <div class="row mx-auto justify-content-center">
                     <%
+                    	// getting list of genres
                     	String[] arrStr = g.getIdGenres().split(", ");
                     	ArrayList<Integer> arr = new ArrayList<Integer>();
                     	
-                    	for (String s : arrStr) {
-                    		arr.add(Integer.parseInt(s));
+                    	try {
+                    		for (String s : arrStr) {
+                        		arr.add(Integer.parseInt(s));
+                        	}
+                    	} catch(NumberFormatException e) {
+                    		log.logError(e.getMessage());
+                    		response.sendRedirect(cp.REDIRECT_GAME_LIST);
+                    		return;
                     	}
                     	
                     	int i = 0;
                     	String checked = "";
+                    	// printing list of genres
 						for (Genre ge : genres) {
 							if (arr.contains(ge.getId())) {
 								checked = "checked";

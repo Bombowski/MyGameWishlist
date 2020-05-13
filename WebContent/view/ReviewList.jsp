@@ -50,18 +50,20 @@ pageEncoding="UTF-8"%>
 	</jsp:include>	
 		<div class="d-flex row justify-content-center">
 		<%
+			// Getting list of reviews
 			@SuppressWarnings("unchecked")
 			ArrayList<ReviewList> reviews = (ArrayList<ReviewList>)request.getAttribute("reviews");
 			
-			String rateInfo = usr == null ? "Game info" : "Rate/ Game info";
-			
+			// Printing a list of games and their average rating
 			for (ReviewList rl : reviews) {
 				double avgRating = rl.getAverageRating();
 				String rating = avgRating == -1 ? "-" : avgRating + "";
+				// building link with id of the game as param
 				StringBuilder sb = new StringBuilder()
 						.append(cp.REDIRECT_GAME_INFO)
 						.append("?id=")
 						.append(rl.getIdGame());
+				// getting random color
 				String color = jspF.getPriceBgColor(avgRating);
 		%>
 			<div class="bg-gray col-xl-2 col-lg-3 col-md-4 col-sm-5 col-12 text-center ml-sm-4 ml-0 mt-3 px-2 row">
@@ -92,11 +94,14 @@ pageEncoding="UTF-8"%>
 		<% 
 			}
 			
+			// div that contains numbers of pages
 			StringBuilder sb = new StringBuilder().append("<div class='mt-3 justify-content-center d-flex col-12'>");
 			
+			// getting total number of pages, and current page number
 			int noPags = (Integer)request.getAttribute("total");
 			int pag = (Integer)request.getAttribute("pag");
 			
+			// adding all links to StringBuilder
 			for (int i = 0; i < noPags; i++) {
 				A a = new A((i + 1) + "", cp.REDIRECT_REVIEW_LIST + "?pag=" + i);					
 				String color = i == pag ? "btn-primary" : "btn-dark";					

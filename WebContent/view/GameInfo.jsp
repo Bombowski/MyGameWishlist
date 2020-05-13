@@ -56,6 +56,7 @@ pageEncoding="UTF-8"%>
 			GameFull g = null;
 			ArrayList<ReviewOfGame> reviews = null;
 			ReviewOfGame rog = null;
+			// getting all of the objects
 			try {
 				 g = (GameFull) request.getAttribute("game");
 				 reviews = (ArrayList<ReviewOfGame>) request.getAttribute("reviews");
@@ -161,6 +162,7 @@ pageEncoding="UTF-8"%>
         </div>
         <div class="row justify-content-center">
         	<%
+        		// if the list of reviews isn't empty it is getting printed
         		if (reviews != null) {
         			for (ReviewOfGame rev : reviews) {
         	%>

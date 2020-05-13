@@ -26,6 +26,7 @@
 	User usr = jspF.getLoggedUser(request.getSession(false));
 	String noGamesText = "<p class='text-center h4'>No games on your wishlist... yet.</p>";
 
+	// getting page number
 	int pag = 0;
 	try {
 		pag = Integer.parseInt(request.getParameter("pag"));	
@@ -87,8 +88,10 @@
 								</div>							
 							</div>	
 							<%
+								// generating table contained in the modal.
 								Table tbl = new Table();
 								tbl.addClass("table");
+								// generating header
 								Tr th = new Tr();
 								th.addClass("h4");
 								th.addTd("Title");
@@ -99,6 +102,7 @@
 								
 								tbl.addRow(th);
 								
+								// getting lists from request
 								@SuppressWarnings("unchecked")
 								Pagination<WishListGame> list = (Pagination<WishListGame>) request.getAttribute("list");
 								@SuppressWarnings("unchecked")
@@ -107,6 +111,7 @@
 									if (list.size() == 0) {
 										out.append("No games on your wishlist... yet.");
 									} else {
+										// for each item creating a row
 										for (WishListGame wlg : list) {
 											Tr tr = new Tr();
 											tr.addClass("checkbox-block");
@@ -119,6 +124,7 @@
 												}
 											}
 
+											// generating checkbox
 											tr.addTd(new Input("checkbox", "games", new StringBuilder()
 													.append(wlg.getUrlGame())
 													.append("&")
@@ -166,6 +172,7 @@
         </div>
         <div class="d-flex flex-column justify-content-center mt-4 row">
                <%
+               	   // if list isn't empty generaing game data
                    if (list.size() == 0) {
                 	   out.append(noGamesText);
                    } else {
@@ -175,9 +182,11 @@
            	   <div class="col-12 row justify-content-center d-flex d-md-none">
 		<%
 			try {
+				// creating table that contains all of the data
 				tbl = new Table();
 				tbl.addClass("table md-table text-center d-md-block d-none mx-auto bg-gray");
 				
+				// creating header
 				th = new Tr();
 				th.addClass("h5");
 				th.addTd("");
@@ -192,11 +201,13 @@
 				
 				tbl.addRow(th);
 
+				// preparing images
 				Img del = new Img("view/imgs/delete.png","delete");
 				del.addClass("table-icon");
 				Img edit = new Img("view/imgs/edit.png","edit");
 				edit.addClass("table-icon");
 				
+				// printing current page
 				for (WishListGame g : list.getPag(pag)) {
 					String img = jspF.buildImg(g);
 					String title = "";
@@ -214,6 +225,7 @@
 						}
 					}
 					
+					// building row
 					Tr tr = new Tr();
 					tr.addTd(img);					
 					tr.addTd(title);
@@ -226,6 +238,7 @@
 					
 					tbl.addRow(tr);	
 				%>
+					<!-- printing view for mobile devices -->
 					<div class="boxes bg-gray col-sm-5 col-12 text-center ml-sm-4 ml-0 mt-3 px-2 row">
 		             	<div class="row flex-row mx-auto">
 		             		<div class="col-12 m-1 mt-2">
@@ -276,6 +289,7 @@
 					response.sendRedirect(cp.REDIRECT_MYLIST);
 				}
 				
+				// printing page number buttons
 				StringBuilder sb = new StringBuilder().append("<div class='mt-3 justify-content-center d-flex col-12'>");
 				for (int i = 0; i < list.getTotalPag(); i++) {
 					A a = new A((i + 1) + "", cp.REDIRECT_MYLIST + "?pag=" + i);					

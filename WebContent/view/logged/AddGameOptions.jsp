@@ -1,5 +1,6 @@
 <%@page import="bomboshtml.body.Input"%>
 <%@page import="java.util.Hashtable"%>
+<%@page import="java.util.Map.Entry"%>
 <%@page import="mygamewishlist.model.pojo.ScrapedGame"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="mygamewishlist.model.pojo.db.User"%>
@@ -49,6 +50,7 @@
 			<div class="d-flex row col-12 mb-3">
 				<div class="col-6 d-flex justify-content-start">
 				<% 
+					// getting and printing search param
 					String searchParam = (String)request.getAttribute("search");
 					
 					searchParam = searchParam == null ? "" : searchParam;
@@ -66,6 +68,7 @@
 				<div class="buttons col-6">
 				<%
 					try {
+						// getting list of stores and games
 						@SuppressWarnings("unchecked")
 						ArrayList<String> stores = (ArrayList<String>)request.getAttribute("stores");
 						@SuppressWarnings("unchecked")
@@ -79,6 +82,7 @@
 							return;
 						}
 						
+						// printing buttons with stores
 						for (String str : stores) {
 							if (str != null) {
 								out.append("<button type='button' class='h5 btn btn-dark mr-2' id='")
@@ -100,20 +104,23 @@
 				<%
 						String noR = "No results.";
 						
-						for (String key : games.keySet()) {
-							ArrayList<ScrapedGame> list = games.get(key);
+						// printing all of the results
+						for (Entry<String,ArrayList<ScrapedGame>> entry : games.entrySet()) {
+							ArrayList<ScrapedGame> list = entry.getValue();
 							
 							if (list == null) {
 								out.append("<div id='store'></div>");
 							} else {
+								// setting div id
 								out.append("<div id='")
-									.append(key)
+									.append(entry.getKey())
 									.append("tbl' class='row flex-row justify-content-center w-100'>");
 								
 									if (list.isEmpty()) { 
 										out.append(noR);
 									} else {
 										int i = 0;
+										// printing results
 										for (ScrapedGame sg : list) {
 											Input in = new Input("checkbox", "games", sg.getStoreName() + "&" +  i);
 											in.addClass("d-none position-absolute mt-2 ml-2 align-left chkBox");
