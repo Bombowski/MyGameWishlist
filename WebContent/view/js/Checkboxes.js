@@ -51,19 +51,27 @@ function initCheck(e) {
 		$(errors).text("")
 	}
     
-    var ref = window.location.href;
+    
     ele = this;
+    var att = $("html").attr("url");
+    var ref;
+    if (att != undefined) {
+    	ref = att;
+    } else {
+    	ref = window.location.href;
+    }
+    
     setTimeout(function() {
-    	setError(ele, getError(ref.substring(ref.lastIndexOf("/"))));
+    	setError(ele, getError(ref.substring(ref.lastIndexOf("/") + 1)));
     }, 200);
 }
 
 function getError(page) {
-	if (/^(.*\/MyList.*)$/.test(page) || /^(.*\/AddGameOptions.*)$/.test(page)) {
+	if (/^(.*MyList.*)$/.test(page) || /^(.*AddGameOptions.*)$/.test(page)) {
 		return "No items were selected";
-	} else if (/^(.*\/AddGameWishlist.*)$/.test(page)) {
+	} else if (/^(.*AddGameWishlist.*)$/.test(page)) {
 		return "No stores were selected";
-	} else if (/^(.*\/UpdateGame.*)$/.test(page) || /^(.*\/AddGame.*)$/.test(page)) {
+	} else if (/^(.*UpdateGame.*)$/.test(page) || /^(.*AddGame.*)$/.test(page)) {
 		return "No game genres were selected";
 	}
 	return "Unexpected error";

@@ -24,7 +24,7 @@
 	}
 %>
 
-<html>
+<html url="AddGameOptions">
 <jsp:include page="../template/Head.jsp">
 	<jsp:param name="js" value="AddGameOptions,ResizeImgs,Checkboxes" />
 </jsp:include>
@@ -102,7 +102,7 @@
 			</div>
             <div id="tables" class="col-12 row flex-row mx-auto justify-content-center">
 				<%
-						String noR = "No results.";
+						String noR = "<h5>No results.</5>";
 						
 						// printing all of the results
 						for (Entry<String,ArrayList<ScrapedGame>> entry : games.entrySet()) {
