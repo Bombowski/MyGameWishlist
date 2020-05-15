@@ -191,6 +191,7 @@ public class ScrapingSteam {
 	public ScrapedGame getGame(WishListGame2Scrap wlg) {
 		WishListGame2ScrapSteam wlgs = (WishListGame2ScrapSteam)wlg;
 		ScrapedGame toReturn = new ScrapedGame();
+		toReturn.setCurrentPrice(-1);
 		
 		// create the link with appid
 		SteamApiLink sal = new SteamApiLink();
@@ -227,6 +228,13 @@ public class ScrapingSteam {
 			}
 		} catch (JSONException | ServerErrorException e) {
 			LOG.logError(e.getMessage());
+		} catch (Exception e) {
+			StringBuilder sb = new StringBuilder();
+			for (StackTraceElement ste : e.getStackTrace()) {
+				sb.append(ste.toString())
+					.append("\n");
+			}
+			LOG.logError(sb.toString());
 		}
 		
 		return toReturn;

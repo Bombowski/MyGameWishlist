@@ -129,17 +129,19 @@ public class ScrapingInstantGaming {
 	 */
 	public ScrapedGame getGame(WishListGame2Scrap wlg) {
 		ScrapedGame toReturn = new ScrapedGame();
+		
 		// get the document
 		Document doc = null;
 		try {
 			LOG.logDebug(wlg.toString());
 			doc = ScrapingFunctions.getDoc(wlg.getUrlStore() + wlg.getUrlGame(), "");
 		} catch (IOException e1) {
-			LOG.logError(e1.getMessage().concat(" - IOException ScrapingInstantGaming"));
-			
+			LOG.logError(e1.getMessage());
+		} catch (Exception e) {
 			StringBuilder sb = new StringBuilder();
-			for (StackTraceElement ste : e1.getStackTrace()) {
-				sb.append(ste.toString());
+			for (StackTraceElement ste : e.getStackTrace()) {
+				sb.append(ste.toString())
+					.append("\n");
 			}
 			LOG.logError(sb.toString());
 		}

@@ -110,31 +110,39 @@ public class ScrapingGOG {
 	 * @return
 	 */
 	public ScrapedGame getGame(WishListGame2Scrap wlg) {
+		ScrapedGame toReturn = new ScrapedGame();
+		toReturn.setCurrentPrice(-1);		
+		
 		Document doc = null;
 		try {
 			doc = ScrapingFunctions.getDocCookie(wlg.getUrlStore() + wlg.getUrlGame(), "", "gog_lc", "ES_EUR_en-US");
 		} catch (IOException e) {
 			 LOG.logError(e.getMessage());
+		} catch (Exception e) {
+			StringBuilder sb = new StringBuilder();
+			for (StackTraceElement ste : e.getStackTrace()) {
+				sb.append(ste.toString())
+					.append("\n");
+			}
+			LOG.logError(sb.toString());
 		}
 		
 		// checking if doc isn't null
 		if (doc == null) {
-			return null;
+			return new ScrapedGame();
 		}
-		
-		ScrapedGame sc = new ScrapedGame();
 		
 		// setting all of the values
-		sc.setDefaultPrice(Double.parseDouble(doc.select(".product-actions-price__base-amount").text()));		
-		sc.setCurrentPrice(Double.parseDouble(doc.select(".product-actions-price__final-amount").text()));
+		toReturn.setDefaultPrice(Double.parseDouble(doc.select(".product-actions-price__base-amount").text()));		
+		toReturn.setCurrentPrice(Double.parseDouble(doc.select(".product-actions-price__final-amount").text()));
 		
-		if (sc.getCurrentPrice() == sc.getDefaultPrice()) {
-			sc.setCurrentDiscount(0);
+		if (toReturn.getCurrentPrice() == toReturn.getDefaultPrice()) {
+			toReturn.setCurrentDiscount(0);
 		} else {
-			sc.setCurrentDiscount(Math.round(
-					(100 - sc.getCurrentPrice() * 100 / sc.getDefaultPrice()) * 100) / 100);			
+			toReturn.setCurrentDiscount(Math.round(
+					(100 - toReturn.getCurrentPrice() * 100 / toReturn.getDefaultPrice()) * 100) / 100);			
 		}
 		
-		return sc;
+		return toReturn;
 	}
 }
