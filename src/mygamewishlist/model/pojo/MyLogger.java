@@ -12,10 +12,10 @@ import ch.qos.logback.classic.Logger;
 public class MyLogger {
 
 	private static MyLogger ml = new MyLogger();
-	private static Logger err;
+	private static Logger logger;
 	
 	private MyLogger() {
-		err = (Logger) LoggerFactory.getLogger("FILE_ERROR");
+		logger = (Logger) LoggerFactory.getLogger("DefaultLogger");
 	}
 	
 	public static MyLogger getLOG() {
@@ -35,7 +35,7 @@ public class MyLogger {
 	 * @param msg String
 	 */
 	public void logError(String msg) {
-		err.error(msg);
+		logger.error(msg);
 	}
 	
 	/**
@@ -44,6 +44,6 @@ public class MyLogger {
 	 * @param msg String
 	 */
 	public void logDebug(String msg) {
-		err.debug(msg);
+		logger.debug(msg);
 	}
 }

@@ -42,8 +42,10 @@ public class TimersEJB {
 	 */
 	ArrayList<ScrapedGame> toSend;
 	
-	public TimersEJB() {
-	}
+	/**
+	 * Empty constructor for ejb
+	 */
+	public TimersEJB() {}
 
 	/**
 	 * Used for initializing EJB, as they don't seem to initialize

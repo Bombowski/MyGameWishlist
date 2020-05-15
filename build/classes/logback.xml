@@ -1,17 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <configuration>
-
-	<appender name="FILE_ERROR"
-		class="ch.qos.logback.core.FileAppender">
-		<file> mygamewishlist.log </file>
+	
+	<appender name="FILE1" class="ch.qos.logback.core.FileAppender">
+		<file>mygamewishlist.log</file>
+		<append>true</append>
 		<encoder>
-			<pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{35} -
-				%msg%n</pattern>
+			<pattern>%d{dd-MM-yyyy - HH:mm:ss} %-4relative [%thread] %-5level
+				%logger{35} - %msg%n</pattern>
 		</encoder>
 	</appender>
-	
+
+	<appender name="FILE2" class="ch.qos.logback.core.FileAppender">
+		<file>database.log</file>
+		<append>true</append>
+		<encoder>
+			<pattern>%d{dd-MM-yyyy - HH:mm:ss} %-4relative [%thread] %-5level
+				%logger{35} - %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<Logger name="DefaultLogger" level="debug">
+		<appender-ref ref="FILE1" />
+	</Logger>
+
+	<Logger name="org.apache.ibatis" level="debug">
+		<appender-ref ref="FILE2" />
+	</Logger>
+
+	<Logger name="java.sql" level="debug">
+		<appender-ref ref="FILE2" />
+	</Logger>
+
 	<root level="debug">
-		<appender-ref ref="FILE_ERROR" />
+		<!-- No hay -->
 	</root>
 </configuration>
