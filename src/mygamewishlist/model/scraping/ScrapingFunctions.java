@@ -3,6 +3,7 @@ package mygamewishlist.model.scraping;
 import java.io.IOException;
 import java.util.HashMap;
 
+import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
@@ -13,7 +14,10 @@ import org.jsoup.nodes.Document;
  */
 public class ScrapingFunctions {
 	
-	private ScrapingFunctions() {};
+	private static final String CURRENT_USR_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36";
+	private static final String REFERRER = "http://www.google.com";
+	
+	private ScrapingFunctions() {}
 	
 	/**
 	 * Replaces all of the commas by dots, euros by empty string, and
@@ -35,11 +39,10 @@ public class ScrapingFunctions {
 	 * @throws IOException
 	 */ 
 	protected static Document getDoc(String url, String name) throws IOException {
-		return Jsoup.connect(new StringBuilder()
-				.append(url)
-				.append(name)
-				.toString())
-			.execute().bufferUp().parse();
+		return getConection(url, name)
+				.userAgent(CURRENT_USR_AGENT)
+				.referrer(REFERRER)
+				.execute().bufferUp().parse();
 	}
 	
 	/**
@@ -54,12 +57,11 @@ public class ScrapingFunctions {
 	 * @throws IOException
 	 */
 	protected static Document getDocCookie(String url, String name, String ckName, String ckValue) throws IOException {
-		return Jsoup.connect(new StringBuilder()
-				.append(url)
-				.append(name)
-				.toString())
-			.cookie(ckName, ckValue)	
-			.execute().bufferUp().parse();
+		return getConection(url, ckName)
+				.userAgent(CURRENT_USR_AGENT)
+				.referrer(REFERRER)
+				.cookie(ckName, ckValue)	
+				.execute().bufferUp().parse();
 	}
 	
 	/**
@@ -72,13 +74,23 @@ public class ScrapingFunctions {
 	 * @return Document
 	 * @throws IOException
 	 */
-	protected static Document getDocCookie(String url, String name, HashMap<String, String> cookies) throws IOException {
-		return Jsoup.connect(new StringBuilder()
-				.append(url)
-				.append(name)
-				.toString())
-			.cookies(cookies)
-			.execute().bufferUp().parse();
+	protected static Document getDocCookie(String url, String name, HashMap<String, String> cookies) throws IOException {		
+		return getConection(url, name)
+				.userAgent(CURRENT_USR_AGENT)
+				.referrer(REFERRER)
+				.cookies(cookies)
+				.execute().bufferUp().parse();
+	}
+	
+	/**
+	 * Returns a conection of url + name
+	 * 
+	 * @param url String
+	 * @param name String
+	 * @return Conection
+	 */
+	private static Connection getConection(String url, String name) {
+		return Jsoup.connect(url + name);
 	}
 	
 	/**
