@@ -86,7 +86,7 @@ public class TimersEJB {
 		String time = getDate();
 
 		/*
-		 * this hashtable will store all of the checked games, it will be used
+		 * this hashtable will store all of the checked games
 		 */
 		Hashtable<String, ScrapedGame> chkedGames = new Hashtable<String, ScrapedGame>();
 		// get users that have at least one game in their wishlist
