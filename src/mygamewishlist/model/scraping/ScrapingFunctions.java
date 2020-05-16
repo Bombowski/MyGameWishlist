@@ -57,7 +57,7 @@ public class ScrapingFunctions {
 	 * @throws IOException
 	 */
 	protected static Document getDocCookie(String url, String name, String ckName, String ckValue) throws IOException {
-		return getConection(url, ckName)
+		return getConection(url, name)
 				.userAgent(CURRENT_USR_AGENT)
 				.referrer(REFERRER)
 				.cookie(ckName, ckValue)	

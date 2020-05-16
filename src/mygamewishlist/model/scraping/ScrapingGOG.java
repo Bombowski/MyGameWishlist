@@ -115,6 +115,7 @@ public class ScrapingGOG {
 		
 		Document doc = null;
 		try {
+			LOG.logDebug(wlg.toString());
 			doc = ScrapingFunctions.getDocCookie(wlg.getUrlStore() + wlg.getUrlGame(), "", "gog_lc", "ES_EUR_en-US");
 		} catch (IOException e) {
 			 LOG.logError(e.getMessage());
@@ -129,12 +130,20 @@ public class ScrapingGOG {
 		
 		// checking if doc isn't null
 		if (doc == null) {
-			return new ScrapedGame();
+			return toReturn;
 		}
 		
 		// setting all of the values
-		toReturn.setDefaultPrice(Double.parseDouble(doc.select(".product-actions-price__base-amount").text()));		
-		toReturn.setCurrentPrice(Double.parseDouble(doc.select(".product-actions-price__final-amount").text()));
+		try {
+			toReturn.setDefaultPrice(Double.parseDouble(doc.select(".product-actions-price__base-amount").text()));		
+			toReturn.setCurrentPrice(Double.parseDouble(doc.select(".product-actions-price__final-amount").text()));
+		} catch(NumberFormatException e) {
+			LOG.logError("base amount:" + doc.select(".product-actions-price__base-amount").text());
+			LOG.logError("final amount:" + doc.select(".product-actions-price__final-amount").text());
+			toReturn.setDefaultPrice(-1);
+			return toReturn;
+		}
+		
 		
 		if (toReturn.getCurrentPrice() == toReturn.getDefaultPrice()) {
 			toReturn.setCurrentDiscount(0);
