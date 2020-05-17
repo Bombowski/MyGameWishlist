@@ -33,6 +33,6 @@
 	</Logger>
 
 	<root level="debug">
-		<!-- No hay -->
+		
 	</root>
 </configuration>
