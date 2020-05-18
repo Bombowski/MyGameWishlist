@@ -29,7 +29,8 @@
 	// getting page number
 	int pag = 0;
 	try {
-		pag = Integer.parseInt(request.getParameter("pag"));	
+		String pagStr = request.getParameter("pag");
+		pag = pagStr == null ? 0 : Integer.parseInt(pagStr);	
 	} catch (NumberFormatException e) {
 		log.logError(e.getMessage());
 	}

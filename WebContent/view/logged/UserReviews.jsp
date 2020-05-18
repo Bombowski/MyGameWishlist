@@ -81,7 +81,7 @@
 									Your review:
 								</div>
 								<div class="h6">
-									<% out.append(rev.getReview()); %>
+									<% out.append(jspF.ifNullEmpty(rev.getReview())); %>
 								</div>
 							</div>
 							<div class="col-6 d-flex flex-column">

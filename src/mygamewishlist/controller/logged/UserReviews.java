@@ -46,6 +46,10 @@ public class UserReviews extends HttpServlet {
 				String id = request.getParameter("id");
 				rd = getServletContext().getRequestDispatcher(cp.JSP_USER_REVIEWS);
 				
+				/*
+				 * if the id of the game isn't null, it means that the user is trying to delete
+				 * one of his reviews.
+				 */
 				if (id != null) {
 					cq_ejb.deleteReview(usr.getId(), Integer.parseInt(id));
 				}

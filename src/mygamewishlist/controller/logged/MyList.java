@@ -72,10 +72,10 @@ public class MyList extends HttpServlet {
 					list = new Pagination<WishListGame>(
 						cq_ejb.getListByIdUser(usr.getId()), 10);					
 				}
+				
+				request.setAttribute("stores", cq_ejb.getStores());
+				request.setAttribute("list", list);
 			}
-			
-			request.setAttribute("stores", cq_ejb.getStores());
-			request.setAttribute("list", list);
 
 			rd.forward(request, response);
 		} catch (Exception e) {
