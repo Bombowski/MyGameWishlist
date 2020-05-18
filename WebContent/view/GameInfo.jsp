@@ -65,6 +65,10 @@ pageEncoding="UTF-8"%>
 				 log.logError(e.getMessage());
 				 response.sendRedirect(cp.REDIRECT_GAME_LIST);
 			}
+			
+			if (rog == null) {
+				rog = new ReviewOfGame();
+			}
 		%>
 		<div class="row d-flex flex-md-row flex-column mb-5">
 			<div class="row d-flex flex-column col-md-6 col-12 mx-auto">
@@ -143,7 +147,7 @@ pageEncoding="UTF-8"%>
 	                    </div>
 	                    <div class="col-md-6 col-12 d-flex color-black mx-auto">
 	                        <input class="form-control my-auto" name="rating" type="number" step='0.01' min='0' required 
-	                        	value="<% out.append(rog.getRating() + ""); %>">
+	                        	value="<% out.append(rog.getRating() + "");%>">
 	                    </div>
                     </div>
                 </div>
@@ -151,6 +155,9 @@ pageEncoding="UTF-8"%>
 	                <button type="submit" class="btn button-dark mx-auto">
 	                	Send review
 	                </button>
+	                <a class="btn button-dark mx-auto" href="#">
+	                	Delete review
+	                </a>
 	            </div>
 			</form>
 			<%

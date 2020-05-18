@@ -9,6 +9,7 @@ import mygamewishlist.model.pojo.MyLogger;
 import mygamewishlist.model.pojo.db.Review;
 import mygamewishlist.model.pojo.db.ReviewList;
 import mygamewishlist.model.pojo.db.ReviewOfGame;
+import mygamewishlist.model.pojo.db.ReviewUser;
 
 /**
  * @author Patryk
@@ -116,4 +117,20 @@ public class ReviewDAO {
 		}
 		return new ReviewOfGame();
 	} 
+	
+	public ArrayList<ReviewUser> getUserReviews(int idUser) {
+		try {
+			getRevMapper();
+			return reviewMapper.getUserReviews(idUser);
+		} catch(Exception e) {
+			LOG.logError(e.getMessage());
+		} finally {
+			try {
+				closeAll();
+			} catch (Exception e) {
+				LOG.logError(e.getMessage());
+			}
+		}
+		return new ArrayList<ReviewUser>();
+	}
 }

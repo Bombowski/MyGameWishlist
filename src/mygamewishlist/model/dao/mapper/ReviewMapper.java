@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import mygamewishlist.model.pojo.db.Review;
 import mygamewishlist.model.pojo.db.ReviewList;
 import mygamewishlist.model.pojo.db.ReviewOfGame;
+import mygamewishlist.model.pojo.db.ReviewUser;
 
 public interface ReviewMapper {
 	
@@ -19,4 +20,6 @@ public interface ReviewMapper {
 	public ArrayList<ReviewOfGame> getGameReviews(@Param("idUser") int idUser, @Param("idGame") int idGame);
 
 	public ReviewOfGame getGameReview(@Param("idUser") int idUser, @Param("idGame") int idGame);
+	
+	public ArrayList<ReviewUser> getUserReviews(@Param("idUser") int idUser);
 }

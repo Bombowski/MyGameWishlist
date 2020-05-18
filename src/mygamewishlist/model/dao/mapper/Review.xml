@@ -17,7 +17,7 @@
 		GROUP BY
 			GA.NAME, USER_RATING, GA.ID
 		ORDER BY
-			GA.ID
+			AVERAGE_RATING DESC
 	</select>
 	
 	<update id="addOrUpdateReview" parameterType="Review">
@@ -27,7 +27,7 @@
 	</update>
 	
 	<delete id="deleteReview" parameterType="Review">
-		DELETE REVIEW WHERE ID_USER = #{idUser} AND ID_GAME = #{idGame}
+		DELETE FROM REVIEW WHERE ID_USER = #{idUser} AND ID_GAME = #{idGame}
 	</delete>
 	
 	<select id="getGameReviews" resultMap="reviewOfGameMap">
@@ -51,6 +51,24 @@
 			ID_USER = #{idUser} AND
 			ID_GAME = #{idGame}
 	</select>
+	
+	<select id="getUserReviews" resultMap="reviewsUser">
+		SELECT
+			REVIEW, RATING, GA.NAME, GA.ID
+		FROM
+			REVIEW RE, USER US, GAME GA
+		WHERE
+			RE.ID_USER = US.ID AND
+		    GA.ID = RE.ID_GAME AND
+			US.ID = #{idUser}
+	</select>
+	
+	<resultMap type="ReviewUser" id="reviewsUser">
+		<result property="review" column="REVIEW" />
+		<result property="rating" column="RATING" />
+		<result property="gameName" column="NAME" />
+		<result property="idGame" column="ID" />
+	</resultMap>
 	
 	<resultMap type="ReviewOfGame" id="reviewOfGameMap">
 		<result property="usrName" column="USER_NAME" />

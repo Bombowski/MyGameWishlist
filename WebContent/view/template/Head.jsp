@@ -12,6 +12,7 @@
 	<script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
 	<script src="view/js/jquery-3.4.1.min.js" type="text/javascript"></script>
 	<script src="view/js/SessionManagement.js" type="text/javascript" async defer></script>
+	<script src="view/js/bootstrap.min.js" type="text/javascript"></script>
 	<% 
 		String paths = request.getParameter("js");
 		

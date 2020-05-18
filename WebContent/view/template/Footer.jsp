@@ -14,3 +14,11 @@
 		</div>
 	</div>
 </footer>
+<div id="cookies" class="fixed-bottom bg-gray">
+	<div class="d-flex flex-row justify-content-center my-auto">
+		<p class="color-white text-right h6 my-auto mx-2">We use cookies btw</p>
+	    <button id="cookies" class="btn btn-dark">
+	        Got it
+	    </button>
+	</div>
+</div>

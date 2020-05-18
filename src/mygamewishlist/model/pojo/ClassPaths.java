@@ -42,6 +42,7 @@ public class ClassPaths {
 	public final String LOGIN = "/Login";
 	public final String REVIEW_LIST = "/ReviewList";
 	public final String GAME_INFO = "/GameInfo";
+	public final String USER_REVIEWS = "/UserReviews";
 	public final String ADD_GAME_OPTIONS = "/AddGameOptions";
 	public final String ADD_GAME_WISHLIST = "/AddGameWishlist";
 	public final String UPDATE_GAME_WISHLIST = "/UpdateGameWishlist";
@@ -57,6 +58,7 @@ public class ClassPaths {
 	public final String REDIRECT_LOGIN = redirect(LOGIN);
 	public final String REDIRECT_REVIEW_LIST = redirect(REVIEW_LIST);
 	public final String REDIRECT_GAME_INFO = redirect(GAME_INFO);
+	public final String REDIRECT_USER_REVIEWS = redirect(USER_REVIEWS);
 	public final String REDIRECT_ADD_GAME_OPTIONS = redirect(ADD_GAME_OPTIONS);
 	public final String REDIRECT_ADD_GAME_WISHLIST = redirect(ADD_GAME_WISHLIST);
 	public final String REDIRECT_UPDATE_GAME_WISHLIST = redirect(UPDATE_GAME_WISHLIST);
@@ -72,6 +74,7 @@ public class ClassPaths {
 	public final String JSP_LOGIN = jsp(VIEW,LOGIN);
 	public final String JSP_REVIEW_LIST = jsp(VIEW,REVIEW_LIST);
 	public final String JSP_GAME_INFO = jsp(VIEW,GAME_INFO);
+	public final String JSP_USER_REVIEWS = jsp(LOGGED,USER_REVIEWS);
 	public final String JSP_ADD_GAME_OPTIONS = jsp(LOGGED,ADD_GAME_OPTIONS);
 	public final String JSP_ADD_GAME_WISHLIST = jsp(LOGGED,ADD_GAME_WISHLIST);
 	public final String JSP_UPDATE_GAME_WISHLIST = jsp(LOGGED,UPDATE_GAME_WISHLIST);
@@ -88,7 +91,7 @@ public class ClassPaths {
 	 * @return String
 	 */
 	private String redirect(String name) {
-		return new StringBuilder().append(PROJECT).append(name).toString();
+		return PROJECT + name;
 	}
 	
 	/**

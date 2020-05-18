@@ -11,6 +11,7 @@
 		<typeAlias type='mygamewishlist.model.pojo.db.Review' alias='Review'></typeAlias>
 		<typeAlias type='mygamewishlist.model.pojo.db.ReviewList' alias='ReviewList'></typeAlias>
 		<typeAlias type='mygamewishlist.model.pojo.db.ReviewOfGame' alias='ReviewOfGame'></typeAlias>
+		<typeAlias type='mygamewishlist.model.pojo.db.ReviewUser' alias='ReviewUser'></typeAlias>
 		<typeAlias type='mygamewishlist.model.pojo.db.Store' alias='Store'></typeAlias>
 		<typeAlias type='mygamewishlist.model.pojo.db.WishListGame' alias='WishListGame'></typeAlias>
 		<typeAlias type='mygamewishlist.model.pojo.db.WishListGameSteam' alias='WishListGameSteam'></typeAlias>

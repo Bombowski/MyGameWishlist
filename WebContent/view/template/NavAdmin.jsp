@@ -7,8 +7,12 @@
 <nav class="col-12">
 	<div class="w-75 row mx-auto">
 		<div class="col-md-6 col-sm-12 navbar navbar-expand ">
+			<button class="nav-link btn btn-dark dropdown-toggle mr-1" type="button" id="dropdownReviews" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Reviews</button>
+	        <div class="dropdown-menu color-black" aria-labelledby="dropdownReviews">
+			    <a class="dropdown-item" href="/MyGameWishlist/ReviewList">Reviews</a>
+			    <a class="dropdown-item" href="/MyGameWishlist/UserReviews">My Reviews</a>
+			</div>
 			<ul class="navbar-nav mx-auto mx-lg-0 mr-lg-auto">
-				<li class="nav-link px-1"><a href="/MyGameWishlist/ReviewList" class="nav-link btn btn-dark">Reviews</a></li>
 	            <li class="nav-link px-1"><a href="/MyGameWishlist/MyList" class="nav-link btn btn-dark">My List</a></li>
 				<li class="nav-link px-1"><a href="/MyGameWishlist/GameList" class="nav-link btn btn-dark">Game List</a></li>
 			</ul>

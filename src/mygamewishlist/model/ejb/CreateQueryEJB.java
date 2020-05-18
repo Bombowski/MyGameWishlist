@@ -23,6 +23,7 @@ import mygamewishlist.model.pojo.db.Genre;
 import mygamewishlist.model.pojo.db.Review;
 import mygamewishlist.model.pojo.db.ReviewList;
 import mygamewishlist.model.pojo.db.ReviewOfGame;
+import mygamewishlist.model.pojo.db.ReviewUser;
 import mygamewishlist.model.pojo.db.Store;
 import mygamewishlist.model.pojo.db.TimelineGame;
 import mygamewishlist.model.pojo.db.TimelineGameDetailed;
@@ -51,6 +52,9 @@ public class CreateQueryEJB {
 	private static final TimelineDAO TIM_DAO = new TimelineDAO();
 	private static final GenreDAO GEN_DAO = new GenreDAO();
 	
+	/**
+	 * Empty contructor for EJB
+	 */
 	public CreateQueryEJB() {}
 	
 	/**
@@ -447,5 +451,15 @@ public class CreateQueryEJB {
 	 */
 	public ReviewOfGame getGameReview(int idUser, int idGame) {
 		return REV_DAO.getGameReview(idUser, idGame);
+	}
+	
+	/**
+	 * Returns a list of all of the reviews of one user
+	 * 
+	 * @param idUser int user id
+	 * @return ArrayList<ReviewUser>
+	 */
+	public ArrayList<ReviewUser> getUserReviews(int idUser) {
+		return REV_DAO.getUserReviews(idUser);
 	}
 }
