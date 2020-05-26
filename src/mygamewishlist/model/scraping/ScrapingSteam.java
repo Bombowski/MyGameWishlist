@@ -85,7 +85,7 @@ public class ScrapingSteam {
 				// checking if it's valid
 				if (chk.getBoolean("success")) {
 					JSONObject data = chk.getJSONObject("data");
-					if (!data.getBoolean("is_free")) {
+					if (!data.getBoolean("is_free") && data.has("price_overview")) {
 						// adding results to the list
 						games.add(getSearchedGame(data, id, g2s));
 						i++;
@@ -116,7 +116,7 @@ public class ScrapingSteam {
 	 */
 	private ScrapedGame getSearchedGame(JSONObject data, int id, Game2Scrap g2s) throws JSONException {
 		ScrapedGame ssg = new ScrapedGame();
-
+		
 		// setting all of the parameters
 		ssg.setStoreName(g2s.getStoreName());
 		ssg.setFullName(data.getString("name"));
@@ -229,12 +229,8 @@ public class ScrapingSteam {
 		} catch (JSONException | ServerErrorException e) {
 			LOG.logError(e.getMessage());
 		} catch (Exception e) {
-			StringBuilder sb = new StringBuilder();
-			for (StackTraceElement ste : e.getStackTrace()) {
-				sb.append(ste.toString())
-					.append("\n");
-			}
-			LOG.logError(sb.toString());
+			LOG.logError(e.getStackTrace());
+			LOG.logError(e.getMessage());
 		}
 		
 		return toReturn;

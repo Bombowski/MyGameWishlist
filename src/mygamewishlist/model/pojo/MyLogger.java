@@ -38,6 +38,14 @@ public class MyLogger {
 		logger.error(msg);
 	}
 	
+	public void logError(StackTraceElement[] ste) {
+		StringBuilder sb = new StringBuilder();
+		for (StackTraceElement s : ste) {
+			sb.append(s.toString());
+		}
+		logger.error(sb.toString());
+	}	
+	
 	/**
 	 * Logs a message as debug
 	 * 

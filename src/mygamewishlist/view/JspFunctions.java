@@ -196,9 +196,9 @@ public class JspFunctions {
 	public String buildPrices(String discount, WishListGame g) {
 		return discount.equals("0.0%") ? g.getCurrentPrice() + "€"
 				: new StringBuilder()
-					.append("<s>")
+					.append("<p><s>")
 					.append(g.getDefaultPrice())
-					.append("€</s><span class='h5'> ")
+					.append("€</s></p><span class='h5 bg-success p-1'> ")
 					.append(g.getCurrentPrice())
 					.append("€</span>")
 					.toString();

@@ -37,20 +37,21 @@ public class ScrapingInstantGaming {
 	 */
 	public Hashtable<String,ArrayList<ScrapedGame>> getInstantGames(Game2Scrap g2s) {
 		Document doc = null;
+		Hashtable<String, ArrayList<ScrapedGame>> toReturn = new Hashtable<String, ArrayList<ScrapedGame>>();
 		try {
 			// get the document
 			doc = ScrapingFunctions.getDoc(g2s.getStoreUrl() + g2s.getQueryPart(), g2s.getName());
 		} catch (IOException e) {
 			LOG.logError(e.getMessage());
-			return new Hashtable<String,ArrayList<ScrapedGame>>();
+			return toReturn;
 		}		
 		
 		// check if document contains something
 		if (doc == null) {
-			return new Hashtable<String,ArrayList<ScrapedGame>>();
+			return toReturn;
 		} else if (doc.select(".noresult-title").text()
 				.equals("Sorry, we have no games matching your query :(")) {
-			return new Hashtable<String, ArrayList<ScrapedGame>>();
+			return toReturn;
 		}
 		
 		// select the elements
@@ -66,7 +67,6 @@ public class ScrapingInstantGaming {
 			}
 		}
 		
-		Hashtable<String, ArrayList<ScrapedGame>> toReturn = new Hashtable<String, ArrayList<ScrapedGame>>();
 		toReturn.put(g2s.getStoreName(), games);
 		
 		return toReturn;
@@ -81,20 +81,24 @@ public class ScrapingInstantGaming {
 	 */
 	private ScrapedGame getSearchedGame(Element e, Game2Scrap g2s) {
 		// set all of the data
-		String url = e.select(".cover").attr("href");
-		url = url.substring(0, url.length() - 1);
-		String img = e.select(".picture").attr("src");
-		String name = e.select(".name").text();
-		String priceS = e.select(".price").text();
-		String discountS = e.select(".discount").text();
-		
+		String priceS = e.selectFirst(".price").text();		
 		// check if price is valid
 		if (priceS.equals("N/A")) {
 			return null;
 		}
+				
+		String url = e.selectFirst(".cover").attr("href");
+		url = url.substring(0, url.length() - 1);
+		String img = e.selectFirst(".picture").attr("src");
+		String name = e.selectFirst(".name").text();
+		
+		// checking if there is a discount box or not
+		Element discountE = e.selectFirst(".discount");
+		String discountS = discountE == null ? "-0" : discountE.text();
 		
 		double discountD;
 		double defaultP;
+				
 		double currentP = Double.parseDouble(ScrapingFunctions.replaceCommasEurosPercent(priceS));
 		
 		// if price is valid, check discount and set defualt price
@@ -102,8 +106,14 @@ public class ScrapingInstantGaming {
 			defaultP = currentP;
 			discountD = 0;
 		} else {
+			/*
+			 * for some reason some instant gaming games have
+			 * two minus characters instead of one... so im fixing that here
+			 */
+			discountS = discountS.charAt(1) == '-' ? discountS.substring(1) : discountS;			
 			discountD = Math.abs(Double.parseDouble(
 					ScrapingFunctions.replaceCommasEurosPercent(discountS)));
+			
 			defaultP = currentP * 100 / (100 - discountD);
 		}
 		

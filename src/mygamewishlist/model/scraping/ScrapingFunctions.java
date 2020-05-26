@@ -27,7 +27,7 @@ public class ScrapingFunctions {
 	 * @return String
 	 */
 	protected static String replaceCommasEurosPercent(String price) {
-		return price.replace(",", ".").replace("€", "").replace("%", "");
+		return price.replace(",", ".").replace("€", "").replace("%", "").replace("$", "");
 	}
 	
 	/**

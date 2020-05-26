@@ -10,16 +10,13 @@ import org.junit.runners.Suite.SuiteClasses;
 import mygamewishlist.model.ejb.CreateQueryEJB;
 
 @RunWith(Suite.class)
-@SuiteClasses({GameTests.class, GenreTests.class, ReviewTests.class, SteamTests.class, 
-	StoreTests.class, TimelineTests.class, UserTests.class, VariableTests.class, WishlistGameTests.class
-	})
-//GameTests.class, GenreTests.class, ReviewTests.class, SteamTests.class, 
-//StoreTests.class, TimelineTests.class, UserTests.class, VariableTests.class, WishlistGameTests.class
+@SuiteClasses({ GameTests.class, GenreTests.class, ReviewTests.class, SteamTests.class, StoreTests.class,
+		TimelineTests.class, UserTests.class, VariableTests.class, WishlistGameTests.class, ScrapingTesting.class })
 public class Tests {
-	
+
 	@EJB
 	protected static CreateQueryEJB cq_ejb;
-	
+
 	@BeforeClass
 	public static void init() {
 		cq_ejb = new CreateQueryEJB();

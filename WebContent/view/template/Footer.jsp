@@ -16,9 +16,9 @@
 </footer>
 <div id="cookies" class="fixed-bottom bg-gray">
 	<div class="d-flex flex-row justify-content-center my-auto">
-		<p class="color-white text-right h6 my-auto mx-2">
+		<p class="text-right h6 my-auto mx-2">
 			Our site uses cookies to make some stuff easier for us, you don't need to worry about that, but if you want, you can 
-			<a href="https://ec.europa.eu/info/cookies_en">find out more about cookies here</a>
+			<a class="text-primary" href="https://ec.europa.eu/info/cookies_en">find out more about cookies here</a>
 		</p>
 	    <button id="cookies" class="btn btn-dark">
 	        Got it

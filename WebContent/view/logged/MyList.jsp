@@ -189,7 +189,7 @@
 				
 				// creating header
 				th = new Tr();
-				th.addClass("h5");
+				th.addClass("h5 mx-auto");
 				th.addTd("");
 				th.addTd("Title");
 				th.addTd("Current Price");
@@ -228,6 +228,7 @@
 					
 					// building row
 					Tr tr = new Tr();
+					tr.addClass("mx-auto");
 					tr.addTd(img);					
 					tr.addTd(title);
 					tr.addTd(prices);
