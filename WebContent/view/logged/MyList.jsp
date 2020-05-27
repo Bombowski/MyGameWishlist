@@ -185,7 +185,8 @@
 			try {
 				// creating table that contains all of the data
 				tbl = new Table();
-				tbl.addClass("table md-table text-center d-md-block d-none mx-auto bg-gray");
+				tbl.addClass("table md-table text-center d-md-flex d-none mx-auto bg-gray");
+				tbl.addTbodyClass("mx-auto");
 				
 				// creating header
 				th = new Tr();
