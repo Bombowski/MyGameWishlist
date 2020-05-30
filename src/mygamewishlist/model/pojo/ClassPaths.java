@@ -33,7 +33,7 @@ public class ClassPaths {
 		return cp;
 	}
 	
-	private final String PROJECT = "/MyGameWishlist";
+	private final String PROJECT = "";
 	private final String JSP = ".jsp";
 	private final String VIEW = "/view";
 	private final String LOGGED = new StringBuilder().append(VIEW).append("/logged").toString();

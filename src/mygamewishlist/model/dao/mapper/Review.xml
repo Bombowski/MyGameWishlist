@@ -21,9 +21,9 @@
 	</select>
 	
 	<update id="addOrUpdateReview" parameterType="Review">
-		INSERT INTO REVIEW (ID_USER, ID_GAME, RATING) VALUES
-			(#{idUser},#{idGame},#{rating}) ON DUPLICATE KEY UPDATE
-			RATING = #{review}
+		INSERT INTO REVIEW (ID_USER, ID_GAME, RATING, REVIEW) VALUES
+			(#{idUser},#{idGame},#{rating},#{review}) ON DUPLICATE KEY UPDATE
+			RATING = #{rating}, REVIEW = #{review}
 	</update>
 	
 	<delete id="deleteReview" parameterType="Review">
