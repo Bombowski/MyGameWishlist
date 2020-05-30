@@ -146,7 +146,7 @@ pageEncoding="UTF-8"%>
 	                        <span class="ml-md-auto mx-auto my-auto">Rating</span>
 	                    </div>
 	                    <div class="col-md-6 col-12 d-flex color-black mx-auto">
-	                        <input class="form-control my-auto" name="rating" type="number" step='0.01' min='0' required 
+	                        <input class="form-control my-auto" name="rating" type="number" step='0.01' min='0' max='10' required 
 	                        	value="<% out.append(rog.getRating() + "");%>">
 	                    </div>
                     </div>

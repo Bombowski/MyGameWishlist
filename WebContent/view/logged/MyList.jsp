@@ -164,7 +164,7 @@
 		<div class="mt-2 mx-auto w-75 d-flex">
 		<% } %>
 				
-            <a href="/MyGameWishlist/AddGameWishlist" class="btn btn-dark mx-2 bg-black">
+            <a href="/AddGameWishlist" class="btn btn-dark mx-2 bg-black">
                 Add game
             </a>
             <button type="button" class="btn btn-dark mx-2" data-toggle="modal"

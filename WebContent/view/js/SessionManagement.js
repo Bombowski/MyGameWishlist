@@ -28,13 +28,13 @@ function onSignIn(googleUser) {
 	var profile = googleUser.getBasicProfile();
 	
 	// sending petition to login to create a user
-	$.post("/MyGameWishlist/Login",
+	$.post("/Login",
 		{
 			email: profile.getEmail(),
 			name: profile.getName()
 		},
 		function() {
-			window.location.href = "/MyGameWishlist/MyList";
+			window.location.href = "/MyList";
 		}
 	);
 }
@@ -48,7 +48,7 @@ $(".logout").click(function() {
 		onLoad();
 	}
 	gapi.auth2.getAuthInstance().disconnect();
-	window.location.href = "/MyGameWishlist/Logout";
+	window.location.href = "/Logout";
 });
 
 /**

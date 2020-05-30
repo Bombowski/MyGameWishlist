@@ -51,7 +51,7 @@
 	</jsp:include>
 		<div class="w-75 mx-auto d-flex">
 			<div class="col-6">
-				<a class="btn btn-primary mb-4" href="/MyGameWishlist/AddGame">
+				<a class="btn btn-primary mb-4" href="/AddGame">
 					Add game
 				</a>
 			</div class="col-6">
@@ -87,8 +87,8 @@
 					String genres = g.getGenres();
 					String dev = g.getDeveloper();
 					String relD = g.getReleaseDate();
-					String update = new A(edit.print(),"/MyGameWishlist/UpdateGame?id=" + g.getId()).print();
-					String delete = new A(del.print(),"/MyGameWishlist/DeleteGame?id=" + g.getId()).print();
+					String update = new A(edit.print(),"/UpdateGame?id=" + g.getId()).print();
+					String delete = new A(del.print(),"/DeleteGame?id=" + g.getId()).print();
 
 					Tr tr = new Tr();
 					tr.addClass("bg-gray");

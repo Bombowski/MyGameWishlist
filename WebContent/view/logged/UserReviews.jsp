@@ -73,7 +73,7 @@
 				for (ReviewUser rev : reviews) {
 					%>
 					<div class="col-12 col-md-5 m-2 py-2 bg-gray d-flex flex-column text-center">
-						<% String link = "/MyGameWishlist/GameInfo?id=" + rev.getIdGame(); %>
+						<% String link = "/GameInfo?id=" + rev.getIdGame(); %>
 						<a class="h4" href="<% out.append(link); %>"><% out.append(rev.getGameName()); %></a>
 						<div class="d-flex flex-row">
 							<div class="col-6 d-flex flex-column">
@@ -95,7 +95,7 @@
 						</div>
 						<div class="d-flex flex-row justify-content-center mt-2">
 							<a class="btn btn-dark mr-1" href="<% out.append(link); %>">Update review</a>
-							<a class="btn btn-dark ml-1" href="<% out.append("/MyGameWishlist/UserReviews?id=" + rev.getIdGame()); %>">Delete review</a>
+							<a class="btn btn-dark ml-1" href="<% out.append("/UserReviews?id=" + rev.getIdGame()); %>">Delete review</a>
 						</div>
 					</div>
 					<%
