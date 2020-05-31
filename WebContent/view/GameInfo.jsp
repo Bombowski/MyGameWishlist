@@ -1,3 +1,4 @@
+<%@page import="mygamewishlist.model.pojo.db.ReviewUser"%>
 <%@page import="mygamewishlist.model.pojo.db.ReviewOfGame"%>
 <%@page import="mygamewishlist.model.pojo.db.GameFull"%>
 <%@page import="bomboshtml.body.Input"%>
@@ -55,19 +56,19 @@ pageEncoding="UTF-8"%>
 		<%
 			GameFull g = null;
 			ArrayList<ReviewOfGame> reviews = null;
-			ReviewOfGame rog = null;
+			ReviewUser rog = null;
 			// getting all of the objects
 			try {
 				 g = (GameFull) request.getAttribute("game");
 				 reviews = (ArrayList<ReviewOfGame>) request.getAttribute("reviews");
-				 rog = (ReviewOfGame) request.getAttribute("myReview"); 
+				 rog = (ReviewUser) request.getAttribute("myReview"); 
 			} catch(Exception e) {
 				 log.logError(e.getMessage());
 				 response.sendRedirect(cp.REDIRECT_GAME_LIST);
 			}
 			
 			if (rog == null) {
-				rog = new ReviewOfGame();
+				rog = new ReviewUser();
 			}
 		%>
 		<div class="row d-flex flex-md-row flex-column mb-5">
@@ -152,10 +153,10 @@ pageEncoding="UTF-8"%>
                     </div>
                 </div>
 	            <div class="my-2 color-black mx-auto">
-	                <button type="submit" class="btn button-dark mx-auto">
+	                <button type="submit" class="btn btn-dark mx-auto color-white">
 	                	Send review
 	                </button>
-	                <a class="btn button-dark mx-auto" href="#">
+	                <a class="btn btn-dark mx-auto color-white" href="<% out.append("/UserReviews?id=" + rog.getIdGame()); %>">
 	                	Delete review
 	                </a>
 	            </div>

@@ -16,6 +16,8 @@ import mygamewishlist.model.pojo.ClassPaths;
 import mygamewishlist.model.pojo.MyLogger;
 import mygamewishlist.model.pojo.db.Game;
 import mygamewishlist.model.pojo.db.Review;
+import mygamewishlist.model.pojo.db.ReviewOfGame;
+import mygamewishlist.model.pojo.db.ReviewUser;
 import mygamewishlist.model.pojo.db.User;
 
 /**
@@ -53,7 +55,8 @@ public class GameInfo extends HttpServlet {
 			RequestDispatcher rd = getServletContext().getRequestDispatcher(cp.JSP_GAME_INFO);
 			request.setAttribute("game", g);
 			request.setAttribute("reviews", cq_ejb.getGameReviews(idUser, g.getId()));
-			request.setAttribute("myReview", cq_ejb.getGameReview(idUser, g.getId()));
+			ReviewOfGame rog = cq_ejb.getGameReview(idUser, g.getId());
+			request.setAttribute("myReview", new ReviewUser(rog.getReview(), rog.getRating(), "", g.getId()));
 			
 			rd.forward(request, response);
 		} catch(Exception e) {

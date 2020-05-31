@@ -59,7 +59,8 @@
 	                <%
 	                // getting all of the object lists
 	                @SuppressWarnings("unchecked")
-	                Hashtable<String, ArrayList<TimelineGameDetailed>> list = (Hashtable<String, ArrayList<TimelineGameDetailed>>)request.getAttribute("list");
+	                Hashtable<String, ArrayList<TimelineGameDetailed>> list = 
+	                	(Hashtable<String, ArrayList<TimelineGameDetailed>>)request.getAttribute("list");
 	                @SuppressWarnings("unchecked")
 	                List<LocalDate> dates = (List<LocalDate>)request.getAttribute("dates");
 	                @SuppressWarnings("unchecked")
