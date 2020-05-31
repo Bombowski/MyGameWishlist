@@ -41,9 +41,9 @@ public class GraphDatesEJB {
 		 * get instance of calendar, and get dates from last 14 days
 		 */
 		Calendar c = Calendar.getInstance();
-		LocalDate finish = LocalDate.of(c.get(Calendar.YEAR), c.get(Calendar.MONTH) + 1, c.get(Calendar.DAY_OF_MONTH) + 1);
+		LocalDate finish = getLocalDate(c);
 		c.add(Calendar.DAY_OF_MONTH, -14);
-		LocalDate start = LocalDate.of(c.get(Calendar.YEAR), c.get(Calendar.MONTH) + 1, c.get(Calendar.DAY_OF_MONTH) + 1);
+		LocalDate start = getLocalDate(c);
 		dates = getDatesBetween(start, finish);
 
 		// initialize the Hashtable that will be returned later
@@ -108,5 +108,24 @@ public class GraphDatesEJB {
 	 */
 	public List<LocalDate> getDates() {
 		return dates;
+	}
+	
+	private LocalDate getLocalDate(Calendar c) {
+		int dayNum = c.get(Calendar.DAY_OF_MONTH);
+		int monthNum = c.get(Calendar.MONTH);
+		
+		if (c.getMaximum(Calendar.DAY_OF_MONTH) == dayNum) {
+			dayNum = 1;
+			monthNum ++;
+		} else {
+			dayNum ++;
+		}
+		
+		monthNum ++;
+		if (monthNum == 13) {
+			monthNum = 1;
+		}
+		
+		return LocalDate.of(c.get(Calendar.YEAR), monthNum, dayNum);
 	}
 }

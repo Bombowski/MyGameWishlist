@@ -148,9 +148,9 @@ public class TimersEJB {
 	}
 
 	/**
-	 * This function is used when the game isn't in the list of games yet
+	 * This function is used when the game isn't in the list of games yet.
 	 * Calls the lowerPrice function, then interprets the code returned, and
-	 * desides whether or not add the game to toSend, update prices, or do nothing
+	 * decides whether or not add the game to toSend, update prices, or do nothing
 	 * 
 	 * @param wlg WishlistGame2Scrap game from database
 	 * @param scGame ScrapedGame game from scraping

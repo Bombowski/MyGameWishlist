@@ -71,7 +71,6 @@ public class PriceTimeline extends HttpServlet {
 					Hashtable<String, ArrayList<TimelineGameDetailed>> list = new Hashtable<String, ArrayList<TimelineGameDetailed>>();
 					// List of stores
 					ArrayList<Store> stores = cq_ejb.getStores();
-					ArrayList<String> names = new ArrayList<String>();
 					
 					for (String str : games) {
 						/*
@@ -83,26 +82,26 @@ public class PriceTimeline extends HttpServlet {
 							continue;
 						}
 						
-						int idStore = Integer.parseInt(split[1]);						
-						list.put(str, cq_ejb.getTimelineByUrlDetailed(split[0]));
-						
+						int idStore = Integer.parseInt(split[1]);
 						for (Store st : stores) {
 							if (st.getId() == idStore) {
-								// Adding names of games and their stores to the ArrayList
-								names.add(new StringBuilder()
+								/*
+								 * Adding names of games and their stores as keys, and
+								 * all of the data as ArrayList's as values.
+								 */
+								list.put(new StringBuilder()
 										.append(split[2])
 										.append(" ")
 										.append(st.getName())
-										.toString());
+										.toString(), 
+										cq_ejb.getTimelineByUrlDetailed(split[0]));
 							}
-						}												
+						}									
 					}
-					
-					// Forwarding list of prices and discounts, dates, and names of games
+										
 					RequestDispatcher rd = getServletContext().getRequestDispatcher(cp.JSP_PRICE_TIMELINE);
 					request.setAttribute("list", gd_ejb.generateTimeline(list));
 					request.setAttribute("dates", gd_ejb.getDates());
-					request.setAttribute("names", names);
 					rd.forward(request, response);
 				}
 			}

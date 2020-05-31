@@ -2,7 +2,6 @@
 <%@page import="bomboshtml.body.A"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.Map.Entry"%>
-<%@page import="java.util.Calendar"%>
 <%@page import="java.time.LocalDate"%>
 <%@page import="org.json.JSONArray"%>
 <%@page import="mygamewishlist.model.pojo.db.TimelineGameDetailed"%>
@@ -63,8 +62,6 @@
 	                	(Hashtable<String, ArrayList<TimelineGameDetailed>>)request.getAttribute("list");
 	                @SuppressWarnings("unchecked")
 	                List<LocalDate> dates = (List<LocalDate>)request.getAttribute("dates");
-	                @SuppressWarnings("unchecked")
-	                ArrayList<String> names = (ArrayList<String>)request.getAttribute("names");
 	                JSONArray labels = new JSONArray();
 	                
 	                if (list == null || dates == null) {
@@ -89,7 +86,7 @@
                             // generating list with random colors
                             ArrayList<Color> colors = jspF.generateColors(list.size());                            
                             int i = 0;
-                            for (ArrayList<TimelineGameDetailed> value : list.values()) {
+                            for (Entry<String, ArrayList<TimelineGameDetailed>> entry : list.entrySet()) {
                             	JSONArray jsArr = new JSONArray();
                             	// getting colors
                             	Color c = colors.get(i);
@@ -105,13 +102,13 @@
                        					.toString();
                             	
                             	// adding prices to timeline
-                            	for (TimelineGameDetailed tlgd : value) {
+                            	for (TimelineGameDetailed tlgd : entry.getValue()) {
                             		jsArr.put(tlgd.getPrice() == 0 ? null : tlgd.getPrice());
                             	}
                             %>	                            
 	                        	{
 	                        		// generating line
-	                            	label: "<% out.print(names.get(i)); %>",
+	                            	label: "<% out.print(entry.getKey()); %>",
 	                            	fill: false,
 	                                lineTension: 0,
 	                                backgroundColor: "rgba(75, 192, 192, 0.4)",
