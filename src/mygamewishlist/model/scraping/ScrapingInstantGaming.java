@@ -42,7 +42,7 @@ public class ScrapingInstantGaming {
 			// get the document
 			doc = ScrapingFunctions.getDoc(g2s.getStoreUrl() + g2s.getQueryPart(), g2s.getName());
 		} catch (IOException e) {
-			LOG.logError(e.getMessage());
+			LOG.logError(e.getStackTrace());
 			return toReturn;
 		}		
 		
@@ -143,17 +143,9 @@ public class ScrapingInstantGaming {
 		// get the document
 		Document doc = null;
 		try {
-			LOG.logDebug(wlg.toString());
 			doc = ScrapingFunctions.getDoc(wlg.getUrlStore() + wlg.getUrlGame(), "");
-		} catch (IOException e1) {
-			LOG.logError(e1.getMessage());
 		} catch (Exception e) {
-			StringBuilder sb = new StringBuilder();
-			for (StackTraceElement ste : e.getStackTrace()) {
-				sb.append(ste.toString())
-					.append("\n");
-			}
-			LOG.logError(sb.toString());
+			LOG.logError(e.getStackTrace());
 		}
 		
 		// if document is null, reutrn ScrapedGame with negative price

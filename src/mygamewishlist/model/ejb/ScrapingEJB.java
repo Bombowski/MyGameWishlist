@@ -35,12 +35,13 @@ public class ScrapingEJB {
 	 * list used by scraping called by user, like when user is
 	 * searching for a game in a store. this object will sotre:
 	 * Store name that identifies a scraping function, scraping
-	 * function recieves a Game2Scrap parameter, and returns a HashTable
+	 * function receives a Game2Scrap parameter, and returns a HashTable
 	 * of String (store name) as key, and a list of scraped game in a
 	 * ArrayList.
 	 */
 	private Hashtable<String, Function<Game2Scrap, Hashtable<String,ArrayList<ScrapedGame>>>> scraping = 
 			new Hashtable<String, Function<Game2Scrap, Hashtable<String,ArrayList<ScrapedGame>>>>();
+	
 	/*
 	 * list used by TimersEJB class, it is used when the timer is
 	 * checking for price changes in games, this object stores:

@@ -1,6 +1,5 @@
 package mygamewishlist.model.scraping;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
@@ -62,7 +61,7 @@ public class ScrapingGOG {
 				}				
 			}
 		} catch (JSONException e) {
-			LOG.logError(e.getMessage());
+			LOG.logError(e.getStackTrace());
 		}
 		
 		// add results to the hashtable and return it
@@ -115,17 +114,9 @@ public class ScrapingGOG {
 		
 		Document doc = null;
 		try {
-			LOG.logDebug(wlg.toString());
 			doc = ScrapingFunctions.getDocCookie(wlg.getUrlStore() + wlg.getUrlGame(), "", "gog_lc", "ES_EUR_en-US");
-		} catch (IOException e) {
-			 LOG.logError(e.getMessage());
 		} catch (Exception e) {
-			StringBuilder sb = new StringBuilder();
-			for (StackTraceElement ste : e.getStackTrace()) {
-				sb.append(ste.toString())
-					.append("\n");
-			}
-			LOG.logError(sb.toString());
+			LOG.logError(e.getStackTrace());
 		}
 		
 		// checking if doc isn't null

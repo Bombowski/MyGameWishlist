@@ -106,7 +106,7 @@ public class PriceTimeline extends HttpServlet {
 				}
 			}
 		} catch(Exception e) {
-			LOG.logError(e.getMessage());
+			LOG.logError(e.getStackTrace());
 			response.sendRedirect(cp.REDIRECT_MYLIST);
 		}
 	}

@@ -92,7 +92,7 @@ public class ScrapingSteam {
 					}
 				}
 			} catch (JSONException | InternalServerErrorException e) {
-				LOG.logError(e.getMessage());
+				LOG.logError(e.getStackTrace());
 			}
 		}
 		
@@ -227,10 +227,9 @@ public class ScrapingSteam {
 				toReturn.setCurrentDiscount(0);
 			}
 		} catch (JSONException | ServerErrorException e) {
-			LOG.logError(e.getMessage());
+			LOG.logError(e.getStackTrace());
 		} catch (Exception e) {
 			LOG.logError(e.getStackTrace());
-			LOG.logError(e.getMessage());
 		}
 		
 		return toReturn;

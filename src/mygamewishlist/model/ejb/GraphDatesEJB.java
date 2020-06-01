@@ -110,10 +110,19 @@ public class GraphDatesEJB {
 		return dates;
 	}
 	
+	/**
+	 * Returns Calendars tomorrow date in a LocalDate format (month between 1-12,
+	 * days between 1-28/31)
+	 * 
+	 * @param c Calendar
+	 * @return LocalDate
+	 */
 	private LocalDate getLocalDate(Calendar c) {
+		// getting current calendar day and month number
 		int dayNum = c.get(Calendar.DAY_OF_MONTH);
 		int monthNum = c.get(Calendar.MONTH);
 		
+		// checking if it's the last day of the month
 		if (c.getMaximum(Calendar.DAY_OF_MONTH) == dayNum) {
 			dayNum = 1;
 			monthNum ++;
@@ -121,6 +130,7 @@ public class GraphDatesEJB {
 			dayNum ++;
 		}
 		
+		// checking if it's the last month of the year
 		monthNum ++;
 		if (monthNum == 13) {
 			monthNum = 1;

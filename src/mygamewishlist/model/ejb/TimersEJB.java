@@ -66,7 +66,7 @@ public class TimersEJB {
 		try {
 			cq_ejb.addSteamGames(scr_ejb.loadGames());
 		} catch (JSONException e) {
-			LOG.logError(e.getMessage());
+			LOG.logError(e.getStackTrace());
 		}
 	}
 
