@@ -25,10 +25,7 @@ public class ClientSessionEJB {
 	 * @return true if there is, false if not
 	 */
 	public boolean isSome1Logged(HttpSession session) {
-		if (session != null && session.getAttribute("user") != null) {
-			return true;
-		}
-		return false;
+		return session != null && session.getAttribute("user") != null;
 	}
 	
 	/**

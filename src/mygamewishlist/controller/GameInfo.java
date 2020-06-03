@@ -56,12 +56,13 @@ public class GameInfo extends HttpServlet {
 			request.setAttribute("game", g);
 			request.setAttribute("reviews", cq_ejb.getGameReviews(idUser, g.getId()));
 			ReviewOfGame rog = cq_ejb.getGameReview(idUser, g.getId());
-			request.setAttribute("myReview", new ReviewUser(rog.getReview(), rog.getRating(), "", g.getId()));
+			request.setAttribute("myReview", rog == null ? null : 
+				new ReviewUser(rog.getReview(), rog.getRating(), "", g.getId()));
 			
 			rd.forward(request, response);
 		} catch(Exception e) {
 			LOG.logError(e.getMessage());
-			RequestDispatcher rd = getServletContext().getRequestDispatcher(cp.JSP_REVIEW_LIST);
+			RequestDispatcher rd = getServletContext().getRequestDispatcher(cp.REVIEW_LIST);
 			rd.forward(request, response);
 		}
 	}

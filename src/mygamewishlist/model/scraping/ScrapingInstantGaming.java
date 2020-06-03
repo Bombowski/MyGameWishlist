@@ -180,8 +180,6 @@ public class ScrapingInstantGaming {
 		sc.setCurrentPrice(priceD);
 		sc.setDefaultPrice(defaultD);
 		
-		LOG.logDebug(sc.toString());
-		
 		return sc;
 	}
 }

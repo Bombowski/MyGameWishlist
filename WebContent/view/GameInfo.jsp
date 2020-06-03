@@ -156,7 +156,7 @@ pageEncoding="UTF-8"%>
 	                <button type="submit" class="btn btn-dark mx-auto color-white">
 	                	Send review
 	                </button>
-	                <a class="btn btn-dark mx-auto color-white" href="<% out.append("/UserReviews?id=" + rog.getIdGame()); %>">
+	                <a class="btn btn-dark mx-auto color-white" href="<% out.append("/UserReviews?id=" + rog.getIdGame() + "&p=gi"); %>">
 	                	Delete review
 	                </a>
 	            </div>

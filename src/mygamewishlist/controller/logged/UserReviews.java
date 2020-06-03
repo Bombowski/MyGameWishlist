@@ -44,7 +44,12 @@ public class UserReviews extends HttpServlet {
 				rd = getServletContext().getRequestDispatcher(cp.REVIEW_LIST);
 			} else {
 				String id = request.getParameter("id");
-				rd = getServletContext().getRequestDispatcher(cp.JSP_USER_REVIEWS);
+				String redircet2 = request.getParameter("p");
+				redircet2 = redircet2 == null ? "" : redircet2;
+				
+				rd = redircet2.equals("gi") ?
+						getServletContext().getRequestDispatcher(cp.GAME_INFO + "?id=" + id) :
+						getServletContext().getRequestDispatcher(cp.JSP_USER_REVIEWS);
 				
 				/*
 				 * if the id of the game isn't null, it means that the user is trying to delete

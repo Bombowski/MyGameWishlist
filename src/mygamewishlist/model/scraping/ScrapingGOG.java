@@ -129,8 +129,7 @@ public class ScrapingGOG {
 			toReturn.setDefaultPrice(Double.parseDouble(doc.select(".product-actions-price__base-amount").text()));		
 			toReturn.setCurrentPrice(Double.parseDouble(doc.select(".product-actions-price__final-amount").text()));
 		} catch(NumberFormatException e) {
-			LOG.logError("base amount:" + doc.select(".product-actions-price__base-amount").text());
-			LOG.logError("final amount:" + doc.select(".product-actions-price__final-amount").text());
+			LOG.logError(e.getStackTrace());
 			toReturn.setDefaultPrice(-1);
 			return toReturn;
 		}

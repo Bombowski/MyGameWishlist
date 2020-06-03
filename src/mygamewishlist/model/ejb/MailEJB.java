@@ -73,7 +73,7 @@ public class MailEJB {
 			// send message
 			Transport.send(messageContent);
 		} catch (MessagingException e) {
-			LOG.logError(e.getMessage());
+			LOG.logError(e);
 		}
 	}
 	
