@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import mygamewishlist.model.ejb.ClientSessionEJB;
 import mygamewishlist.model.ejb.CreateQueryEJB;
 import mygamewishlist.model.pojo.ClassPaths;
+import mygamewishlist.model.pojo.MyCalendar;
 import mygamewishlist.model.pojo.MyLogger;
 import mygamewishlist.model.pojo.Pagination;
 import mygamewishlist.model.pojo.db.User;
@@ -29,10 +30,13 @@ public class MyList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	private static final MyLogger LOG = MyLogger.getLOG();
-	private static final ClassPaths cp = ClassPaths.getCP();
+	private static final ClassPaths CP = ClassPaths.getCP();
+	private static final MyCalendar CAL = MyCalendar.getMC();
 
 	private Pagination<WishListGame> list;
 	private int previousUser = -1;
+	private String lastDate = "";
+	private int lastHour = -1;
 	
 	@EJB
 	ClientSessionEJB sc_ejb;
@@ -47,12 +51,12 @@ public class MyList extends HttpServlet {
 			throws ServletException, IOException {
 		try {
 			User usr = sc_ejb.getLoggedUser(request);
-			RequestDispatcher rd;
-
+			RequestDispatcher rd;		
+			
 			if (usr == null) {
-				rd = getServletContext().getRequestDispatcher(cp.LOGIN);
+				rd = getServletContext().getRequestDispatcher(CP.LOGIN);
 			} else {
-				rd = getServletContext().getRequestDispatcher(cp.JSP_MYLIST);
+				rd = getServletContext().getRequestDispatcher(CP.JSP_MYLIST);
 			
 				if (previousUser == -1) {
 					previousUser = usr.getId();
@@ -60,17 +64,20 @@ public class MyList extends HttpServlet {
 					previousUser = usr.getId();
 					list = new Pagination<WishListGame>(
 							cq_ejb.getListByIdUser(usr.getId()), 10);
+					updateLastDateHour();
 				}
 				
 				/*
 				 * if the list is null, or the restart attribute was sent, 
-				 * the list gets refreshed
+				 * or an hour or more time have passed, the list gets refreshed
 				 */
-				if (list == null || request.getAttribute("r") != null) {
+				if (list == null || request.getAttribute("r") != null || 
+						!lastDate.equals(CAL.getSqlDate()) || lastHour != CAL.getHour()) {
 					request.removeAttribute("r");
 					
 					list = new Pagination<WishListGame>(
-						cq_ejb.getListByIdUser(usr.getId()), 10);					
+						cq_ejb.getListByIdUser(usr.getId()), 10);
+					updateLastDateHour();
 				}
 				
 				request.setAttribute("stores", cq_ejb.getStores());
@@ -80,7 +87,7 @@ public class MyList extends HttpServlet {
 			rd.forward(request, response);
 		} catch (Exception e) {
 			LOG.logError(e.getMessage());
-			response.sendRedirect(cp.JSP_LOGIN);
+			response.sendRedirect(CP.JSP_LOGIN);
 		}
 	}
 	
@@ -88,12 +95,20 @@ public class MyList extends HttpServlet {
 		User usr = sc_ejb.getLoggedUser(request);
 		
 		if (usr == null) {
-			response.sendRedirect(cp.REDIRECT_LOGIN);
+			response.sendRedirect(CP.REDIRECT_LOGIN);
 		} else {
 			list = new Pagination<WishListGame>(
 					cq_ejb.getListByIdUser(usr.getId()), 10);
 			
-			response.sendRedirect(cp.REDIRECT_MYLIST);
+			response.sendRedirect(CP.REDIRECT_MYLIST);
 		}
+	}
+	
+	/**
+	 * Updates current hour and date and hour and sqlDate from MyCalendar
+	 */
+	private void updateLastDateHour() {
+		lastDate = CAL.getSqlDate();
+		lastHour = CAL.getHour();
 	}
 }

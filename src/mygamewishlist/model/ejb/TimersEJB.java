@@ -1,7 +1,6 @@
 package mygamewishlist.model.ejb;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Hashtable;
 
 import javax.ejb.EJB;
@@ -11,6 +10,7 @@ import javax.ejb.Stateless;
 
 import org.json.JSONException;
 
+import mygamewishlist.model.pojo.MyCalendar;
 import mygamewishlist.model.pojo.MyLogger;
 import mygamewishlist.model.pojo.ScrapedGame;
 import mygamewishlist.model.pojo.db.User;
@@ -26,7 +26,8 @@ import mygamewishlist.model.pojo.db.WishListGame2Scrap;
 public class TimersEJB {
 
 	private static final MyLogger LOG = MyLogger.getLOG();
-
+	private static final MyCalendar CAL = MyCalendar.getMC();
+	
 	@EJB
 	ScrapingEJB scr_ejb;
 
@@ -79,11 +80,13 @@ public class TimersEJB {
 	public void chkPrices() {
 		// initialize EJB's
 		initAll();
+		
 		/*
-		 * this variable will store todays date, and it will be used for
-		 * inserting into price timeline.
-		 */	
-		String time = getDate();
+		 * Updating calendar and then storing todays date, it 
+		 * will be used for inserting into price timeline.
+		 */
+		CAL.updateCalendar();
+		String time = CAL.getSqlDate();
 
 		/*
 		 * this hashtable will store all of the checked games
@@ -244,23 +247,5 @@ public class TimersEJB {
 		}
 		
 		return 0;
-	}
-
-	/**
-	 * Generates todays date in the sql format
-	 * 
-	 * @return String today's date
-	 */
-	private String getDate() {
-		StringBuilder sb = new StringBuilder();
-		Calendar c = Calendar.getInstance();
-		
-		sb.append(c.get(Calendar.YEAR))
-			.append("-")
-			.append(c.get(Calendar.MONTH) + 1)
-			.append("-")
-			.append(c.get(Calendar.DAY_OF_MONTH));
-		
-		return sb.toString();
 	}
 }
